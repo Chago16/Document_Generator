@@ -71,32 +71,33 @@
 
 <main>
 
-	<div class="wrapper-container">
-			<div class="header">
-				<img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
-				<div class="create">
-					<div class="create-contents">
-						<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M23 15.3333V30.6666M15.3333 23H30.6667M42.1667 23C42.1667 33.5854 33.5855 42.1666 23 42.1666C12.4146 42.1666 3.83334 33.5854 3.83334 23C3.83334 12.4145 12.4146 3.83331 23 3.83331C33.5855 3.83331 42.1667 12.4145 42.1667 23Z" stroke="#EEF2F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-							</svg>
-						<p class="nav-label">Create New</p>
-					</div>
-				</div>
-				
-				<div class="account">
-					<!-- svelte-ignore a11y_consider_explicit_label -->
-					<button id="logout" class="logout">
-						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-					<img src="/icons/userIcon.svg" alt="" width="43" height="43">
-					<div id="account-det" class="account-det">
-						<h3 id="account-name">Account Name</h3>
-						<p id="account-email">account@email.com</p>
-					</div>
-				</div>
+	<div class="header">
+		<img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
+		<div class="create">
+			<div class="create-contents">
+				<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M23 15.3333V30.6666M15.3333 23H30.6667M42.1667 23C42.1667 33.5854 33.5855 42.1666 23 42.1666C12.4146 42.1666 3.83334 33.5854 3.83334 23C3.83334 12.4145 12.4146 3.83331 23 3.83331C33.5855 3.83331 42.1667 12.4145 42.1667 23Z" stroke="#EEF2F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				<p class="nav-label">Create New</p>
 			</div>
+		</div>
+		
+		<div class="account">
+			<!-- svelte-ignore a11y_consider_explicit_label -->
+			<button id="logout" class="logout">
+				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<img src="/icons/userIcon.svg" alt="" width="43" height="43">
+			<div id="account-det" class="account-det">
+				<h3 id="account-name">Account Name</h3>
+				<p id="account-email">account@email.com</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="wrapper-container">
 
 			<div class="navigation-container">
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -213,22 +214,29 @@
 						</ul>
 					
 					</nav>
-					</div> <!-- Nav Bar Contents Closing Div -->
+		
+			</div> <!-- Nav Bar Contents Closing Div -->
+
+
+			<div class="content-container">
+				{@render children()}
+			</div>			
 	</div> <!-- Pages Closing Div -->
 	
-
-
-
-	<div class="content-container">
-		{@render children()}
-	</div>
 </main>
 
 <style>
 
+main {
+	height: 100vh;
+}
+
 .wrapper-container {
-    height: 90vh;
+	margin-top: -15px;
+    height: 85%;
     position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
 .header{
@@ -239,8 +247,8 @@
 
 .header .logo {
 	width: 55px;
-	margin-top: 20px;
-	margin-left: 35px;
+	margin-top: 0px;
+	margin-left: 45px;
 }
 
 .header .create{
@@ -410,8 +418,8 @@
 
 .content-container {
 	display: flex;
-	align-items: center;
 	justify-content: center;
+
 }
 
 .currentNav{
@@ -429,6 +437,8 @@
 .currentNav svg{
 	width: 112px;
 }
+
+
 
 </style>
 
