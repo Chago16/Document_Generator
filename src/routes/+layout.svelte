@@ -69,7 +69,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-
+<main>
 
 	<div class="wrapper-container">
 			<div class="header">
@@ -215,10 +215,10 @@
 					</nav>
 					</div> <!-- Nav Bar Contents Closing Div -->
 	</div> <!-- Pages Closing Div -->
-	</div>
+	
 
 
-<main>
+
 	<div class="content-container">
 		{@render children()}
 	</div>

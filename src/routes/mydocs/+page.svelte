@@ -5,14 +5,14 @@
 </script>
 
 <main>
-    
+
 </main>
 
-<div class="my-docu-contents">
+<section class="my-docu-contents">
     <h1>My Documents</h1>
 
 
-</div>
+</section>
 
 
 
@@ -20,7 +20,7 @@
 
 <style>
 
-.my-docu-contents {
+.section {
     display: flex;
 }
 
