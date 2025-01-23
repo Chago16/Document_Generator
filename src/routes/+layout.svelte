@@ -2,12 +2,20 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { activePage } from '../lib/store.js';
+	import { goto } from '$app/navigation';
 
 	let { children } = $props();
 	// svelte-ignore non_reactive_update
 	let navbarActive = true;  // Tracks navbar activeness
   	let inactivityTimer: number | undefined;      // Timer for inactivity
   	const inactivityTime = 2000; 
+
+	onMount(() => {
+		if (window.location.pathname !== '/') {
+		goto('/');
+		}
+	});
+
 
 	onMount(() => {
 		resetInactivityTimer();  // Start the inactivity timer when the component is mounted
@@ -61,7 +69,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<main>
+
 
 	<div class="wrapper-container">
 			<div class="header">
@@ -76,6 +84,7 @@
 				</div>
 				
 				<div class="account">
+					<!-- svelte-ignore a11y_consider_explicit_label -->
 					<button id="logout" class="logout">
 						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,7 +128,6 @@
 						<!-- svelte-ignore event_directive_deprecated -->
 						<a href="/" on:click={() => activePage.set('home')} class={$activePage === 'home' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="white" xmlns="http://www.w3.org/2000/svg">
 								<g clip-path="url(#clip0_104_187)">
@@ -207,7 +215,10 @@
 					</nav>
 					</div> <!-- Nav Bar Contents Closing Div -->
 	</div> <!-- Pages Closing Div -->
+	</div>
 
+
+<main>
 	<div class="content-container">
 		{@render children()}
 	</div>
@@ -411,7 +422,7 @@
 					/*Details: 230*/
 					/*Contact: 313*/
 					/*About Us: 380*/
-	left: 21px;
+	left: 22px; 
 	transition: top 0.3s ease;
 }
 

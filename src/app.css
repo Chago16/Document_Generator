@@ -32,18 +32,25 @@
 
 @font-face {
     font-family: 'Poppins Regular';
-    src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+    src: url('/fonts/POPPINS-REGULAR.ttf') format('truetype');
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Poppins Bold';
-    src: url('/fonts/Poppins-Bold.ttf') format('truetype');
+    src: url('/fonts/POPPINS-BOLD.TTF') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Poppins Bold Italic';
+    src: url('/fonts/POPPINS-BOLDITALIC.TTF') format('truetype');
     font-style: normal;
   }
 
 @font-face {
     font-family: 'Poppins Italics';
-    src: url('/fonts/Poppins-Italic.ttf') format('truetype');
+    src: url('/fonts/POPPINS-ITALIC.ttf') format('truetype');
     font-style: italic;
 }
+
