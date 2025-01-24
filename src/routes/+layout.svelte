@@ -98,8 +98,13 @@
 	</div>
 
 	<div class="wrapper-container">
+		
+			<div class="content-container">
+				{@render children()}
+			</div>	
 
 			<div class="navigation-container">
+				
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<!-- svelte-ignore event_directive_deprecated -->
 				<div id="navigation-bar" class:inactive={!navbarActive}> 
@@ -108,7 +113,7 @@
 						<path d="M-1.52588e-05 835L134 807.5C170.5 799 183 769.114 183 741.5V351H-1.52588e-05V835Z" fill="#023DFE"/>
 						</svg>
 				</div>
-
+				
 				<div id="currentNav" class="currentNav" style="--top-value: 
 				{$activePage === 'home' ? '-8px' :
 				$activePage === 'templates' ? '78px' :
@@ -212,67 +217,70 @@
 						</span>
 					</a></li>
 						</ul>
-					
 					</nav>
-		
-			</div> <!-- Nav Bar Contents Closing Div -->
-
-
-			<div class="content-container">
-				{@render children()}
-			</div>			
-	</div> <!-- Pages Closing Div -->
-	
+				</div> <!-- Nav Bar Contents Closing Div -->
+			</div><!-- Nav Bar Container Closing Div -->		
+	</div> <!-- Wrapper Container Closing Div -->
 </main>
 
 <style>
 
 main {
-	height: 100vh;
+	height: 95vh;
 }
 
 .wrapper-container {
 	margin-top: -15px;
-    height: 85%;
-    position: relative;
+    height: min-content;
 	display: flex;
 	flex-direction: column;
+	z-index: 1;
 }
 
 .header{
 	display: flex;
 	flex-direction: row;
+	position: fixed;
 	height: 15%;
+	width: 100%;
+	z-index: 2;
+	background: linear-gradient(to bottom, #ffffff, #ffffff,#ffffff,#ffffff00);
 }
 
 .header .logo {
 	width: 55px;
-	margin-top: 0px;
-	margin-left: 45px;
+	margin-top: 20px;
+	margin-left: 35px;
 }
 
 .header .create{
 	display: flex;
-	height: 127px;
-	min-width: 300px;
+	height: 139px;
+	min-width: 379px;
 	padding: 0;
-	transform: translateX(40px) translateY(-10px);
+	transform: translateX(5px) translateY(-15px); /* 5px down   -15px up*/
 	background: url("/assets/createNewBar.svg") no-repeat;
-	background-size: 300px ;
+	background-size: 379px ;
 	justify-content: center;
 	align-items: center;
+	transition: transform 0.3s ease;
+}
+
+.header .create:hover {
+  transform: translateX(5px) translateY(5px);
+  cursor: pointer;
 }
 
 .header .create .create-contents{
 	display: flex;
 	float: left;
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-left: -8px;
 }
 
 .create-contents p{
 	margin-left: 30px;
-	margin-top: 10px;
+	margin-top: 11px;
 	font-size: 22px;
 }
 
@@ -281,7 +289,7 @@ main {
 	display: flex;
 	float: right;
 	margin-top: 25px;
-	justify-content: flex-end;
+	margin-left: 600px;
 }
 
 .account button{
@@ -293,14 +301,20 @@ main {
 	width: 50px;
 	font-family: 'Telegraf UltraBold';
 	font-size: 14px;
-	background-color: rgb(255, 255, 255);
+	background-color: rgba(255, 255, 255, 0);
 	border: 0px;
 	border-radius: 7px;
+	transition: 0.3s ease;
 }
 
 .account button svg {
 	width: 25px;
     height: 25px;
+}
+
+.account button svg:hover path{
+  	stroke: #023DFE;
+	cursor: pointer;
 }
 
 .account img{
@@ -310,7 +324,7 @@ main {
 }
 
 .header .account .account-det {
-	width: 23%;
+	width: 250px;
 	margin-top: 15px;
 }
 
@@ -327,10 +341,11 @@ main {
 }
 
 .navigation-container {
+	position: fixed;
     padding: 0;
-	height: 80%;
-	transform: translateX(-12px) translateY(5px);
-	margin-bottom: 0;
+	height: min-content;
+	width: 133px;
+	transform: translateX(-12px) translateY(110px);
 }
 
 #navigation-bar {
@@ -416,20 +431,17 @@ main {
 	fill: black;
 }
 
-.content-container {
-	display: flex;
-	justify-content: center;
-
+.wrapper-container .content-container {
+	transform: translateY(120px);
+	margin-left: 9%;
+	width: 91%;
+	/*display: flex;
+	justify-content: center;*/
 }
 
 .currentNav{
 	position: absolute;
-	top: var(--top-value, 15px);		/*Home: 5*/
-					/*Templates: 65*/
-					/*MyDocs: 148*/
-					/*Details: 230*/
-					/*Contact: 313*/
-					/*About Us: 380*/
+	top: var(--top-value, 15px);
 	left: 22px; 
 	transition: top 0.3s ease;
 }
@@ -437,8 +449,6 @@ main {
 .currentNav svg{
 	width: 112px;
 }
-
-
 
 </style>
 
