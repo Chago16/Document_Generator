@@ -48,7 +48,7 @@
     font-style: normal;
   }
 
-  @font-face {
+@font-face {
     font-family: 'Poppins Bold Italic';
     src: url('/fonts/POPPINS-BOLDITALIC.TTF') format('truetype');
     font-style: normal;
@@ -60,12 +60,4 @@
     font-style: italic;
 }
 
-h1 {
-  font-family: 'Poppins Bold';
-  font-size: 26px;
-}
 
-p {
-  font-family: 'SourceSansPro Regular';
-  font-size: 14px;
-}
