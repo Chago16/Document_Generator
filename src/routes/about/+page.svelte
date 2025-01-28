@@ -1,6 +1,10 @@
 <script>
+    import '../../app.css';
+
 
 </script>
+
+
 <div class="about-wrapper">
     <div class="pictures">
         <div class="top">

@@ -241,16 +241,17 @@ main {
 	display: flex;
 	flex-direction: row;
 	position: fixed;
-	height: 15%;
+	height: 22%;
 	width: 100%;
+	background: linear-gradient(to bottom, #ffffff, #ffffff, #ffffff,#ffffff00);
 	z-index: 2;
-	background: linear-gradient(to bottom, #ffffff, #ffffff,#ffffff,#ffffff00);
+	margin-left: -9px;
 }
 
 .header .logo {
 	width: 55px;
-	margin-top: 20px;
-	margin-left: 35px;
+	margin-top: -30px;
+	margin-left: 40px;
 }
 
 .header .create{
@@ -346,6 +347,7 @@ main {
 	height: min-content;
 	width: 133px;
 	transform: translateX(-12px) translateY(110px);
+	z-index: 3;
 }
 
 #navigation-bar {
@@ -375,9 +377,13 @@ main {
 	fill: #023DFE;
 }
 
+.content-container {
+	margin: 25px;
+}
+
 .navigation-contents {
 	top: 0;
-	z-index: 1;
+	z-index: 2;
     position: absolute; /* Positions content on top of navbar */
 	margin-left: 35px;
 	margin-top: 65px;
@@ -449,6 +455,7 @@ main {
 .currentNav svg{
 	width: 112px;
 }
+
 
 </style>
 

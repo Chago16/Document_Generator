@@ -4,15 +4,12 @@
 
 </script>
 
-<main>
 
-</main>
-
-<section class="my-docu-contents">
+<div class="mydoc-contents">
     <h1>My Documents</h1>
 
 
-</section>
+</div>
 
 
 
@@ -20,15 +17,9 @@
 
 <style>
 
-section {
+.mydoc-contents {
     display: flex;
 }
-
-h1 {
-    font-family: 'Poppins Bold';
-    font-size: 26px;
-}
-
 
 
 
