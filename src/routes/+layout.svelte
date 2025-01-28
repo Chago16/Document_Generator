@@ -378,7 +378,7 @@ main {
 }
 
 .content-container {
-	margin: 25px;
+	margin: 25px 0 0 0;
 }
 
 .navigation-contents {
