@@ -360,12 +360,12 @@ main {
 }
 
 .inactive-item p {
-	color: black;
+	color: #1B1B1B;
 	transition: color 0.5s ease;
 }
 
 .inactive-item .icon {
-	fill: black;
+	fill: #1B1B1B;
 	transition: fill 0.5s ease;
 }
 
@@ -430,11 +430,11 @@ main {
 }
 
 .navigation-item:hover p {
-	color: black;
+	color: #1B1B1B;
 }
 
 .navigation-item:hover .icon {
-	fill: black;
+	fill: #1B1B1B;
 }
 
 .wrapper-container .content-container {

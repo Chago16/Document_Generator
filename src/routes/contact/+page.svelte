@@ -69,11 +69,13 @@
     font-family: 'Poppins Bold';
     font-size: 50px;
     line-height: 1.2;
+    color: #1B1B1B;
 }
 
 p {
     font-family: 'SourceSansPro Regular';
     font-size: 20px;
+    color: #1B1B1B;
 }
 
 .form-side input {
@@ -82,8 +84,8 @@ p {
     margin: 10px;
     height: 30px;
     padding-left: 15px;
-    border-radius: 5px;
-    border: 1px solid #023DFE;
+    border-radius: 7px;
+    border: 3px solid #023DFE;
     font-family: 'SourceSansPro Regular';
 }
 
@@ -92,9 +94,9 @@ p {
     font-size: 18px;
     width: 83%;
     margin: 10px;
-    height: 35px;
-    border-radius: 5px;
-    border: 1px solid #023DFE;
+    height: 38px;
+    border-radius: 7px;
+    border: 3px solid #023DFE;
     font-family: 'SourceSansPro Regular';
 }
 
@@ -104,8 +106,8 @@ p {
     width: 80%;
     margin: 10px;
     height: 120px;
-    border-radius: 5px;
-    border: 1px solid #023DFE;
+    border-radius: 7px;
+    border: 3px solid #023DFE;
     font-family: 'SourceSansPro Regular';
     resize: none;
 }
@@ -132,7 +134,7 @@ p {
 }
 
 .full-name input {
-    width: 37%;
+    width: 36.75%;
 }
 
 </style>

@@ -9,6 +9,7 @@
     font-family: 'Telegraf Regular';
     src: url('/fonts/TelegrafRegular_272984568a25d8528fe2de8b20b29011.otf') format('opentype');
     font-style: normal;
+    
 }
 
 @font-face {
@@ -60,4 +61,8 @@
     font-style: italic;
 }
 
-
+@font-face {
+  font-family: 'Poppins Semibold';
+  src: url('/fonts/POPPINS-SEMIBOLD.TTF') format('truetype');
+  font-style: italic;
+}
