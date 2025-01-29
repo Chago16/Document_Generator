@@ -50,6 +50,7 @@
 	"dependencies": {
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
+		"quill": "^2.0.3",
 		"svelte-routing": "^2.13.0"
 	}
 }
