@@ -83,32 +83,35 @@
         <br>
         <h3 class="headers-h3">Sender Details:</h3>
         <div class="sender-wrapper">
-            <div class="sender-input-text">
-                <div class="sender-input">
-                    <p>Sender Name:</p>
-                    <input type="text" name="senderName" id="" required>
-                </div>
-                <div class="sender-input">
-                    <p>Position:</p>
-                    <input type="text" name="senderPosition" id="" required>
-                </div>
-                <div class="sender-input">
-                    <p>Email Address:</p>
-                    <input type="email" name="senderEmailAddress" id="" required>
-                </div>
-                <div class="sender-input">
-                    <p>Phone Number:</p>
-                    <input type="email" name="senderPhoneNumber" id="" required>
-                </div>
+            <div class="sender-input">
+                <p>Sender Name:</p>
+                <input type="text" name="senderName" id="" required>
             </div>
-            <div class="sender-input-image">
-                <p>Signature Upload</p>
-                <button type="button" class="upload">Upload</button>
-                <button type="reset" class="remove">Remove</button>
+            <div class="sender-input">
+                <p>Position:</p>
+                <input type="text" name="senderPosition" id="" required>
             </div>
-            <div class="sender-input-image-preview">
-                <div class="image-container">
-                    <img src="/assets/LogoSample.png" alt="logo">
+            <div class="sender-input-image-wrap">
+                <div class="sender-input-image">
+                    <p>Signature Upload</p>
+                    <button type="button" class="upload">Upload</button>
+                    <button type="reset" class="remove">Remove</button>
+                </div>
+                
+                <div class="sender-input-image-preview">
+                    <div class="image-container">
+                        <img src="/assets/LogoSample.png" alt="logo">
+                    </div>
+                </div>
+                <div class="sender-input-image">
+                    <p>Head Shot Picture Upload</p>
+                    <button type="button" class="upload">Upload</button>
+                    <button type="reset" class="remove">Remove</button>
+                </div>
+                <div class="sender-input-image-preview">
+                    <div class="image-container">
+                        <img src="/assets/LogoSample.png" alt="logo">
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,7 +201,7 @@
         margin: 0px;
         margin-bottom: 0px;
         padding-right: 70px;
-        border-right: 1px solid black;
+        border-right: 1px solid #1B1B1B;
     }
     .headers-h3{
         margin: 0px;
@@ -261,7 +264,7 @@
     }
 
     .custom-input{
-        height: 60px;
+        height: 30px;
         display: flex;
         flex-direction: row;
         margin-left: 20px;
@@ -275,7 +278,7 @@
 
     .custom-input textarea{
         width:100%;
-        height: 50px;
+        height: 20px;
         border: 1px solid #023DFE;
         border-radius:10px;
         resize: none;
@@ -283,18 +286,13 @@
 
     .sender-wrapper{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: start;
-        justify-content: space-between;
-    }
-
-    .sender-input-text{
-        width: 50%;
     }
 
     .sender-input{
+        width: 97%;
         height: 35px;
-        width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -302,7 +300,14 @@
     }
 
     .sender-input p{
-        width: 165px;
+        width: 135px;
+    }
+
+    .sender-input-image-wrap{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     .sender-input-image{
@@ -323,11 +328,27 @@
     }
 
     .sender-input-image-preview {
-        height: 110px;
-        width: 25%;
+        height: 73px;
+        width: 50%;
         padding: 16px;
         background-color: #D9D9D9;
+        margin-top: 10px;
         border-radius: 10px;
+        margin-left: 20px;
+    }
+
+    .sender-input-image-preview  .image-container{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sender-input-image-preview  img{
+        height: 65px;
+        width: min-content;
+
+        
+        justify-content: center;
+        align-items: center;
     }
 
 </style>

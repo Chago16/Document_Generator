@@ -1,19 +1,81 @@
 <script>
     import '../../app.css';
 
+    let showStatus = false;
+    let statusData = {
+        top: "280px",
+        left: "80px",
+        arrowLeft: "120px",
+        bottom: "259px",
+        arrowBorder: "transparent transparent #131313 transparent", // Default shape
+        name: "",
+        role: "",
+        skills: {
+            "UI/UX Design": { width: "50%", className: "ui-ux" },
+            "Front-end Dev": { width: "50%", className: "frontend" },
+            "Back-end Dev": { width: "50%", className: "backend" },
+            "Communication": { width: "50%", className: "communication" }
+        }
+    };
 
+    function displayStatus(
+        name,
+        role,
+        skills,
+        top = "280px",
+        left = "80px",
+        arrowLeft = "120px",
+        bottom = "259px",
+        arrowBorder = "transparent transparent #131313 transparent" // Default arrow shape
+    ) {
+        statusData = { name, role, skills, top, left, arrowLeft, bottom, arrowBorder };
+        showStatus = true;
+    }
+
+    function hideStatus() {
+        showStatus = false;
+    }
 </script>
 
 
 <div class="about-wrapper">
     <div class="pictures">
         <div class="top">
-            <img class="images aj" src="/assets/AJPic.png" alt="">
-            <img class="images lui" src="/assets/LuiPic.png" alt="">
+            <img class="images aj" src="/assets/AJPic.png" alt=""
+                onmouseover={() => displayStatus("Anthony James Esteban", "[Role]", {
+                    "UI/UX Design": { width: "50%", className: "ui-ux" },
+                    "Front-end Dev": { width: "50%", className: "frontend" },
+                    "Back-end Dev": { width: "50%", className: "backend" },
+                    "Communication": { width: "50%", className: "communication" }
+                })}
+                onmouseleave={hideStatus}>
+
+            <img class="images lui" src="/assets/LuiPic.png" alt=""
+                onmouseover={() => displayStatus("Luigi Lagman", "[Role]", {
+                    "UI/UX Design": { width: "85%", className: "ui-ux" },
+                    "Front-end Dev": { width: "70%", className: "frontend" },
+                    "Back-end Dev": { width: "30%", className: "backend" },
+                    "Communication": { width: "40%", className: "communication" }
+                }, "280px", "80px", "320px")}
+                onmouseleave={hideStatus}>
         </div>
         <div class="bottom">
-            <img class="images ches" src="/assets/ChesPic.png" alt="">
-            <img class="images gaby" src="/assets/GabyPic.png" alt="">
+            <img class="images ches" src="/assets/ChesPic.png" alt=""
+                onmouseover={() => displayStatus("Marc Chester Perez", "[Role]", {
+                    "UI/UX Design": { width: "50%", className: "ui-ux" },
+                    "Front-end Dev": { width: "50%", className: "frontend" },
+                    "Back-end Dev": { width: "50%", className: "backend" },
+                    "Communication": { width: "50%", className: "communication" }
+                }, "20px", "80px", "80px", "-59px", "#131313 transparent transparent  transparent")}
+                onmouseleave={hideStatus}>
+            <img class="images gaby" src="/assets/GabyPic.png" alt=""
+                onmouseover={() => displayStatus("Gabriel Ian Santos", "[Role]", {
+                    "UI/UX Design": { width: "50%", className: "ui-ux" },
+                    "Front-end Dev": { width: "50%", className: "frontend" },
+                    "Back-end Dev": { width: "50%", className: "backend" },
+                    "Communication": { width: "50%", className: "communication" }
+                }, "20px", "80px", "320px", "-59px", "#131313 transparent transparent  transparent")}
+                onmouseleave={hideStatus}>
         </div>
     </div>
 
@@ -30,45 +92,27 @@
     <div class="blur circle-2 "></div>
     <div class="blur circle-3 "></div>
 
-    <div class="status-window">
-        <h1>Anthony James Esteban</h1>
-        <h3>[Role]</h3>
+    {#if showStatus}
+        <div class="status-window" style="top: {statusData.top}; left: {statusData.left};">
+            <h1>{statusData.name}</h1>
+            <h3>{statusData.role}</h3>
 
-        <div class="skillRate">
-            <div class="bar">
-                <div class="skill">
-                    <p>UI/UX Design</p>
-                </div>
-                <div class="progressBar">
-                    <span class="ui-ux"></span>
-                </div>
+            <div class="skillRate">
+                {#each Object.entries(statusData.skills) as [skill, { width, className }]}
+                    <div class="bar">
+                        <div class="skill">
+                            <p>{skill}</p>
+                        </div>
+                        <div class="progressBar">
+                            <span class={className} style="width: {width};"></span>
+                        </div>
+                    </div>
+                {/each}
             </div>
-            <div class="bar">
-                <div class="skill">
-                    <p>Front-end Dev</p>
-                </div>
-                <div class="progressBar">
-                    <span class="frontend"></span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="skill">
-                    <p>Back-end Dev</p>
-                </div>
-                <div class="progressBar">
-                    <span class="backend"></span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="skill">
-                    <p>Communication</p>
-                </div>
-                <div class="progressBar">
-                    <span class="communication"></span>
-                </div>
-            </div>
+
+            <div class="status-window-arrow" style="bottom: {statusData.bottom}; left: {statusData.arrowLeft}; border-color: {statusData.arrowBorder};"></div>
         </div>
-    </div>
+    {/if}
 
 </div>
 
@@ -184,32 +228,33 @@
     }
 
 
-    .status-window{
+    .status-window {
+        display: block;
         width: 400px;
         position: absolute;
         background: #131313;
         padding: 30px;
         border-radius: 20px;
-        top:280px;
-        left: 80px;
-        color:#D9D9D9;
+        color: #D9D9D9;
     }
 
-    .status-window::after {
+    .status-window-arrow {
         content: "";
         position: absolute;
-        bottom: 259px; /* Position it below the div */
-        left: 80px; /* Position it on the left side of the div */
         border-width: 30px;
         border-style: solid;
-        border-color: transparent transparent  #131313  transparent; /* down left up right */
+        border-color: transparent transparent #131313 transparent;
     }
 
-    .skillRate{
+    .skillRate {
         width: 100%;
     }
 
-    .bar{
+    .skillRate p{
+        width: 150px;
+    }
+
+    .bar {
         height: 30px;
         display: flex;
         align-items: center;
@@ -217,54 +262,45 @@
         margin-left: 30px;
     }
 
-    .skill{
+    .skill {
         width: 110px;
     }
 
-    .skill p{
-        width: 100px;
-        font-weight: 600;
-    }
-
-    .progressBar{
+    .progressBar {
         width: 100%;
         height: 20px;
-        margin-top: 0px;
         background-color: #ffffff;
         border: 1px solid black;
         border-radius: 15px;
         position: relative;
     }
 
-    .ui-ux{
+    /* Skill Bar Colors */
+    .ui-ux {
         position: absolute;
         height: 100%;
         border-radius: 15px;
-        width: 50%;
         background-color: #023DFE;
     }
 
-    .frontend{
+    .frontend {
         position: absolute;
         height: 100%;
         border-radius: 15px;
-        width: 50%;
         background-color: #F8422F;
     }
 
-    .backend{
+    .backend {
         position: absolute;
         height: 100%;
         border-radius: 15px;
-        width: 50%;
         background-color: #707070;
     }
 
-    .communication{
+    .communication {
         position: absolute;
         height: 100%;
         border-radius: 15px;
-        width: 50%;
         background-color: #A0EA00;
     }
 </style>
