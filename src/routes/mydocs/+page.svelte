@@ -150,10 +150,14 @@
 .mydoc-contents {
     display: flex;
     flex-direction: column;
+    margin-left: 30px;
 }
 
 .title-header {
     margin-bottom: 5px;
+    font-family: 'Poppins Bold';
+    font-size: 24px;
+    color: #1B1B1B;
 }
 
 .labels {
@@ -165,12 +169,14 @@
     font-family: 'Poppins Bold';
     font-size: 18px;
     margin: 0 0 8px 10px;
+    color: #1B1B1B;
 }
 
 .label2 {
     font-family: 'Poppins Bold';
     font-size: 18px;
     margin: 0 250px 8px auto;
+    color: #1B1B1B;
 }
 
 .item-container {
@@ -184,12 +190,12 @@
 .line {
     width: 95%; 
     margin: 13px 0px 0px 0px;
-    border: 1px solid black;
+    border: 1px solid #1B1B1B;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: #1B1B1B;
 }
 
 .items {
@@ -212,6 +218,7 @@ a {
     font-family: 'Poppins Bold';
     font-size: 18px;
     margin: 10px 0 0 0;
+    color: #1B1B1B;
 }
 
 .docu-type {
@@ -219,12 +226,14 @@ a {
     font-size: 16px;
     font-weight: 300;
     margin: 2px 0 0 0;
+    color: #1B1B1B;
 }
 
 .date {
     font-family: 'Telegraf Regular';
     font-size: 18px;
     font-weight: 300;
+    color: #1B1B1B;
 }
 
 .item-container::-webkit-scrollbar {
