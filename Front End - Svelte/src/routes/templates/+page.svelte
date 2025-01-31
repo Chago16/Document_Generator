@@ -124,6 +124,9 @@
 
 
 <style>
+    *{
+        color: #1b1b1b;
+    }
     h1 {
         font-family: 'Poppins Bold';
         font-size: 26px;
@@ -245,7 +248,7 @@
     .details-logo{
         padding-right: 50px;
         padding-bottom: 20px;
-        border-right: 1px solid black;
+        border-right: 1px solid #1b1b1b;
     }
 
     .details-logo h3{

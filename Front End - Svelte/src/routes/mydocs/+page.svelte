@@ -188,9 +188,9 @@
 }
 
 .line {
-    width: 95%; 
+    width: 97%; 
     margin: 13px 0px 0px 0px;
-    border: 1px solid #1B1B1B;
+    border-top: 1px solid #1B1B1B;
 }
 
 a {
@@ -200,6 +200,7 @@ a {
 
 .items {
     text-align: left;
+    box-sizing: border-box;
 }
 
 .within-item {
