@@ -89,7 +89,7 @@
 
                 <br><br>
                 <h3>Content</h3>
-                <div class="content-input">
+                <div class="content-input-select">
                     <p>Tone:</p>
                     <select id="tone" name="tone">
                         <option value="Formal">Formal</option>
@@ -104,11 +104,11 @@
                         <option value="Empathic">Empathic</option>
                     </select>
                 </div>
-                <div class="content-input">
+                <div class="content-input-textarea">
                     <p>Details Prompt<br>to AI:</p>
                     <textarea name="detailsPrompt" id="detailsPrompt"></textarea>
                 </div>
-                <div class="content-input">
+                <div class="content-input-textarea">
                     <p>Additional Details:</p>
                     <textarea name="additionalDetails" id="additionalDetails"></textarea>
                 </div>
@@ -331,15 +331,29 @@
         width: 140px;
     }
 
-    .content-input {
+    .content-input-select {
         margin-left: 20px;
         width: 97%;
+        height: 28px;
         display: flex;
         flex-direction: row;
         align-items: center;
     }
 
-    .content-input p{
+    .content-input-select p{
+        width: 140px;
+    }
+
+    .content-input-textarea {
+        margin-left: 20px;
+        width: 97%;
+        height: 62px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .content-input-textarea p{
         width: 140px;
     }
 </style>

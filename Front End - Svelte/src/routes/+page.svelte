@@ -116,22 +116,27 @@
 }
 
 .item-div {
+    width: 97%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .image-div-container {
     margin-top: 15px;
     border-radius: 5px;
-    background-image: url(assets/wp-banner.png);
+    background-image: url('assets/wp-banner1.png');
     background-size: cover;
     background-position: center;
-    width: 95%;
+    width: 97%;
     height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.image-div-container h1{
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* X, Y, blur, color */
 }
 
 .your-proj {
@@ -148,7 +153,6 @@
 }
 
 .item-container {
-    margin: 0 20px 0 0;
     max-width: 230px;
     width: 100%;
 }
