@@ -89,8 +89,6 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec metus nibh. Vivamus sapien felis, fermentum id leo nec, viverra laoreet ipsum. Donec luctus quis arcu non dignissim. Vivamus posuere arcu id est tempor fringilla. Duis ac magna vel ex molestie finibus ac nec mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dictum purus, nec imperdiet felis. Sed quis ipsum sed est posuere mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
             <br><br>
             Aenean in lorem eu dui fringilla tempor. Nulla aliquet libero mauris, sed pellentesque elit bibendum sollicitudin. Maecenas in congue urna. Maecenas commodo felis turpis, a ornare nisl faucibus a. Ut ac lobortis mauris. Donec tristique sit amet orci vel suscipit. Proin risus enim, commodo sed ex ut, pharetra sodales est. Vestibulum gravida lobortis libero, vitae interdum leo fringilla nec.
-            <br><br>
-            Quisque turpis nisl, iaculis id diam id, facilisis feugiat lorem. Curabitur tempus rhoncus vestibulum. Mauris non consectetur justo. Quisque rutrum posuere massa, nec viverra velit aliquam ut. Fusce placerat at metus sit amet hendrerit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque a nulla tortor. Sed tempor rhoncus mollis. Curabitur malesuada sapien a ante tempor elementum sed id nibh. Mauris accumsan, odio sit amet mollis semper, lorem ante consectetur tellus, ultricies eleifend orci sem vel nulla. Nunc fermentum erat a dolor maximus auctor. Cras interdum molestie tellus, in ultrices velit commodo quis. Sed et risus at purus dapibus egestas. Mauris accumsan cursus sem eget semper. Nulla ac lectus ac turpis iaculis tincidunt sed quis erat.</p>
     </div>
 
     <div class="blur circle-1 "></div>
@@ -127,12 +125,14 @@
         width: 100%;
         display: flex;
         float: right;
+        color: #1b1b1b;
     }
     .pictures {
         margin-top: 20px;
         margin-left: 50px;
-        max-width: 525px;
+        min-width: 525px;
         height: 525px;
+        z-index: 3;
     }
 
     .images {
@@ -175,16 +175,17 @@
     }
 
     .text {
-        width: 650px;
+        width: 100%;
         margin-left: 100px;
         margin-top: 40px;
         z-index: 10; /* Ensure the text is on top */
         position: relative; /* Position relative to its normal flow */
+        margin-right: 50px;
     }
 
     h1 {
         font-family: 'Poppins Bold';
-        font-size: 26px;
+        font-size: 50px;
         margin-top: 0px;
         margin-bottom: 0px;
     }
@@ -197,7 +198,7 @@
 
     p {
         font-family: 'SourceSansPro Regular';
-        font-size: 14px;
+        font-size: 20px;
     }
 
     .blur {
@@ -241,6 +242,15 @@
         padding: 30px;
         border-radius: 20px;
         color: #D9D9D9;
+        z-index: 5;
+    }
+
+    .status-window h1{
+        font-size: 26px;
+    }
+
+    .status-window p{
+        font-size: 14px;
     }
 
     .status-window-arrow {

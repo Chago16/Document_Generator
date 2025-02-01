@@ -16,19 +16,6 @@
 	// 	}
 	// });
 
-	/*onMount(() => {
-		if (!sessionStorage.getItem("reloaded")) {
-			sessionStorage.setItem("reloaded", "true");
-			window.location.reload();
-		}
-
-		// Reload on back/forward navigation but not on internal SvelteKit navigation
-		window.addEventListener("popstate", () => {
-			sessionStorage.removeItem("reloaded"); // Reset flag for back/forward navigation
-			window.location.reload();
-		});
-	});*/
-
 	onMount(() => {
 		resetInactivityTimer();  // Start the inactivity timer when the component is mounted
 	});
@@ -464,10 +451,8 @@ main {
 
 .wrapper-container .content-container {
 	transform: translateY(120px);
-	margin-left: 9%;
+	margin-left: 133px;
 	width: 91%;
-	/*display: flex;
-	justify-content: center;*/
 }
 
 .currentNav{

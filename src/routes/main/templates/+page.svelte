@@ -1,7 +1,9 @@
 <script>
     import '../../../app.css';
 
-
+    function navigateToEditing() {
+        window.location.href = "/main/templates/editing";
+    }
 </script>
 
 <div class="templates-contents">
@@ -116,7 +118,7 @@
         </div>
         
         <br>
-        <button><a href="/templates/editing">Generate Document</a></button>
+        <button on:click={navigateToEditing}>Generate Document</button>
     </div>
 </div>
 
@@ -140,10 +142,6 @@
     p {
         font-family: 'SourceSansPro Regular';
         font-size: 14px;
-    }
-
-    a{
-        text-decoration: none;
     }
 
     img{
@@ -186,7 +184,7 @@
     }
 
     button{
-        width: 630px;
+        width: 100%;
         height: 50px;
         font-family: 'SourceSansPro Bold';
         font-size: 20px;
@@ -200,10 +198,17 @@
         margin-left: auto; 
     }
 
+    button:hover{
+        color: #A0EA00;
+        background-color: #1b1b1b;
+        transition: all 0.3s ease;
+    }
+
     .templates-contents{
         display: flex;
         flex-direction: row;
         margin-left: 30px;
+        padding-right: 50px;
     }
 
     .past-docus{

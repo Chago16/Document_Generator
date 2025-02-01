@@ -163,6 +163,7 @@
 .labels {
     display: flex;
     margin: 0 0 -10px 5px;
+    padding-right: 50px;
 }
 
 .label {
@@ -184,11 +185,11 @@
     max-height: 450px; /* Set a maximum height for the container */
     overflow-y: auto;  /* Enable vertical scrolling */
     overflow-x: hidden; /* Disable horizontal scrolling */
-    padding-right: 10px; /* Optional: Add padding for scrollbar spacing */
+    padding-right: 50px; /* Optional: Add padding for scrollbar spacing */
 }
 
 .line {
-    width: 97%; 
+    width: 100%; 
     margin: 13px 0px 0px 0px;
     border-top: 1px solid #1B1B1B;
 }
