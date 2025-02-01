@@ -16,6 +16,18 @@
 	// 	}
 	// });
 
+	/*onMount(() => {
+		if (!sessionStorage.getItem("reloaded")) {
+			sessionStorage.setItem("reloaded", "true");
+			window.location.reload();
+		}
+
+		// Reload on back/forward navigation but not on internal SvelteKit navigation
+		window.addEventListener("popstate", () => {
+			sessionStorage.removeItem("reloaded"); // Reset flag for back/forward navigation
+			window.location.reload();
+		});
+	});*/
 
 	onMount(() => {
 		resetInactivityTimer();  // Start the inactivity timer when the component is mounted
@@ -60,7 +72,6 @@
 		resetInactivityTimer();
 	}
 
-	
 
 </script>
   
@@ -73,26 +84,28 @@
 
 	<div class="header">
 		<img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
-		<div class="create">
-			<div class="create-contents">
-				<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M23 15.3333V30.6666M15.3333 23H30.6667M42.1667 23C42.1667 33.5854 33.5855 42.1666 23 42.1666C12.4146 42.1666 3.83334 33.5854 3.83334 23C3.83334 12.4145 12.4146 3.83331 23 3.83331C33.5855 3.83331 42.1667 12.4145 42.1667 23Z" stroke="#EEF2F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				<p class="nav-label">Create New</p>
+		<div class="create-account">
+			<div class="create">
+				<div class="create-contents">
+					<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M23 15.3333V30.6666M15.3333 23H30.6667M42.1667 23C42.1667 33.5854 33.5855 42.1666 23 42.1666C12.4146 42.1666 3.83334 33.5854 3.83334 23C3.83334 12.4145 12.4146 3.83331 23 3.83331C33.5855 3.83331 42.1667 12.4145 42.1667 23Z" stroke="#EEF2F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					<p class="nav-label">Create New</p>
+				</div>
 			</div>
-		</div>
-		
-		<div class="account">
-			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button id="logout" class="logout">
-				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</button>
-			<img src="/icons/userIcon.svg" alt="" width="43" height="43">
-			<div id="account-det" class="account-det">
-				<h3 id="account-name">Account Name</h3>
-				<p id="account-email">account@email.com</p>
+			
+			<div class="account">
+				<!-- svelte-ignore a11y_consider_explicit_label -->
+				<button id="logout" class="logout">
+					<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				<img src="/icons/userIcon.svg" alt="" width="43" height="43">
+				<div id="account-det" class="account-det">
+					<h3 id="account-name">Account Name</h3>
+					<p id="account-email">account@email.com</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -225,8 +238,13 @@
 
 <style>
 
+:global(body) {
+    margin: 0px;
+}
+
 main {
 	height: 95vh;
+	margin: 0px;
 }
 
 .wrapper-container {
@@ -237,34 +255,42 @@ main {
 	z-index: 1;
 }
 
-.header{
-	display: flex;
-	flex-direction: row;
-	position: fixed;
-	height: 22%;
-	width: 100%;
-	background: linear-gradient(to bottom, #ffffff, #ffffff, #ffffff,#ffffff00);
-	z-index: 2;
-	margin-left: -9px;
+.header {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  height: 22%;
+  width: 100%;
+  background: linear-gradient(to bottom, #ffffff, #ffffff, #ffffff, #ffffff00);
+  z-index: 2;
+  margin-left: -9px;
+  margin-top: 5px;
 }
 
 .header .logo {
-	width: 55px;
-	margin-top: -30px;
-	margin-left: 40px;
+  width: 55px;
+  margin-top: -30px;
+  margin-left: 40px;
 }
 
-.header .create{
-	display: flex;
-	height: 139px;
-	min-width: 379px;
-	padding: 0;
-	transform: translateX(5px) translateY(-15px); /* 5px down   -15px up*/
-	background: url("/assets/createNewBar.svg") no-repeat;
-	background-size: 379px ;
-	justify-content: center;
-	align-items: center;
-	transition: transform 0.3s ease;
+.header .create-account {
+  width: 91%;
+  display: flex;
+  justify-content: space-between; /* Ensures items are on opposite sides */
+  padding-right: 20px;
+}
+
+.header .create {
+  display: flex;
+  height: 139px;
+  min-width: 379px;
+  padding: 0;
+  transform: translateX(5px) translateY(-15px);
+  background: url("/assets/createNewBar.svg") no-repeat;
+  background-size: 379px;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .header .create:hover {
@@ -272,25 +298,23 @@ main {
   cursor: pointer;
 }
 
-.header .create .create-contents{
-	display: flex;
-	float: left;
-	margin-top: 30px;
-	margin-left: -8px;
+.header .create .create-contents {
+  display: flex;
+  margin-top: 30px;
+  margin-left: -8px;
 }
 
-.create-contents p{
-	margin-left: 30px;
-	margin-top: 11px;
-	font-size: 22px;
+.create-contents p {
+  margin-left: 30px;
+  margin-top: 11px;
+  font-size: 22px;
 }
 
 .header .account {
-	width: 100%;
-	display: flex;
-	float: right;
-	margin-top: 25px;
-	margin-left: 600px;
+  display: flex; /* Flexbox for the account section */
+  justify-content: flex-end; /* Ensures it aligns to the right */
+  align-items: center; /* Vertically centers items */
+  margin-top: -45px;
 }
 
 .account button{
@@ -325,7 +349,7 @@ main {
 }
 
 .header .account .account-det {
-	width: 250px;
+	width: min-content;
 	margin-top: 15px;
 }
 
@@ -348,6 +372,7 @@ main {
 	width: 133px;
 	transform: translateX(-12px) translateY(110px);
 	z-index: 3;
+	margin-left: 9px;
 }
 
 #navigation-bar {
