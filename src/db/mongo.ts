@@ -1,17 +1,11 @@
-import mongoose from 'mongoose';
+import {MongoClient} from 'mongodb';
 import { MONGO_URL } from '$env/static/private';
 
-export async function start_mongo(): Promise<typeof mongoose> {
-    console.log('Starting MongoDB with Mongoose...');
-    try {
-        await mongoose.connect(MONGO_URL);
-        console.log('MongoDB connected successfully!');
-        return mongoose;
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-        // Instead of process.exit, we throw the error
-        throw error;
-    }
+const client = new MongoClient(MONGO_URL)
+
+export function start_mongo() : Promise<MongoClient> {
+    console.log('Starting Mongo...');
+    return client.connect();
 }
 
-export default mongoose;
+export default client.db()
