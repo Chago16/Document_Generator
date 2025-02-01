@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto } from '$app/navigation';
 
   let showRegister = false;
@@ -7,15 +7,18 @@
     goto('/main');
   }
 
-  function showRegisterScreen(event) {
+
+  function showRegisterScreen(event: { preventDefault: () => void; }) {
     event.preventDefault();
     showRegister = true;
   }
 
-  function hideRegisterScreen(event) {
+
+  function hideRegisterScreen(event: { preventDefault: () => void; }) {
     event.preventDefault();
     showRegister = false;
   }
+
 </script>
 
   <div class="banner-login-wrapper">
@@ -79,6 +82,8 @@
       </div>
       {#if showRegister}
       <div class="register-screen">
+        <form>
+
           <div class="register">
               <div class="header">
                   <div class="register-header-text">
@@ -106,7 +111,7 @@
                   </div>
   
                   <div class="register-input-text">
-                      <button>Sign up</button>
+                      <button type="submit">Sign up</button>
                   </div>
               </div>
       
@@ -115,7 +120,9 @@
                     <h3>Already have an account? <a href="#" on:click={hideRegisterScreen}>Log in</a></h3>
                   </div>
               </div>
-          </div>
+        </div>
+
+        </form>
       </div> 
       {/if}  
   </div>
