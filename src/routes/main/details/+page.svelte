@@ -146,7 +146,13 @@
         border: 2px solid #023DFE;
         color: #023DFE;
         border-radius: 5px;
-        background-color: white;
+        background-color: #EEF2F8;
+    }
+
+    .remove:hover {
+        color: #1b1b1b;
+        border-color:#1B1B1B;
+        transition: all 0.5s ease;
     }
 
     .upload{
@@ -155,6 +161,12 @@
         color: white;
         border-radius: 5px;
         background-color: #023DFE;
+    }
+
+    .upload:hover {
+        border-color: #1B1B1B;
+        background-color:#1B1B1B;
+        transition: all 0.5s ease;
     }
 
     input{
@@ -175,7 +187,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 0px 55px 0px 30px;
+        padding: 0px 50px 0px 30px;
     }
 
     .header-save button{
@@ -188,9 +200,15 @@
         background-color: #A0EA00;
         cursor: pointer;
     }
+
+    .header-save button:hover{
+        background-color: #1b1b1b;
+        color: #A0EA00;
+        transition: all 0.5s ease;
+    }
     
     .details-wrapper{
-        padding: 0px 55px 0px 30px;
+        padding: 0px 50px 0px 30px;
         display: flex;
         flex-direction: row;
     }
@@ -282,16 +300,15 @@
         border: 1px solid #023DFE;
         border-radius:10px;
         resize: none;
+        padding-left: 10px;
     }
 
     .sender-wrapper{
         display: flex;
         flex-direction: column;
-        align-items: start;
     }
 
     .sender-input{
-        width: 97%;
         height: 35px;
         display: flex;
         flex-direction: row;

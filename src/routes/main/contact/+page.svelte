@@ -26,18 +26,20 @@
                 <input type="text" placeholder="First Name" id="firstName">
                 <input type="text" placeholder="Last Name" id="lastName">
             </div>
-            <input type="email" placeholder="Email" id="email">
-            <input type="number" placeholder="Phone Number (Optional)" id="phoneNumber">
-            <select id="subject" name="subject">
-                <option value="question">Question</option>
-                <option value="feedback">Feedback</option>
-                <option value="support">Support</option>
-                <option value="suggestion">Suggestion</option>
-              </select>
-              <input type="text" placeholder="Subject Title" id="subjectTitle">
-              <textarea placeholder="Your Message" name="message" id="message"></textarea>
-
-            <button type="submit">Submit</button>
+            <div class="form-inputs">
+                <input type="email" placeholder="Email" id="email">
+                <input type="number" placeholder="Phone Number (Optional)" id="phoneNumber">
+                <select id="subject" name="subject">
+                    <option value="question">Question</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="support">Support</option>
+                    <option value="suggestion">Suggestion</option>
+                </select>
+                <input type="text" placeholder="Subject Title" id="subjectTitle">
+                <textarea placeholder="Your Message" name="message" id="message"></textarea>
+                <button type="submit">Submit</button>
+            </div>
+            
         </form>
     </div>
 
@@ -52,6 +54,7 @@
     display: flex;
     flex-direction: row;
     margin-left: 30px;
+    padding-right: 50px;
 }
 
 .message-side {
@@ -60,9 +63,9 @@
 
 .form-side {
     flex: 1;
-    text-align: center;
     margin-top: 30px;
     font-family: 'SourceSansPro Regular';
+    margin-left: 80px;
 }
 
 .welcome-text {
@@ -79,11 +82,10 @@ p {
 }
 
 .form-side input {
-    font-size: 18px;
-    width: 80%;
-    margin: 10px;
-    height: 30px;
     padding-left: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+    height: 30px;
     border-radius: 7px;
     border: 3px solid #023DFE;
     font-family: 'SourceSansPro Regular';
@@ -92,8 +94,7 @@ p {
 .form-side select {
     padding-left: 15px;
     font-size: 18px;
-    width: 83%;
-    margin: 10px;
+    margin-top: 20px;
     height: 38px;
     border-radius: 7px;
     border: 3px solid #023DFE;
@@ -103,8 +104,7 @@ p {
 .form-side textarea {
     padding-left: 15px;
     font-size: 16px;
-    width: 80%;
-    margin: 10px;
+    margin-top: 20px;
     height: 120px;
     border-radius: 7px;
     border: 3px solid #023DFE;
@@ -113,8 +113,7 @@ p {
 }
 
 .form-side button {
-    width: 83%;
-    margin: 10px;
+    margin-top: 20px;
     height: 40px;
     border-radius: 5px;
     border: 0;
@@ -133,8 +132,20 @@ p {
     transition: all 0.5s ease;
 }
 
-.full-name input {
-    width: 36.75%;
+.full-name{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.full-name input{
+    width: 100%;
+}
+
+.form-inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 </style>

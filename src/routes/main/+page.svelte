@@ -94,6 +94,8 @@
 
 .overflow-container {
     overflow-y: auto;
+    
+    padding-right: 53px;
     max-height: 77vh;
 }
 
@@ -116,7 +118,7 @@
 }
 
 .item-div {
-    width: 97%;
+    /*width: 97%;*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -128,7 +130,7 @@
     background-image: url('assets/wp-banner1.png');
     background-size: cover;
     background-position: center;
-    width: 97%;
+    /*width: 97%;*/
     height: 160px;
     display: flex;
     align-items: center;
