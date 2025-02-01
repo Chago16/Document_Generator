@@ -1,7 +1,7 @@
 <script lang='ts'>
-	import '../app.css';
+	import '../../app.css';
 	import { onMount } from 'svelte';
-	import { activePage } from '../lib/store.js';
+	import { activePage } from '../../lib/store.js';
 	import { goto } from '$app/navigation';
 
 	let { children } = $props();
@@ -10,11 +10,11 @@
   	let inactivityTimer: number | undefined;      // Timer for inactivity
   	const inactivityTime = 2000; 
 
-	onMount(() => {
-		if (window.location.pathname !== '/') {
-		goto('/');
-		}
-	});
+	// onMount(() => {
+	// 	if (window.location.pathname !== '/') {
+	// 	goto('/');
+	// 	}
+	// });
 
 
 	onMount(() => {

@@ -1,5 +1,5 @@
 <script>
-    import '../../app.css';
+    import '../../../app.css';
 
     let showStatus = false;
     let statusData = {
@@ -18,6 +18,11 @@
         }
     };
 
+    /**
+	 * @param {string} name
+	 * @param {string} role
+	 * @param {{ "UI/UX Design": { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; }; "Front-end Dev": { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; }; "Back-end Dev": { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; }; Communication: { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; } | { width: string; className: string; }; }} skills
+	 */
     function displayStatus(
         name,
         role,
