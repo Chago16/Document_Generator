@@ -132,7 +132,7 @@
 						<ul>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/" on:click={() => activePage.set('home')} class={$activePage === 'home' ? 'activePage' : ''}>
+						<a href="/main" on:click={() => activePage.set('home')} class={$activePage === 'home' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@
 					</a></li>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/templates" on:click={() => activePage.set('templates')} class={$activePage === 'templates' ? 'activePage' : ''}>
+						<a href="/main/templates" on:click={() => activePage.set('templates')} class={$activePage === 'templates' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
@@ -163,7 +163,7 @@
 					</a></li>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/mydocs" on:click={() => activePage.set('mydocs')} class={$activePage === 'mydocs' ? 'activePage' : ''}>
+						<a href="/main/mydocs" on:click={() => activePage.set('mydocs')} class={$activePage === 'mydocs' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
@@ -175,7 +175,7 @@
 					</a></li>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/details" on:click={() => activePage.set('details')} class={$activePage === 'details' ? 'activePage' : ''}>
+						<a href="/main/details" on:click={() => activePage.set('details')} class={$activePage === 'details' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
@@ -194,7 +194,7 @@
 					</a></li>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/contact" on:click={() => activePage.set('contact')} class={$activePage === 'contact' ? 'activePage' : ''}>
+						<a href="/main/contact" on:click={() => activePage.set('contact')} class={$activePage === 'contact' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
@@ -206,7 +206,7 @@
 					</a></li>
 					<li>
 						<!-- svelte-ignore event_directive_deprecated -->
-						<a href="/about" on:click={() => activePage.set('about')} class={$activePage === 'about' ? 'activePage' : ''}>
+						<a href="/main/about" on:click={() => activePage.set('about')} class={$activePage === 'about' ? 'activePage' : ''}>
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<!-- svelte-ignore event_directive_deprecated -->
 						<span class="navigation-item" class:inactive-item={!navbarActive} on:mouseenter={handleMouseEnter}>
