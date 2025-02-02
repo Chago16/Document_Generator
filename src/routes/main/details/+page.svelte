@@ -28,14 +28,16 @@
                 <button type="button" class="upload">Upload</button>
             </div>
         </div>
-        <div class="branding-input-image-preview">
-            <div class="image-container">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
+        <div class="branding-input-image-preview-wrapper">
+            <div class="branding-input-image-preview">
+                <div class="image-container">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                </div>
             </div>
         </div>
         <div class="branding-input-image">
@@ -45,12 +47,13 @@
                 <button type="button" class="upload">Upload</button>
             </div>
         </div>
+        <div class="branding-input-image-preview-wrapper">
+            
         <div class="branding-input-image-preview">
             <div class="image-container">
                 <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
-                <img src="/assets/LogoSample.png" alt="logo">
             </div>
+        </div>
         </div>
     </div>
 
@@ -214,7 +217,7 @@
     }
 
     .branding{
-        width:700px;
+        width:40%;
         padding: 0px;
         margin: 0px;
         margin-bottom: 0px;
@@ -245,9 +248,12 @@
         margin-left: 20px;
     }
 
+    .branding-input-image-preview-wrapper{
+        width: 100%;
+    }
+
     .branding-input-image-preview{
         height: 110px;
-        width: 400px;
         padding: 16px;
         background-color: #D9D9D9;
         border-radius: 10px;

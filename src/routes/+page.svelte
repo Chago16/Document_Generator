@@ -14,11 +14,20 @@
   }
 
 
-  function hideRegisterScreen(event: { preventDefault: () => void; }) {
+  function hideRegisterScreen(event: MouseEvent) {
+    // Prevent default behavior
     event.preventDefault();
-    showRegister = false;
-  }
 
+    // Check if the clicked element is `.register-screen`, NOT `.register`
+    if ((event.target as HTMLElement).classList.contains('register-screen')) {
+        showRegister = false; // Hide the register screen
+    }}
+
+    function hideRegisterScreenLink(event: MouseEvent) {
+        // Prevent default behavior
+        event.preventDefault();
+        showRegister = false;  // Hide the register screen      
+    }
 </script>
 
   <div class="banner-login-wrapper">
@@ -81,50 +90,48 @@
           </div>
       </div>
       {#if showRegister}
-      <div class="register-screen">
-        <form>
+        <div class="register-screen" on:click={hideRegisterScreen}>
+            <form>
+                <div class="register">
+                    <div class="header">
+                        <div class="register-header-text">
+                            <h1>Register</h1>
+                            <h3>Please enter your details</h3>
+                        </div>
+                    </div>
+            
+                    <div class="register-input">
+                        <div class="register-input-text">
+                            <input type="email" name="emailRegister">
+                            <p>Email</p>
+                        </div>
+                        <div class="register-input-text">
+                            <input type="text" name="userRegister">
+                            <p>User Name</p>
+                        </div>
+                        <div class="register-input-text">
+                            <input type="password" name="passRegister">
+                            <p>Password</p>
+                        </div>
+                        <div class="register-input-text">
+                            <input type="password" name="confirmPassRegister">
+                            <p>Confirm Password</p>
+                        </div>
 
-          <div class="register">
-              <div class="header">
-                  <div class="register-header-text">
-                      <h1>Register</h1>
-                      <h3>Please enter your details</h3>
-                  </div>
-              </div>
-      
-              <div class="register-input">
-                  <div class="register-input-text">
-                      <input type="email" name="emailRegister">
-                      <p>Email</p>
-                  </div>
-                  <div class="register-input-text">
-                      <input type="text" name="userRegister">
-                      <p>User Name</p>
-                  </div>
-                  <div class="register-input-text">
-                      <input type="password" name="passRegister">
-                      <p>Password</p>
-                  </div>
-                  <div class="register-input-text">
-                      <input type="password" name="confirmPassRegister">
-                      <p>Confirm Password</p>
-                  </div>
-  
-                  <div class="register-input-text">
-                      <button type="submit">Sign up</button>
-                  </div>
-              </div>
-      
-              <div class="login-link">
-                  <div class="login-link-text">
-                    <h3>Already have an account? <a href="#" on:click={hideRegisterScreen}>Log in</a></h3>
-                  </div>
-              </div>
-        </div>
-
-        </form>
-      </div> 
-      {/if}  
+                        <div class="register-input-text">
+                            <button type="submit">Sign up</button>
+                        </div>
+                    </div>
+            
+                    <div class="login-link">
+                        <div class="login-link-text">
+                            <h3>Already have an account? <a href="#" on:click={hideRegisterScreenLink}>Log in</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> 
+        {/if}
   </div>
 
 
@@ -353,6 +360,7 @@
       border-top-left-radius: 60px;
       border-bottom-right-radius: 60px;
       border-bottom-left-radius: 10px;
+      padding-top: 1px;
   }
 
   .register-header-text{

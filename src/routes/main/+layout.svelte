@@ -59,7 +59,14 @@
 		resetInactivityTimer();
 	}
 
+	function goToTemplates() {
+        activePage.set('templates'); // Set current active page to templates
+        goto('/main/templates'); // Navigate to templates page
+    }
 
+	function handleLogout() {
+		goto('/'); // Navigates to /routes on logout
+	}
 </script>
   
 
@@ -72,7 +79,7 @@
 	<div class="header">
 		<img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
 		<div class="create-account">
-			<div class="create">
+			<div class="create" on:click={goToTemplates}>
 				<div class="create-contents">
 					<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M23 15.3333V30.6666M15.3333 23H30.6667M42.1667 23C42.1667 33.5854 33.5855 42.1666 23 42.1666C12.4146 42.1666 3.83334 33.5854 3.83334 23C3.83334 12.4145 12.4146 3.83331 23 3.83331C33.5855 3.83331 42.1667 12.4145 42.1667 23Z" stroke="#EEF2F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -83,12 +90,11 @@
 			
 			<div class="account">
 				<!-- svelte-ignore a11y_consider_explicit_label -->
-				<button id="logout" class="logout">
+				<button id="logout" class="logout" on:click={handleLogout}>
 					<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M20.2931 27.2L25.2343 27.2C25.9831 27.2 26.7013 26.905 27.2308 26.3799C27.7603 25.8548 28.0578 25.1426 28.0578 24.4L28.0578 7.60001C28.0578 6.85741 27.7603 6.14522 27.2308 5.62011C26.7013 5.09501 25.9831 4.80001 25.2343 4.80001L20.2931 4.80001M19.9422 16L3.94218 16M3.94218 16L10.0557 22.4M3.94218 16L10.0557 9.60001" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</button>
-				<img src="/icons/userIcon.svg" alt="" width="43" height="43">
 				<div id="account-det" class="account-det">
 					<h3 id="account-name">Account Name</h3>
 					<p id="account-email">account@email.com</p>
@@ -252,6 +258,7 @@ main {
   z-index: 2;
   margin-left: -9px;
   margin-top: 5px;
+  padding-right: 50px;
 }
 
 .header .logo {
@@ -264,7 +271,7 @@ main {
   width: 91%;
   display: flex;
   justify-content: space-between; /* Ensures items are on opposite sides */
-  padding-right: 20px;
+  padding-right: 58px;
 }
 
 .header .create {
@@ -298,6 +305,7 @@ main {
 }
 
 .header .account {
+	width: min-content;
   display: flex; /* Flexbox for the account section */
   justify-content: flex-end; /* Ensures it aligns to the right */
   align-items: center; /* Vertically centers items */
@@ -322,6 +330,7 @@ main {
 .account button svg {
 	width: 25px;
     height: 25px;
+	margin-right: 20px;
 }
 
 .account button svg:hover path{
@@ -329,15 +338,12 @@ main {
 	cursor: pointer;
 }
 
-.account img{
-	height: 70px;
-	width: 70px;
-	margin: 0 25px;
-}
-
 .header .account .account-det {
-	width: min-content;
+	display: flex;
+    flex-direction: column;
 	margin-top: 15px;
+	white-space: nowrap;
+    width: max-content;
 }
 
 .account-det h3{
@@ -465,8 +471,4 @@ main {
 .currentNav svg{
 	width: 112px;
 }
-
-
 </style>
-
-

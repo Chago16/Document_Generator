@@ -1,8 +1,10 @@
 <script>
     import '../../../app.css';
+    import { goto } from '$app/navigation';
+
 
     function navigateToEditing() {
-        window.location.href = "/main/templates/editing";
+        goto('/editing');
     }
 </script>
 
