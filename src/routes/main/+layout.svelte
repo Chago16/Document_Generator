@@ -65,7 +65,8 @@
     }
 
 	function handleLogout() {
-		goto('/'); // Navigates to /routes on logout
+	activePage.set('home'); // Ensure the activePage is reset to 'home'
+	goto('/'); // Navigates to / routes (home page)
 	}
 </script>
   

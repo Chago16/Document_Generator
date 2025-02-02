@@ -26,22 +26,10 @@
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
                 </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item">
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
                 </div>
             </div> 
             </a>
@@ -60,22 +48,10 @@
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
                 </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item">
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
                 </div>
             </div> 
             </a>
@@ -94,22 +70,10 @@
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
                 </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item">
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
                 </div>
             </div> 
             </a>
@@ -127,6 +91,77 @@
                 </div>
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
+                </div>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
+                </div>
+            </div> 
+            </a>
+        </div>
+        <!-- /item container -->
+
+         <!-- item container -->
+         <div class="items">
+            <hr class="line">
+            <a href="#">
+            <div class="within-item">
+                <div class="item1">
+                    <h2 class="docu-title">Document Name</h2>
+                    <h2 class="docu-type">Document Type</h2>
+                </div>
+                <div class="item2">
+                    <h2 class="date">01/01/25</h2>
+                </div>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
+                </div>
+            </div> 
+            </a>
+        </div>
+        <!-- /item container -->
+
+         <!-- item container -->
+         <div class="items">
+            <hr class="line">
+            <a href="#">
+            <div class="within-item">
+                <div class="item1">
+                    <h2 class="docu-title">Document Name</h2>
+                    <h2 class="docu-type">Document Type</h2>
+                </div>
+                <div class="item2">
+                    <h2 class="date">01/01/25</h2>
+                </div>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
+                </div>
+            </div> 
+            </a>
+        </div>
+        <!-- /item container -->
+
+         <!-- item container -->
+         <div class="items">
+            <hr class="line">
+            <a href="#">
+            <div class="within-item">
+                <div class="item1">
+                    <h2 class="docu-title">Document Name</h2>
+                    <h2 class="docu-type">Document Type</h2>
+                </div>
+                <div class="item2">
+                    <h2 class="date">01/01/25</h2>
+                </div>
+                <div class="delete-item">
+                    <button>
+                        <img src="/icons/delete.svg" alt="">
+                    </button>
                 </div>
             </div> 
             </a>
@@ -202,6 +237,7 @@ a {
 .items {
     text-align: left;
     box-sizing: border-box;
+    align-items: center;
 }
 
 .within-item {
@@ -215,6 +251,16 @@ a {
     align-items: center;
     margin: 10px 215px 0px auto;
 }
+.delete-item{
+    margin-top: 19px;
+}
+
+.delete-item button{
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+}
+
 
 .docu-title {
     font-family: 'Poppins Bold';
