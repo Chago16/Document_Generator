@@ -40,21 +40,6 @@
                 </div>
             </div>
         </div>
-        <div class="branding-input-image">
-            <p>Upload Watermark</p>
-            <div class="buttons-remove-upload">
-                <button type="reset" class="remove">Remove</button>
-                <button type="button" class="upload">Upload</button>
-            </div>
-        </div>
-        <div class="branding-input-image-preview-wrapper">
-            
-        <div class="branding-input-image-preview">
-            <div class="image-container">
-                <img src="/assets/LogoSample.png" alt="logo">
-            </div>
-        </div>
-        </div>
     </div>
 
     <div class="contact-custom-sender">
