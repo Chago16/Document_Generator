@@ -2,6 +2,12 @@
   import { goto } from '$app/navigation';
 
   let showRegister = false;
+  let email = '';
+  let username = '';
+  let password = '';
+  let confirmPassword = '';
+  let loading = false;
+  let errorMessage = '';
 
   function goToHome() {
     goto('/main');
@@ -24,10 +30,58 @@
     }}
 
     function hideRegisterScreenLink(event: MouseEvent) {
-        // Prevent default behavior
         event.preventDefault();
-        showRegister = false;  // Hide the register screen      
+        showRegister = false;       
     }
+
+    async function handleRegistration(event: Event) {
+    event.preventDefault();
+
+    // Simple validation
+    if (!email || !username || !password || !confirmPassword) {
+      errorMessage = 'All fields are required';
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorMessage = 'Passwords do not match';
+      return;
+    }
+
+    // Set loading state
+    loading = true;
+    errorMessage = ''; // Reset error message
+    // Send data to backend using fetch
+    try {
+      const response = await fetch('/api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          username,
+          password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Registration successful!');
+        showRegister = false; // Hide registration form on success
+        goto('/main'); // Redirect to main page (or any page you want)
+      } else {
+        errorMessage = data.message || 'An error occurred, please try again';
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      errorMessage = 'Failed to register, please try again later';
+    } finally {
+      loading = false;
+    }
+  }
+
 </script>
 
   <div class="banner-login-wrapper">
@@ -95,33 +149,34 @@
                 <div class="register">
                     <div class="header">
                         <div class="register-header-text">
-                            <h1>Register</h1>
-                            <h3>Please enter your details</h3>
+                          <h1>Register</h1>
+                          <h3>Please enter your details</h3>
                         </div>
-                    </div>
-            
-                    <div class="register-input">
+                      </div>
+              
+                      <div class="register-input">
                         <div class="register-input-text">
-                            <input type="email" name="emailRegister">
-                            <p>Email</p>
-                        </div>
-                        <div class="register-input-text">
-                            <input type="text" name="userRegister">
-                            <p>User Name</p>
+                          <input type="email" name="emailRegister" bind:value={email} required />
+                          <p>Email</p>
                         </div>
                         <div class="register-input-text">
-                            <input type="password" name="passRegister">
-                            <p>Password</p>
+                          <input type="text" name="userRegister" bind:value={username} required />
+                          <p>User Name</p>
                         </div>
                         <div class="register-input-text">
-                            <input type="password" name="confirmPassRegister">
-                            <p>Confirm Password</p>
+                          <input type="password" name="passRegister" bind:value={password} required />
+                          <p>Password</p>
                         </div>
-
                         <div class="register-input-text">
-                            <button type="submit">Sign up</button>
+                          <input type="password" name="confirmPassRegister" bind:value={confirmPassword} required />
+                          <p>Confirm Password</p>
                         </div>
-                    </div>
+              
+                        <div class="register-input-text">
+                          <button type="submit" on:click={handleRegistration} disabled={loading}>
+                            {loading ? 'Registering...' : 'Sign up'}
+                          </button>
+                        </div>
             
                     <div class="login-link">
                         <div class="login-link-text">
