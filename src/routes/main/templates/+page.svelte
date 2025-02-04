@@ -9,28 +9,11 @@
 </script>
 
 <div class="templates-contents">
-    <div class="past-docus">
-        <h3>Use Past Document as Preset</h3>
-        <div class="preset">
-            <p class="document-title">Saved Doucument 1</p>
-            <p class="document-type">Document Type</p>
-        </div>
-        <div class="preset">
-            <p class="document-title">Saved Doucument 2</p>
-            <p class="document-type">Document Type</p>
-        </div>
 
-        <div class="preset">
-            <p class="document-title">Saved Doucument 3</p>
-            <p class="document-type">Document Type</p>
-        </div>
-    </div>
-
-
-    <div class="template-options">
+    <div class="documents">
         <h1>Custom Document Template</h1>
-
-        <div class="details-logo-document-content">
+        <div class="document-wrapper">
+            <!--
             <div class="details-logo">
                 <h3>Details Included</h3>
                 <div class="details-input-checkbox">
@@ -45,9 +28,6 @@
                     <p>Receiver Address:</p>
                     <input type="text" name="receiverAddress">
                 </div>
-                
-                <br>
-                <br>
                 <h3>Logo/s to Use</h3>
                 <div class="logo-image-preview">
                     <div class="image-container">
@@ -65,10 +45,8 @@
                         </div>
                     </div>
                 </div>
-    
-    
             </div>
-    
+            -->
             <div class="document-content">
                 <h3>Document</h3>
                 <div class="document-input">
@@ -87,36 +65,60 @@
                         <option value="a4">A4</option>
                     </select>
                 </div>
-
-                <br><br>
-                <h3>Content</h3>
-                <div class="content-input-select">
-                    <p>Tone:</p>
-                    <select id="tone" name="tone">
-                        <option value="Formal">Formal</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Conversational">Conversational</option>
-                        <option value="Persuasive">Persuasive</option>
-                        <option value="Inspirational">Inspirational</option>
-                        <option value="Instructional">Instructional</option>
-                        <option value="Creative">Creative</option>
-                        <option value="Urgent">Urgent</option>
-                        <option value="Narrative">Narrative</option>
-                        <option value="Empathic">Empathic</option>
-                    </select>
-                </div>
-                <div class="content-input-textarea">
-                    <p>Details Prompt<br>to AI:</p>
-                    <textarea name="detailsPrompt" id="detailsPrompt"></textarea>
-                </div>
-                <div class="content-input-textarea">
-                    <p>Additional Details:</p>
-                    <textarea name="additionalDetails" id="additionalDetails"></textarea>
-                </div>
+                <br><br><br>
+                <p><strong>Disclaimer:</strong> The content generated below will rely heavily on the inputs provided by you. We use AI for content generation, so the quality and relevance of the content will depend on your input.</p>
             </div>
         </div>
         
         <br>
+    </div>
+
+    <div class="prompt-generate">
+        <div class="prompt">
+            <div class="prompt-wrapper">
+                <h3>Content</h3>
+                    <div class="content-input-select">
+                        <p>Tone:</p>
+                        <select id="tone" name="tone">
+                            <option value="Formal">Formal</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Conversational">Conversational</option>
+                            <option value="Persuasive">Persuasive</option>
+                            <option value="Inspirational">Inspirational</option>
+                            <option value="Instructional">Instructional</option>
+                            <option value="Creative">Creative</option>
+                            <option value="Urgent">Urgent</option>
+                            <option value="Narrative">Narrative</option>
+                            <option value="Empathic">Empathic</option>
+                        </select>
+                    </div>
+                    <div class="content-input-textarea">
+                        <p>Details Prompt<br>to AI:</p>
+                        <textarea name="detailsPrompt" id="detailsPrompt"></textarea>
+                    </div>
+                    <div class="content-input-textarea">
+                        <p>Additional Details:</p>
+                        <textarea name="additionalDetails" id="additionalDetails"></textarea>
+                    </div>
+            <!--
+            <h3>Use Past Document as Preset</h3>
+            <div class="preset">
+                <p class="document-title">Saved Doucument 1</p>
+                <p class="document-type">Document Type</p>
+            </div>
+            <div class="preset">
+                <p class="document-title">Saved Doucument 2</p>
+                <p class="document-type">Document Type</p>
+            </div>
+    
+            <div class="preset">
+                <p class="document-title">Saved Doucument 3</p>
+                <p class="document-type">Document Type</p>
+            </div>
+            -->
+            </div>
+        </div>
+    
         <button on:click={navigateToEditing}>Generate Document</button>
     </div>
 </div>
@@ -130,56 +132,59 @@
     }
     h1 {
         font-family: 'Poppins Bold';
-        font-size: 26px;
+        font-size: 30px;
     }
 
     h3{
         font-family: 'Telegraf';
-        font-size: 18px;
+        font-size: 24px;
     }
 
     p {
         font-family: 'SourceSansPro Regular';
-        font-size: 14px;
+        font-size: 18px;
     }
 
-    img{
+    /*img{
         height: 95px;
         width: min-content;
-    }
+    }*/
 
     input[type="text"]{
         width:100%;
-        height:20px;
-        border: 1px solid #023DFE;
+        height:30px;
+        border: 2px solid #023DFE;
         border-radius:10px;
         padding-left: 10px;
+        font-size: 16px;
     }
 
-    input[type="checkbox"]{
+    /*input[type="checkbox"]{
         width: 20px; 
         height: 20px;
         border-color: #023DFE;
         accent-color: #023DFE;
         border-radius:10px;
         margin-right: 15px;
-    }
+    }*/
 
     select{
-        width:100%;
-        height:22px;
-        border: 1px solid #023DFE;
+        width:103%;
+        height:33px;
+        border: 2px solid #023DFE;
         border-radius:10px;
         padding-left: 10px;
+        font-size: 16px;
     }
 
     textarea{
         width:100%;
-        height:50px;
-        border: 1px solid #023DFE;
+        height:113px;
+        border: 2px solid #023DFE;
         border-radius:10px;
         padding-left: 10px;
         resize: none;
+        font-size: 16px;
     }
 
     button{
@@ -209,16 +214,8 @@
         margin-left: 30px;
         padding-right: 50px;
     }
-
-    .past-docus{
-        width: 220px;
-        height: 503px;
-        background: #D9D9D9;
-        padding: 20px;
-        border-radius: 20px;
-        margin-right: 30px;
-    }
-
+    
+    /*
     .past-docus h3{
         margin-top: 10px;
     }
@@ -236,19 +233,21 @@
 
     .document-type{
         margin-top: 0px;
-    }
+    }*/
 
-    .template-options{
+    .documents{
         width: 1015px;
         display: flex;
         flex-direction: column;
     }
 
-    .details-logo-document-content{
+    .document-wrapper{
+        width: 100%;
         display: flex;
         flex-direction: row;
     }
-
+    
+    /*
     .details-logo{
         padding-right: 50px;
         padding-bottom: 20px;
@@ -302,32 +301,28 @@
     }
 
     .logo-checkbox {
-        position: relative; /* Needed for absolute positioning inside */
-        display: inline-block; /* Keeps image and checkbox grouped */
+        position: relative; 
+        display: inline-block;
     }
 
     .logo-checkbox-over {
         position: absolute;
-        top: 5px; /* Adjust as needed */
+        top: 5px; 
         left: 5px;
-        width: 20px; /* Adjust checkbox size */
+        width: 20px;
         height: 20px;
-        accent-color: #023DFE; /* Change checkbox color */
+        accent-color: #023DFE; 
         cursor: pointer;
-    }
+    }*/
 
     .document-content{
         width: 100%;
         margin-left: 50px;
     }
 
-    .document-content h3{
-        margin-bottom: 0px;
-    }
-
     .document-input {
         width: 97%;
-        height: 30px;
+        height: 45px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -335,7 +330,38 @@
     }
 
     .document-input p{
-        width: 140px;
+        width: 200px;
+    }
+
+    .prompt-generate{
+        width: 100%;
+        padding-left: 80px;
+    }
+    .prompt{
+        height: 439px;
+        background: #D9D9D9;
+        border-radius: 20px;
+        margin-bottom: 50px;
+    }
+
+    .prompt::after {
+        content: '';
+        position: absolute;
+        bottom: 55px; /* Adjust this value to move the triangle up or down */
+        left: 1180px; /* Adjust this value to move the triangle left or right */
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 70px solid #d9d9d9; /* Matches the prompt's background */
+    }
+
+    .prompt-wrapper {
+        padding: 50px;
+    }
+
+    .prompt-wrapper h3{
+        margin-top: 0px;
     }
 
     .content-input-select {
@@ -348,19 +374,20 @@
     }
 
     .content-input-select p{
-        width: 140px;
+        width: 200px;
     }
 
     .content-input-textarea {
         margin-left: 20px;
         width: 97%;
-        height: 62px;
+        height: 120px;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        margin-top: 13px;
     }
 
     .content-input-textarea p{
-        width: 140px;
+        width: 200px;
+        margin-top: 0px;
     }
 </style>

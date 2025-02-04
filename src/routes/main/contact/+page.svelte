@@ -77,7 +77,7 @@
 
 p {
     font-family: 'SourceSansPro Regular';
-    font-size: 20px;
+    font-size: 18px;
     color: #1B1B1B;
 }
 
@@ -87,7 +87,7 @@ p {
     margin-top: 20px;
     height: 30px;
     border-radius: 7px;
-    border: 3px solid #023DFE;
+    border: 2px solid #023DFE;
     font-family: 'SourceSansPro Regular';
 }
 
@@ -97,7 +97,7 @@ p {
     margin-top: 20px;
     height: 38px;
     border-radius: 7px;
-    border: 3px solid #023DFE;
+    border: 2px solid #023DFE;
     font-family: 'SourceSansPro Regular';
 }
 
@@ -107,7 +107,7 @@ p {
     margin-top: 20px;
     height: 120px;
     border-radius: 7px;
-    border: 3px solid #023DFE;
+    border: 2px solid #023DFE;
     font-family: 'SourceSansPro Regular';
     resize: none;
 }

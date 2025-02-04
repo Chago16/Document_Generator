@@ -4,25 +4,23 @@
   import Quill from 'quill';
   import { goto } from '$app/navigation';
   import { saveAs } from 'file-saver';
+  import { generateWord } from 'quill-to-word';
   import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
+  /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
 
   let quil;
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    ['image'],
-    [{ 'header': 1 }, { 'header': 2 }],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
     [{ 'script': 'sub'}, { 'script': 'super' }],
-    [{ 'indent': '-1'}, { 'indent': '+1' }],
-    [{ 'direction': 'rtl' }],
-    [{ 'size': ['small', false, 'large', 'huge'] }],
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    [{ 'color': [] }, { 'background': [] }],
+    ['image'],
     [{ 'font': [] }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    [{ 'color': [] }, { 'background': [] }],
     [{ 'align': [] }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     ['clean']
   ];
 
@@ -30,11 +28,16 @@
     goto('/main/templates');
   }
 
+  /*Quill.register('modules/imageResize', ImageResize);*/
+
   onMount(() => {
     quil = new Quill('#editor', {
       theme: 'snow',
       modules: {
-        toolbar: toolbarOptions,
+        toolbar: toolbarOptions /*,
+        imageResize: {  // Register the image resize module
+          modules: [ 'Resize', 'DisplaySize', 'Toolbar' ],  // You can adjust this as needed
+        },*/
       }
     });
   });
@@ -42,139 +45,264 @@
   async function convertImagesToBase64() {
     const images = document.querySelectorAll('#editor img');
 
-    const promises = Array.from(images).map(img => {
-      return new Promise((resolve) => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+    const promises = Array.from(images).map(async (img) => {
+        return new Promise((resolve) => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
 
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            ctx.drawImage(img, 0, 0);
 
-        img.src = canvas.toDataURL("image/png");
-        resolve();
-      });
-    });
+            const dataURL = canvas.toDataURL("image/png");
+            img.src = dataURL;
 
-    await Promise.all(promises);
-  }
-
-  async function exportToWord() {
-    await convertImagesToBase64(); // Ensure images are properly encoded before exporting
-
-    const delta = quil.getContents(); // Get Quill content
-    const paragraphs = delta.ops.map(op => {
-        let paragraphContent = [];
-        
-        // Check for different formats in the Delta operations
-        if (typeof op.insert === 'string') {
-            let textOptions = {};
-            
-            // Check for formatting in the current operation
-            if (op.attributes) {
-                if (op.attributes.bold) {
-                    textOptions.bold = true; // Set bold as true
-                }
-                if (op.attributes.italic) {
-                    textOptions.italic = true; // Set italic as true
-                }
-                if (op.attributes.underline) {
-                    textOptions.underline = true; // Set underline as true
-                }
-                if (op.attributes.strike) {
-                    textOptions.strike = true; // Set strike as true
-                }
-                if (op.attributes.font) {
-                    textOptions.font = op.attributes.font; // Set font
-                }
-                if (op.attributes.color) {
-                    textOptions.color = op.attributes.color; // Set color
-                }
-                if (op.attributes.size) {
-                    textOptions.size = op.attributes.size; // Set size
-                }
-                if (op.attributes.align) {
-                    textOptions.alignment = op.attributes.align; // Set alignment
-                }
-            }
-            
-            // Create a TextRun with the text and formatting options
-            const text = new TextRun(op.insert, textOptions);
-            paragraphContent.push(text);
-        } else if (op.insert && op.insert.image) {
-            // Handle images in the Quill content
-            paragraphContent.push(new ImageRun({
-                data: op.insert.image, 
-                transformation: { width: 300, height: 300 } // Set the image size if needed
-            }));
-        }
-
-        // Return a new Word paragraph with the rich text
-        return new Paragraph({
-            children: paragraphContent
+            resolve(dataURL);
         });
     });
 
-    // Create a document with custom page size and styling
+    const base64Images = await Promise.all(promises);
+
+    // Modify the Quill delta to store Base64 images
+    const delta = quil.getContents();
+    delta.ops = delta.ops.map((op) => {
+        if (op.insert && op.insert.image) {
+            const imgIndex = Array.from(images).findIndex(img => img.src === op.insert.image);
+            if (imgIndex !== -1) {
+                op.insert.image = base64Images[imgIndex]; // Replace image URL with Base64
+            }
+        }
+        return op;
+    });
+
+    return delta;
+}
+
+// Function to get image dimensions from the Quill editor
+function getImageDimensions(imageUrl) {
+    const image = document.querySelector(`img[src="${imageUrl}"]`);
+    if (image) {
+        return {
+            width: image.width,
+            height: image.height,
+        };
+    }
+    return { width: 500, height: 500 }; // Default to 500 if the image isn't found
+}
+
+async function exportToWord() {
+    const delta = await convertImagesToBase64(); // Ensure images are Base64 before exporting
+
+    let paragraphs = [];
+    let currentTextRuns = [];
+    let currentAlignment = 'left';  // Default alignment
+
+    delta.ops.forEach(op => {
+        if (typeof op.insert === 'string') {
+            let textOptions = {};
+
+            // Apply formatting
+            if (op.attributes) {
+                if (op.attributes.bold) textOptions.bold = true;
+                if (op.attributes.italic) textOptions.italic = true;
+                if (op.attributes.underline) textOptions.underline = true;
+
+                if (op.attributes.strike) textOptions.strike = true;
+
+                if (op.attributes.font) {
+                    let fontMap = {
+                        'sans serif': "Arial",
+                        'serif': "Times New Roman",
+                        'monospace': "Courier New"
+                    };
+                    textOptions.font = fontMap[op.attributes.font] || "Calibri"; // Default to Calibri
+                }
+
+                if (op.attributes.list) {
+                    let listType = op.attributes.list;
+                    paragraphs.push(new Paragraph({
+                        text: op.insert.trim(),
+                        bullet: listType === 'bullet' ? { level: 0 } : undefined,
+                        numbering: listType === 'ordered' ? { level: 0, reference: "numbered-list" } : undefined,
+                    }));
+                    return;
+                }
+
+
+                if (op.attributes.color) textOptions.color = op.attributes.color;
+                if (op.attributes.background) {
+                    textOptions.shading = { fill: op.attributes.background };
+                }
+
+                if (op.attributes.size) {
+                    let fontSizeMap = {
+                        small: 20,  // 10pt
+                        large: 28,  // 14pt
+                        huge: 40    // 20pt
+                    };
+                    textOptions.size = fontSizeMap[op.attributes.size] || 24; // Default to normal size (12pt)
+                }
+
+                if (op.attributes.script === "super") {
+                    textOptions.superscript = true;
+                }
+
+                if (op.attributes.script === "sub") {
+                    textOptions.subscript = true;
+                }
+
+
+                // Check for text alignment (center, right, left)
+                if (op.attributes.align) {
+                    currentAlignment = op.attributes.align;
+                }
+            }
+
+            // Split text by newline, but keep it in the same paragraph
+            const textParts = op.insert.split("\n");
+            textParts.forEach((part, index) => {
+                if (part !== "") {
+                    currentTextRuns.push(new TextRun({ text: part, ...textOptions }));
+                }
+                if (index !== textParts.length - 1) {
+                    paragraphs.push(new Paragraph({
+                        children: currentTextRuns,
+                        alignment: currentAlignment,  
+                    }));
+                    currentTextRuns = [];
+                }
+            });
+        }
+
+        // Handle images
+        if (op.insert && op.insert.image) {
+            if (currentTextRuns.length > 0) {
+                paragraphs.push(new Paragraph({
+                    children: currentTextRuns,
+                    alignment: currentAlignment,  // Apply alignment to the paragraph
+                }));
+                currentTextRuns = [];
+            }
+
+            const imageData = op.insert.image.split(",")[1]; // Extract Base64 data
+            const { width, height } = getImageDimensions(op.insert.image); // Get image size from editor
+
+            paragraphs.push(
+                new Paragraph({
+                    children: [
+                        new ImageRun({
+                            data: imageData,
+                            transformation: {
+                                width: width, // Use original width from editor
+                                height: height, // Use original height from editor
+                            },
+                        }),
+                    ],
+                    alignment: currentAlignment,  // Apply alignment to the paragraph
+                })
+            );
+        }
+    });
+
+    // Add last text paragraph if any
+    if (currentTextRuns.length > 0) {
+        paragraphs.push(new Paragraph({
+            children: currentTextRuns,
+            alignment: currentAlignment,  // Apply alignment to the paragraph
+        }));
+    }
+
+    // Convert inches to twips (1 inch = 1440 twips)
+    const inchesToTwips = 1440;
+    const pageWidthInches = 8.5;
+    const pageHeightInches = 14;
+    const marginInches = 1; // 1 inch margin for all sides
+
     const doc = new Document({
         sections: [
             {
                 properties: {
                     page: {
                         size: {
-                            width: 12240,  // 8.5 inches in twips (legal size width)
-                            height: 20160, // 14 inches in twips (legal size height)
+                            width: pageWidthInches * inchesToTwips,  // Convert width to twips
+                            height: pageHeightInches * inchesToTwips, // Convert height to twips
                         },
                         margin: {
-                            top: 1440, // 1 inch
-                            right: 1440,
-                            bottom: 1440,
-                            left: 1440,
+                            top: marginInches * inchesToTwips, 
+                            right: marginInches * inchesToTwips,
+                            bottom: marginInches * inchesToTwips,
+                            left: marginInches * inchesToTwips,
                         },
                     },
                 },
                 children: paragraphs,
             },
         ],
-        styles: {
-            '@page WordSection1': {
-                'size': '8.5in 14in', // Set Legal size (8.5in × 14in)
-                'margin': '1in 1in 1in 1in' // 1-inch margin on all sides
-            },
-            'p': {
-                'font-size': '12pt',
-                'line-height': '1.5'
-            }
-        }
     });
 
-    // Generate the Word document as a Blob and save it
-    Packer.toBlob(doc).then(blob => {
-        saveAs(blob, 'legal-size-document.docx');
-    }).catch(error => {
+    try {
+        const blob = await Packer.toBlob(doc);
+        saveAs(blob, 'quill-export.docx');
+    } catch (error) {
         console.error('Error generating Word document:', error);
+    }
+}
+
+
+
+
+
+
+
+async function exportToPDF() {
+    // Get the content of the Quill editor
+    const editorContent = document.querySelector('.ql-editor');
+    if (!editorContent) {
+        console.error("Editor content not found!");
+        return;
+    }
+
+    // Use html2canvas to capture the editor content as an image
+    html2canvas(editorContent, {
+        scale: 2, // Increase scale for higher resolution
+        useCORS: true // Allow cross-origin images
+    }).then((canvas) => {
+        // Get the canvas dimensions (in pixels)
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        // Calculate the aspect ratio
+        const aspectRatio = canvasWidth / canvasHeight;
+
+        // Set custom page size in inches (8.5 x 14 inches)
+        const pdf = new jsPDF('p', 'in', [8.5, 14]); // Custom page size in inches
+
+        const pageWidth = pdf.internal.pageSize.width;
+        const pageHeight = pdf.internal.pageSize.height;
+
+        // Calculate the scaled width and height to maintain aspect ratio
+        let imgWidth = pageWidth - 0.5; // Subtracting margins (0.5 inches)
+        let imgHeight = imgWidth / aspectRatio;
+
+        // If the height exceeds the page height (taking into account margins), adjust the height
+        if (imgHeight > pageHeight - 0.5) {
+            imgHeight = pageHeight - 0.5;
+            imgWidth = imgHeight * aspectRatio;
+        }
+
+        // Add the image to the PDF, centered with margins
+        const margin = 1; // Set margin (0.25 inches for all sides)
+        pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', margin, margin, imgWidth, imgHeight);
+
+        // Save the PDF
+        pdf.save("document.pdf");
+    }).catch(error => {
+        console.error("Error generating PDF:", error);
     });
 }
 
-  function exportToPDF() {
-    const editorContent = document.querySelector('.ql-editor');
 
-    if (!editorContent) {
-      console.error("Editor content not found!");
-      return;
-    }
 
-    const doc = new jsPDF();
-
-    html2canvas(editorContent, {
-      scale: 2,
-      useCORS: true
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/jpeg", 1.0);
-      doc.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-      doc.save("document.pdf");
-    }).catch(error => console.error("Error generating PDF:", error));
-  }
 </script>
 
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -206,8 +334,7 @@
 
 <div class="editing-page">
   <div id="editor">
-    <img src="/assets/LuiPic.png" alt="Image here">
-    <p></p>
+    <p>Hello <strong>World</strong>! Good Morning</p>
   </div>
 </div>
 
@@ -352,6 +479,10 @@
         border: none !important;
         box-shadow: none !important;
         background-color: transparent !important;
+    }
+
+    :global(.ql-toolbar button) {
+      margin-right: 25px; /* Adds spacing between individual toolbar buttons */
     }
 
     #editor {
