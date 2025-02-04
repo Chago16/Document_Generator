@@ -15,6 +15,5 @@ export function start_mongo() : Promise<MongoClient> {
         throw err;
       });
   }
-  
 
 export default client.db()
