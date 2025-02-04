@@ -4,6 +4,7 @@
 	import { activePage } from '../../lib/store.js';
 	import { goto } from '$app/navigation';
 
+
 	let { children } = $props();
 	// svelte-ignore non_reactive_update
 	let navbarActive = true;  // Tracks navbar activeness

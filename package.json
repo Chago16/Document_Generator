@@ -31,12 +31,9 @@
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
-<<<<<<< HEAD
 		"@types/bcryptjs": "^2.4.6",
-		"@types/jsonwebtoken": "^9.0.8",
-=======
 		"@types/file-saver": "^2.0.7",
->>>>>>> 4a753ddcddfd44a33853b8fe6969670941c8e8a1
+		"@types/jsonwebtoken": "^9.0.8",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
@@ -56,14 +53,13 @@
 	"dependencies": {
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
-<<<<<<< HEAD
 		"bcryptjs": "^2.4.3",
-		"jsonwebtoken": "^9.0.2",
-=======
 		"docx": "^9.1.1",
 		"file-saver": "^2.0.5",
+		"html2canvas": "^1.4.1",
 		"html2pdf.js": "^0.10.2",
->>>>>>> 4a753ddcddfd44a33853b8fe6969670941c8e8a1
+		"jsonwebtoken": "^9.0.2",
+		"jspdf": "^2.5.2",
 		"mongodb": "^6.13.0",
 		"mongoose": "^8.9.6",
 		"openai": "^4.82.0",

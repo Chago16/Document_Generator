@@ -49,7 +49,6 @@
 
     if (response.ok) {
       alert('Login successful!');
-
       goto('/main');
       return data; // Contains token or user info
     } else {
