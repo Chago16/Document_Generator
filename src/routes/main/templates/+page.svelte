@@ -34,10 +34,6 @@
             <div class="details-logo">
                 <h3>Details Included</h3>
                 <div class="details-input-checkbox">
-                    <input type="checkbox" name="chckWithWatermark">
-                    <p>With Watermark</p>
-                </div>
-                <div class="details-input-checkbox">
                     <input type="checkbox" name="chckMyAddress">
                     <p>Include my Address</p>
                 </div>
@@ -50,6 +46,7 @@
                     <input type="text" name="receiverAddress">
                 </div>
                 
+                <br>
                 <br>
                 <h3>Logo/s to Use</h3>
                 <div class="logo-image-preview">
