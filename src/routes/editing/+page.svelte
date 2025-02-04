@@ -3,33 +3,33 @@
   import { onMount } from 'svelte';
   import Quill from 'quill';
   import { goto } from '$app/navigation';
+  import { saveAs } from 'file-saver';
+  import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
+  import { jsPDF } from "jspdf";
+  import html2canvas from "html2canvas";
+
+  let quil;
+  const toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote', 'code-block'],
+    ['image'],
+    [{ 'header': 1 }, { 'header': 2 }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'font': [] }],
+    [{ 'align': [] }],
+    ['clean']
+  ];
 
   function exitAndSave() {
-    goto('/main'); // Redirects to the main layout
+    goto('/main/templates');
   }
-  
-let quil;
-const toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-  ['blockquote', 'code-block'],
-  ['link', 'image', 'video', 'formula'],
 
-  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-  [{ 'direction': 'rtl' }],                         // text direction
-
-  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-  [{ 'font': [] }],
-  [{ 'align': [] }],
-
-  ['clean']  
-];
-  
   onMount(() => {
     quil = new Quill('#editor', {
       theme: 'snow',
@@ -39,7 +39,142 @@ const toolbarOptions = [
     });
   });
 
-  const container = document.getElementById('editor');
+  async function convertImagesToBase64() {
+    const images = document.querySelectorAll('#editor img');
+
+    const promises = Array.from(images).map(img => {
+      return new Promise((resolve) => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        img.src = canvas.toDataURL("image/png");
+        resolve();
+      });
+    });
+
+    await Promise.all(promises);
+  }
+
+  async function exportToWord() {
+    await convertImagesToBase64(); // Ensure images are properly encoded before exporting
+
+    const delta = quil.getContents(); // Get Quill content
+    const paragraphs = delta.ops.map(op => {
+        let paragraphContent = [];
+        
+        // Check for different formats in the Delta operations
+        if (typeof op.insert === 'string') {
+            let textOptions = {};
+            
+            // Check for formatting in the current operation
+            if (op.attributes) {
+                if (op.attributes.bold) {
+                    textOptions.bold = true; // Set bold as true
+                }
+                if (op.attributes.italic) {
+                    textOptions.italic = true; // Set italic as true
+                }
+                if (op.attributes.underline) {
+                    textOptions.underline = true; // Set underline as true
+                }
+                if (op.attributes.strike) {
+                    textOptions.strike = true; // Set strike as true
+                }
+                if (op.attributes.font) {
+                    textOptions.font = op.attributes.font; // Set font
+                }
+                if (op.attributes.color) {
+                    textOptions.color = op.attributes.color; // Set color
+                }
+                if (op.attributes.size) {
+                    textOptions.size = op.attributes.size; // Set size
+                }
+                if (op.attributes.align) {
+                    textOptions.alignment = op.attributes.align; // Set alignment
+                }
+            }
+            
+            // Create a TextRun with the text and formatting options
+            const text = new TextRun(op.insert, textOptions);
+            paragraphContent.push(text);
+        } else if (op.insert && op.insert.image) {
+            // Handle images in the Quill content
+            paragraphContent.push(new ImageRun({
+                data: op.insert.image, 
+                transformation: { width: 300, height: 300 } // Set the image size if needed
+            }));
+        }
+
+        // Return a new Word paragraph with the rich text
+        return new Paragraph({
+            children: paragraphContent
+        });
+    });
+
+    // Create a document with custom page size and styling
+    const doc = new Document({
+        sections: [
+            {
+                properties: {
+                    page: {
+                        size: {
+                            width: 12240,  // 8.5 inches in twips (legal size width)
+                            height: 20160, // 14 inches in twips (legal size height)
+                        },
+                        margin: {
+                            top: 1440, // 1 inch
+                            right: 1440,
+                            bottom: 1440,
+                            left: 1440,
+                        },
+                    },
+                },
+                children: paragraphs,
+            },
+        ],
+        styles: {
+            '@page WordSection1': {
+                'size': '8.5in 14in', // Set Legal size (8.5in × 14in)
+                'margin': '1in 1in 1in 1in' // 1-inch margin on all sides
+            },
+            'p': {
+                'font-size': '12pt',
+                'line-height': '1.5'
+            }
+        }
+    });
+
+    // Generate the Word document as a Blob and save it
+    Packer.toBlob(doc).then(blob => {
+        saveAs(blob, 'legal-size-document.docx');
+    }).catch(error => {
+        console.error('Error generating Word document:', error);
+    });
+}
+
+  function exportToPDF() {
+    const editorContent = document.querySelector('.ql-editor');
+
+    if (!editorContent) {
+      console.error("Editor content not found!");
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    html2canvas(editorContent, {
+      scale: 2,
+      useCORS: true
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+      doc.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+      doc.save("document.pdf");
+    }).catch(error => console.error("Error generating PDF:", error));
+  }
 </script>
 
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -49,14 +184,13 @@ const toolbarOptions = [
     <img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
     <div class="save-export">
       <button on:click={exitAndSave}>Exit and Save</button>
-        <div class="export">
-          <h3>Export as:  </h3>
-          <button>Word Document</button>
-          <button>PDF</button>
-        </div>
+      <div class="export">
+        <h3>Export as:</h3>
+        <button on:click={exportToWord}>Word Document</button>
+        <button on:click={exportToPDF}>PDF</button>
+      </div>
     </div>
   </div>
-  
 
   <div class="title">
     <input type="text" name="" id="" placeholder="Title">
@@ -64,20 +198,17 @@ const toolbarOptions = [
 </div>
 
 <div class="toolbar">
-  <svg width="1748" height="54" viewBox="0 0 1748 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M29.2467 12.3063C27.2904 9.42738 22.4451 0.0433842 0 0.0433842C0 0.0433842 65.7617 -0.0542303 74.1369 0.0433842L1352.15 0.0433812V54H105.424C74.1369 54 56.4529 54 46.9307 39.9853L29.2467 12.3063Z" fill="white"/>
-    <path d="M29.2467 12.3063C27.2904 9.42738 22.4451 0.0433842 0 0.0433842C0 0.0433842 65.7617 -0.0542303 74.1369 0.0433842L1352.15 0.0433812V54H105.424C74.1369 54 56.4529 54 46.9307 39.9853L29.2467 12.3063Z" fill="white"/>
-    <path d="M1718.75 12.3063C1720.71 9.42738 1725.55 0.0433842 1748 0.0433842C1748 0.0433842 1682.24 -0.0542303 1673.86 0.0433842L395.851 0.0433812V54H1642.58C1673.86 54 1691.55 54 1701.07 39.9853L1718.75 12.3063Z" fill="white"/>
-    <path d="M1718.75 12.3063C1720.71 9.42738 1725.55 0.0433842 1748 0.0433842C1748 0.0433842 1682.24 -0.0542303 1673.86 0.0433842L395.851 0.0433812V54H1642.58C1673.86 54 1691.55 54 1701.07 39.9853L1718.75 12.3063Z" fill="white"/>
-    </svg>
+  <svg width="1533" height="76" viewBox="0 0 1533 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M56.6839 57.6598L56.699 57.6883L56.7147 57.7165C61.1958 65.708 67.6791 69.6911 76.3622 71.6268C84.7657 73.5001 95.4512 73.5001 108.573 73.5H108.861H356.946H1173.83H1421.91H1422.2C1435.32 73.5001 1446.01 73.5001 1454.41 71.6268C1463.09 69.6911 1469.58 65.708 1474.06 57.7165L1474.07 57.6883L1474.09 57.6598L1489.16 29.067C1489.17 29.0577 1489.17 29.0484 1489.18 29.039C1489.27 28.867 1489.37 28.6826 1489.48 28.4875C1490.36 26.8717 1491.63 24.5186 1494.44 22.3615C1497.56 19.9573 1502.82 17.651 1511.97 17.651V15.151V12.651L18.8067 12.6511V15.1511V17.6511C27.9495 17.6511 33.212 19.9574 36.3367 22.3616C39.1402 24.5185 40.4156 26.8716 41.2914 28.4874C41.397 28.6821 41.4967 28.8661 41.5926 29.0378L56.6839 57.6598Z" fill="white" stroke="#023DFE" stroke-width="2"/>
+    <rect width="1533" height="17" fill="white"/>
+  </svg>
 </div>
 
 <div class="editing-page">
-    <div id="editor">
-        <p>Hello World!</p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <p><br /></p>
-      </div>
+  <div id="editor">
+    <img src="/assets/LuiPic.png" alt="Image here">
+    <p></p>
+  </div>
 </div>
 
   <style>
@@ -86,6 +217,7 @@ const toolbarOptions = [
       width: 100%;
       align-items: center;
       justify-content: space-between;
+      z-index: 99;
     }
 
     .header .logo {
@@ -154,7 +286,7 @@ const toolbarOptions = [
       display: flex;
       position: fixed;
       justify-content: center;
-      top:102px;
+      top:89.5px;
       z-index: 10;
     }
 
@@ -172,6 +304,7 @@ const toolbarOptions = [
         align-items: center;
         overflow-y: scroll;
         overflow-x: scroll;
+        border: 2px solid #023DFE;
         border-radius: 20px;
         z-index: 3;
     }
@@ -196,13 +329,14 @@ const toolbarOptions = [
     }
 
     #editor {
-        min-width: 8in;
-        min-height: 11in;
-        padding: 1in;
-        margin: 1rem;
-        border: 1px solid #1B1B1B;
-        background-color: white;
-    }
+      min-width: 8.5in;
+      max-width: 8.5in;
+      min-height: 14in;
+      padding: 1in;
+      margin: 1rem;
+      border: 1px solid #1B1B1B;
+      background-color: white;
+  }
 
     :global(.ql-toolbar) {
         position: fixed;
