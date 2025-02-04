@@ -34,6 +34,37 @@
         showRegister = false;       
     }
 
+    async function loginUser() {
+
+  try {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('Login successful!');
+
+      goto('/main');
+      return data; // Contains token or user info
+    } else {
+      alert(data.message || 'Login failed');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert('Failed to log in, please try again later');
+    return null;
+  }
+}
+
+
+
     async function handleRegistration(event: Event) {
     event.preventDefault();
 
@@ -45,6 +76,7 @@
 
     if (password !== confirmPassword) {
       errorMessage = 'Passwords do not match';
+      alert('Passwords do not Match');
       return;
     }
 
@@ -53,7 +85,7 @@
     errorMessage = ''; // Reset error message
     // Send data to backend using fetch
     try {
-      const response = await fetch('/api', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,9 +102,9 @@
       if (response.ok) {
         alert('Registration successful!');
         showRegister = false; // Hide registration form on success
-        goto('/main'); // Redirect to main page (or any page you want)
+        // goto('/main'); // Redirect to main page (or any page you want)
       } else {
-        errorMessage = data.message || 'An error occurred, please try again';
+        alert(data.message);
       }
     } catch (error) {
       console.error('Error during registration:', error);
@@ -117,26 +149,24 @@
                   <h3>Please enter your details</h3>
               </div>
           </div>
-  
+          <form>
           <div class="login-input">
               <div class="login-input-text">
-                  <input type="email" name="emailLogin">
+                  <input type="email" name="emailLogin" bind:value={email}>
                   <p>Email</p>
               </div>
               <div class="login-input-text">
-                  <input type="text" name="userLogin">
-                  <p>User Name</p>
-              </div>
-              <div class="login-input-text">
-                  <input type="password" name="passLogin">
+                  <input type="password" name="passLogin" bind:value={password}>
                   <p>Password</p>
               </div>
+            
 
               <div class="login-input-text">
-                <button on:click={goToHome}>Log in</button>
+                <button on:click={loginUser}>Log in</button>
               </div>
+            
           </div>
-  
+        </form>
           <div class="register-link">
               <div class="register-link-text">
                 <h3>Dont have an account? <a href="#" on:click={showRegisterScreen}>Register</a></h3>
