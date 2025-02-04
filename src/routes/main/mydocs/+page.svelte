@@ -191,7 +191,7 @@
 .title-header {
     margin-bottom: 5px;
     font-family: 'Poppins Bold';
-    font-size: 24px;
+    font-size: 30px;
     color: #1B1B1B;
 }
 
@@ -203,7 +203,7 @@
 
 .label {
     font-family: 'Poppins Bold';
-    font-size: 18px;
+    font-size: 24px;
     margin: 0 0 8px 10px;
     color: #1B1B1B;
 }
@@ -211,7 +211,7 @@
 .label2 {
     font-family: 'Poppins Bold';
     font-size: 18px;
-    margin: 0 250px 8px auto;
+    margin: 0 290px 8px auto;
     color: #1B1B1B;
 }
 
