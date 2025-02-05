@@ -6,11 +6,34 @@
   import { goto } from '$app/navigation';
   import { saveAs } from 'file-saver';
   import { generateWord } from 'quill-to-word';
-  import { userStore } from '../../lib/store.js';
+  import { userStore, templateDataStore } from '../../lib/store.js';
   import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
   /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
+
+  let templateData: {
+  documentTitle: string;
+  documentType: string;
+  documentSize: string;
+  tone: string;
+  detailsPrompt: string;
+  additionalDetails: string;
+} = {
+  documentTitle: '',
+  documentType: '',
+  documentSize: '',
+  tone: '',
+  detailsPrompt: '',
+  additionalDetails: ''
+};
+onMount(() => {
+  templateDataStore.subscribe(value => {
+    if (value) {
+      templateData = value;
+    }
+  });
+});
 
   // @ts-ignore
   let fromPage;
@@ -417,14 +440,17 @@ let user: { _id: string; username: string; email: string } | null = null;
   async function saveQuillContent() {
   const content = quil.root.innerHTML; // Get Quill's innerHTML
   const owner = userId
+  const documentTitle = templateData.documentTitle;  // Replace with the actual document name
+  const documentType = templateData.documentType;  // Replace with the actual document type
    // Replace with the actual user ID
 
-  try {
+   try {
     const response = await fetch('/api/saved_data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ owner, content })
+      body: JSON.stringify({ owner, content, documentTitle, documentType })
     });
+
 
     const result = await response.json();
     console.log(result.message);
@@ -454,7 +480,8 @@ let user: { _id: string; username: string; email: string } | null = null;
   </div>
 
   <div class="title">
-    <input type="text" name="" id="" placeholder="Title">
+    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentTitle} readonly>
+    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentType} readonly>
   </div>
 </div>
 

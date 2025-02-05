@@ -1,7 +1,7 @@
 import { start_mongo } from '$db/mongo';
-import { json } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
-export async function GET({ params }: any) {
+export const GET: RequestHandler = async ({ params }) => {
   const { ownerID } = params; // Extract the ownerID from the route parameters
 
   // Validate that the ownerID is provided
@@ -33,7 +33,7 @@ export async function GET({ params }: any) {
     return json(response, { status: 200 });
   } catch (err) {
     console.error('Error retrieving content:', err);
-    return json({ message: 'Failed to retrieve content', error: err.message }, { status: 500 });
+    return json({ message: 'Failed to retrieve content', error: err}, { status: 500 });
   } finally {
     client.close();
   }

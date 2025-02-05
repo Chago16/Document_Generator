@@ -1,7 +1,7 @@
 <script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
-    import { userStore } from '../../../lib/store.js';
+    import { userStore, templateDataStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
 
     let user: { _id: string; username: string; email: string } | null = null;
@@ -111,12 +111,17 @@ async function sendRequest() {
     // Pass to the editing page (assuming you have a way to store/send data)
     localStorage.setItem('generatedContent', data.content);
     console.log(data.content);
+    sendTemplatetoStore();
 
     // Redirect to editing page
     goto('/editing');
 }
 
-
+function sendTemplatetoStore() {
+    console.log("saving template data to store");
+    console.log(templateData);
+  templateDataStore.set(templateData);
+}
 </script>
 
 <form>

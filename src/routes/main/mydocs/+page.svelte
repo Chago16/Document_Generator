@@ -1,10 +1,90 @@
-<script>
+<script lang=ts>
     import '../../../app.css';
+    import { onMount } from 'svelte';
+    import { userStore } from '$lib/store';
     import { goto } from '$app/navigation';
 
-    function navigateToEditing(fromPage) {
+    let user: { _id: string; username: string; email: string } | null = null;
+    let documents: { documentId: string, title: string, type: string, date: string }[] = [];
+
+    userStore.subscribe(value => {
+		user = value;
+	});
+
+    let userId: any;
+
+    onMount(() => {
+		const token = localStorage.getItem('token');
+
+		// Clear token to prevent subsequent reloads
+		localStorage.removeItem('token');
+
+		if (token) {
+			location.reload();
+		}
+	});
+
+    onMount(async () => {
+		try {
+			const response = await fetch('/api/login', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			const data = await response.json();
+			console.log(data)
+
+			if (response.ok) {
+				// Store the user data in the `user` variable
+				console.log(data.user);
+
+                userStore.set(data.user);
+                userId = data.user?._id || null;
+                console.log(userId);
+
+			} else {
+				console.error('Failed to fetch user data:', data.message);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+
+	});
+
+    function navigateToEditing(fromPage: string) {
     goto(`/editing?from=${fromPage}`);
     }
+
+
+
+    async function getDocumentsByOwner() {
+  try {
+    const response = await fetch(`/api/g_data/${userId}`);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error fetching documents:', errorData.message);
+      return;
+    }
+
+    const data = await response.json();
+    console.log('Documents for owner:', data);
+    // You can now process or display the data
+
+    documents = data.documents || [];
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+$: if (userId) {
+    getDocumentsByOwner();
+}
+
+$: documents, console.log(documents); 
 </script>
 
 
@@ -17,14 +97,17 @@
     </div>
     <div class="item-container">
 
+        {#if documents.length > 0}
         <!-- item container -->
+        {#each documents as doc (doc.documentId)}
+        {console.log(doc)}
         <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
+            <div class="within-item">
                 <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
+                    <h2 class="docu-title">{doc.title}</h2>
+                    <h2 class="docu-type">{doc.type}</h2>
                 </div>
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
@@ -39,158 +122,14 @@
             </div> 
             </a>
         </div>
+        {/each}
         <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
-         <!-- item container -->
-         <div class="items">
-            <hr class="line">
-            <a href="#">
-            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
-                <div class="item1">
-                    <h2 class="docu-title">Document Name</h2>
-                    <h2 class="docu-type">Document Type</h2>
-                </div>
-                <div class="item2">
-                    <h2 class="date">01/01/25</h2>
-                </div>
-                <div class="delete-item">
-                    <button>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
-                        </svg>
-                    </button>
-                </div>
-            </div> 
-            </a>
-        </div>
-        <!-- /item container -->
-
+{:else}
+  <p>No documents found for this owner.</p>
+{/if}
          
          
     </div>
-    
-
-
 </div>
 
 
