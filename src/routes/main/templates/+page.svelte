@@ -1,7 +1,7 @@
 <script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
-    import { userStore } from '../../../lib/store.js';
+    import { userStore, templateDataStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
 
     let user: { _id: string; username: string; email: string } | null = null;
@@ -105,6 +105,7 @@ async function sendRequest() {
             body: JSON.stringify({ templateData, formData })
         });
 
+<<<<<<< HEAD
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
@@ -123,8 +124,20 @@ async function sendRequest() {
         console.error("Error in sendRequest:", error);
         alert("Failed to generate document. Please check the console for details.");
     }
+=======
+    const data = await response.json();
+    const htmlContent = deltaToHtml(data.content);
+    console.log(htmlContent); // Logs rich text in HTML format
+    sendTemplatetoStore()
+>>>>>>> 7266899fbd94c7c75e08977b948d80458f26dc93
 }
 
+
+function sendTemplatetoStore() {
+    console.log("saving template data to store");
+    console.log(templateData);
+  templateDataStore.set(templateData);
+}
 
 </script>
 
