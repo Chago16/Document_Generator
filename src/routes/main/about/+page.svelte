@@ -47,16 +47,16 @@
     <div class="pictures">
         <div class="top">
             <img class="images aj" src="/assets/AJPic.png" alt=""
-                onmouseover={() => displayStatus("Anthony James Esteban", "[Role]", {
-                    "UI/UX Design": { width: "50%", className: "ui-ux" },
-                    "Front-end Dev": { width: "50%", className: "frontend" },
-                    "Back-end Dev": { width: "50%", className: "backend" },
-                    "Communication": { width: "50%", className: "communication" }
+                onmouseover={() => displayStatus("Anthony James Esteban", "[Developer]", {
+                    "UI/UX Design": { width: "40%", className: "ui-ux" },
+                    "Front-end Dev": { width: "60%", className: "frontend" },
+                    "Back-end Dev": { width: "70%", className: "backend" },
+                    "Communication": { width: "80%", className: "communication" }
                 })}
                 onmouseleave={hideStatus}>
 
             <img class="images lui" src="/assets/LuiPic.png" alt=""
-                onmouseover={() => displayStatus("Luigi Lagman", "[Role]", {
+                onmouseover={() => displayStatus("Luigi Lagman", "[Developer]", {
                     "UI/UX Design": { width: "85%", className: "ui-ux" },
                     "Front-end Dev": { width: "70%", className: "frontend" },
                     "Back-end Dev": { width: "30%", className: "backend" },
@@ -66,15 +66,15 @@
         </div>
         <div class="bottom">
             <img class="images ches" src="/assets/ChesPic.png" alt=""
-                onmouseover={() => displayStatus("Marc Chester Perez", "[Role]", {
+                onmouseover={() => displayStatus("Marc Chester Perez", "[Analyst]", {
                     "UI/UX Design": { width: "50%", className: "ui-ux" },
-                    "Front-end Dev": { width: "50%", className: "frontend" },
-                    "Back-end Dev": { width: "50%", className: "backend" },
-                    "Communication": { width: "50%", className: "communication" }
+                    "Front-end Dev": { width: "60%", className: "frontend" },
+                    "Back-end Dev": { width: "30%", className: "backend" },
+                    "Communication": { width: "80%", className: "communication" }
                 }, "20px", "80px", "80px", "-59px", "#131313 transparent transparent  transparent")}
                 onmouseleave={hideStatus}>
             <img class="images gaby" src="/assets/GabyPic.png" alt=""
-                onmouseover={() => displayStatus("Gabriel Ian Santos", "[Role]", {
+                onmouseover={() => displayStatus("Gabriel Ian Santos", "[Analyst]", {
                     "UI/UX Design": { width: "50%", className: "ui-ux" },
                     "Front-end Dev": { width: "50%", className: "frontend" },
                     "Back-end Dev": { width: "50%", className: "backend" },

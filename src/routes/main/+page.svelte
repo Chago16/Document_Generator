@@ -83,6 +83,11 @@ $: if (userId) {
     getDocumentsByOwner();
 }
 
+function saveToLocalStorage(content: string) {
+    localStorage.setItem('generatedContent', content);
+    console.log(content)
+    goto('/editing');
+  }
 </script>
 
 <div class="home-contents">
@@ -97,7 +102,7 @@ $: if (userId) {
         <div class="item-div">
             {#each documents as doc (doc.documentId)}
             <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
+            <div class="item-container" on:click|preventDefault={() => saveToLocalStorage(doc.content)}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">{doc.documentTitle}</h2>
