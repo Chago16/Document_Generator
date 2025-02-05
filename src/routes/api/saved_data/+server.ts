@@ -1,23 +1,27 @@
 import { start_mongo } from '$db/mongo';
 import { json } from '@sveltejs/kit';
 
-
 export async function POST({ request }: any) {
-  const { owner, content } = await request.json(); // Extract owner ID & Quill content
+  // Extract owner, content, documentName, and documentType from the request body
+  const { owner, content, documentTitle, documentType } = await request.json();
 
-  if (!owner || !content) {
-    return json({ message: 'Owner ID and content are required' }, { status: 400 });
+  // Validate that all required fields are present
+  if (!owner || !content || !documentTitle || !documentType) {
+    return json({ message: 'Owner ID, content, document title, and document type are required' }, { status: 400 });
   }
-  
 
+  // Connect to MongoDB
   const client = await start_mongo();
   const db = client.db();
   const contentsCollection = db.collection('saved_data');
 
   try {
-    const result = await contentsCollection.insertOne({ 
-      owner, 
-      content: content 
+    // Insert the document with all required fields
+    const result = await contentsCollection.insertOne({
+      owner,
+      content,
+      documentTitle,
+      documentType,
     });
 
     // Return the inserted document's ID as part of the response

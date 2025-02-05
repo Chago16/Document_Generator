@@ -1,7 +1,7 @@
 <script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
-    import { userStore } from '../../../lib/store.js';
+    import { userStore, templateDataStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
     import Quill from 'quill';
 
@@ -116,8 +116,15 @@ async function sendRequest() {
     const data = await response.json();
     const htmlContent = deltaToHtml(data.content);
     console.log(htmlContent); // Logs rich text in HTML format
+    sendTemplatetoStore()
 }
 
+
+function sendTemplatetoStore() {
+    console.log("saving template data to store");
+    console.log(templateData);
+  templateDataStore.set(templateData);
+}
 
 </script>
 

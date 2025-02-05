@@ -114,6 +114,8 @@
 		localStorage.removeItem('token');
 		goto('/');
 	}
+
+
 </script>
 
 <head>
