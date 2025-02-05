@@ -393,11 +393,14 @@ async function exportToPDF() {
         }
 
         // Add the image to the PDF, centered with margins
-        const margin = 1; // Set margin (0.25 inches for all sides)
+        const margin = 0.5; // Set margin (0.25 inches for all sides)
         pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', margin, margin, imgWidth, imgHeight);
 
+        console.log("templateData.documentTitle:", templateData.documentTitle);
         // Save the PDF
-        pdf.save("document.pdf");
+        const fileName = templateData.documentTitle ? `${templateData.documentTitle}.pdf` : "document.pdf";
+        pdf.save(fileName);
+        console.log("Generated PDF Filename:", fileName);
     }).catch(error => {
         console.error("Error generating PDF:", error);
     });
@@ -496,16 +499,19 @@ let user: { _id: string; username: string; email: string } | null = null;
       </div>
       <div class="export">
         <h3>Export as:</h3>
-        <button on:click={exportToWord}>Word Document</button>
+        <!--
+        <button on:click={exportToWord}>Word Document</button>-->
         <button on:click={exportToPDF}>PDF</button>
       </div>
     </div>
   </div>
-
+  <!--
   <div class="title">
     <input type="text" name="" id="title" placeholder="Title" bind:value={templateData.documentTitle} readonly>
     <input type="text" name="" id="type" placeholder="Title" bind:value={templateData.documentType} readonly>
   </div>
+  -->
+  
 </div>
 
 <div class="toolbar">
@@ -574,10 +580,10 @@ let user: { _id: string; username: string; email: string } | null = null;
     }
 
     .export{
-      width: 570px;
+      width: 260px;
       display: flex;
       align-items: center;
-      margin-left: 30px;
+      margin-left: 754px;
     }
 
     .export button{
