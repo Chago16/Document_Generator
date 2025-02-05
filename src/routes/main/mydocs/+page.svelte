@@ -5,7 +5,7 @@
     import { goto } from '$app/navigation';
 
     let user: { _id: string; username: string; email: string } | null = null;
-    let documents: string | any[] = [];
+    let documents: any[] = [];
 
     userStore.subscribe(value => {
 		user = value;
@@ -91,6 +91,28 @@ function saveToLocalStorage(content: string) {
     goto('/editing');
   }
 
+  async function deleteDocument(documentId: string) {
+        try {
+            const response = await fetch(`/api/delete_item/${documentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.ok) {
+                // Remove the deleted document from the local `documents` array
+                documents = documents.filter(doc => doc.documentId !== documentId);
+                console.log('Document deleted successfully');
+            } else {
+                const data = await response.json();
+                console.error('Error:', data.message);
+            }
+        } catch (error) {
+            console.error('Error deleting document:', error);
+        }
+    }
+
 </script>
 
 
@@ -119,7 +141,7 @@ function saveToLocalStorage(content: string) {
                     <h2 class="date">01/01/25</h2>
                 </div>
                 <div class="delete-item">
-                    <button>
+                    <button on:click|stopPropagation={() => deleteDocument(doc.documentId)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
                         </svg>

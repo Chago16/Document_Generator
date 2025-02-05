@@ -1,7 +1,49 @@
 <script>
     import '../../../app.css';
 
+    let firstName = '';
+    let lastName = '';
+    let email = '';
+    let phoneNumber = '';
+    let subject = '';
+    let subjectTitle = '';
+    let message = '';
 
+    const submitForm = async () => {
+    const formData = { firstName, lastName, email, phoneNumber, subject, subjectTitle, message };
+
+    try {
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          service_id: 'service_jxiehp5',  // Replace with your Service ID
+          template_id: 'template_z568yuj',  // Replace with your Template ID
+          user_id: '-HQU27fSA0FW8APSf',  // Replace with your User ID (API Key)
+          template_params: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phoneNumber: formData.phoneNumber,
+            subject: formData.subject,
+            subjectTitle: formData.subjectTitle,
+            message: formData.message,
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send form data');
+      }
+
+      alert('Your message has been sent!');
+        firstName = lastName = email = phoneNumber = subject = subjectTitle = message = '';
+    } catch (err) {
+      console.log('There was an error, please try again later.');
+    }
+  };
 </script>
 
 <div class="contact-contents">
@@ -21,22 +63,22 @@
             
     </div>
     <div class="form-side">
-        <form action="/submit" method="POST">
+        <form on:submit|preventDefault={submitForm}>
             <div class="full-name">
-                <input type="text" placeholder="First Name" id="firstName">
-                <input type="text" placeholder="Last Name" id="lastName">
+                <input type="text" placeholder="First Name" bind:value={firstName}>
+                <input type="text" placeholder="Last Name" bind:value={lastName}>
             </div>
             <div class="form-inputs">
-                <input type="email" placeholder="Email" id="email">
-                <input type="number" placeholder="Phone Number (Optional)" id="phoneNumber">
-                <select id="subject" name="subject">
+                <input type="email" placeholder="Email" bind:value={email}>
+                <input type="number" placeholder="Phone Number (Optional)" bind:value={phoneNumber}>
+                <select bind:value={subject}>
                     <option value="question">Question</option>
                     <option value="feedback">Feedback</option>
                     <option value="support">Support</option>
                     <option value="suggestion">Suggestion</option>
                 </select>
-                <input type="text" placeholder="Subject Title" id="subjectTitle">
-                <textarea placeholder="Your Message" name="message" id="message"></textarea>
+                <input type="text" placeholder="Subject Title" bind:value={subjectTitle}>
+                <textarea placeholder="Your Message" bind:value={message}></textarea>
                 <button type="submit">Submit</button>
             </div>
             
