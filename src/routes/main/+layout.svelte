@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { activePage, userStore } from '../../lib/store.js';
 	import { goto } from '$app/navigation';
+	
 	let user: { _id: string; username: string; email: string } | null = null;
 	
 	// Subscribe to the store
@@ -49,7 +50,7 @@
 
 			if (response.ok) {
 				// Store the user data in the `user` variable
-				console.log(data);
+				console.log(data.user);
 
 				userStore.set(data.user);
 			} else {
@@ -164,7 +165,7 @@
 					</svg>
 				</button>
 				<div id="account-det" class="account-det">
-					<h3 id="account-name">{user ? user.email : 'Loading...'}
+					<h3 id="account-name">{user ? user.username : 'Loading...'}
 					</h3>
 					<p id="account-email">{user ? user.email : 'Loading...'}
 					</p>

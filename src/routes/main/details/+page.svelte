@@ -1,6 +1,130 @@
-<script>
+<script lang="ts">
+	import { use } from 'chai';
     import '../../../app.css';
+    import { userStore } from '../../../lib/store.js';
+    import { onMount } from 'svelte';
 
+    let user: { _id: string; username: string; email: string } | null = null;
+
+    userStore.subscribe(value => {
+		user = value;
+	});
+
+    let userId: any;
+    let formData = {
+        businessName: '',
+        taglineSlogan: '',
+        businessAddress: '',
+        phoneNumber: '',
+        emailAddress:'',
+        defaultHeaderText: '',
+        defaultFooterText: '',
+        senderName: '',
+        senderPosition: ''
+    }
+
+    let formData2 = {
+        businessName: '',
+        taglineSlogan: '',
+        businessAddress: '',
+        phoneNumber: '',
+        emailAddress:'',
+        defaultHeaderText: '',
+        defaultFooterText: '',
+        senderName: '',
+        senderPosition: ''
+    }
+
+    onMount(() => {
+		const token = localStorage.getItem('token');
+
+		// Clear token to prevent subsequent reloads
+		localStorage.removeItem('token');
+
+		if (token) {
+			location.reload();
+		}
+	});
+
+    onMount(async () => {
+		try {
+			const response = await fetch('/api/login', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			const data = await response.json();
+			console.log(data)
+
+			if (response.ok) {
+				// Store the user data in the `user` variable
+				console.log(data.user);
+
+                userStore.set(data.user);
+                userId = data.user?._id || null;
+                console.log(userId);
+
+			} else {
+				console.error('Failed to fetch user data:', data.message);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+
+	});
+    
+    async function saveUserDetails(id: any, formData: any) {
+  try {
+    const response = await fetch('/api/stored_details', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id, ...formData }) // Send ID and form data
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error saving user details:', error);
+    return { message: 'Request failed' };
+  }
+}
+
+    async function handleSubmit() {
+        const result = await saveUserDetails(userId, formData);
+        console.log(formData);
+        console.log(result.message); // Show success or error message
+        fetchData();
+    }
+
+    $: if (userId) {
+    fetchData();
+}
+
+async function fetchData() {
+    try {
+        const response = await fetch(`/api/g_details/${userId}`);
+        if (!response.ok) {
+            console.error('Failed to fetch data:', response.status, await response.text());
+            return;
+        }
+
+        const data = await response.json();
+        formData2 = { ...formData, ...data };
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+}
+
+let formState = 'form1';
+
+const toggleForm = () => {
+    formState = formState === 'form1' ? 'form2' : 'form1';
+  };
 
 </script>
 
@@ -8,31 +132,36 @@
     <h1>Common Details Setup</h1>
 </div>
 
+<button on:click={toggleForm}>Edit</button>
+
+
+<form on:submit={handleSubmit}>
 <div class="details-wrapper">
 
+    {#if formState === 'form1'}
     <div class="branding-contact">
         <h3 class="headers-h3">Branding Details:</h3>
         <div class="branding-input">
             <p>Business Name:</p>
-            <input type="text" name="businessName" id="" required>
+            <input type="text" name="businessName" id="" required bind:value={formData2.businessName} readonly>
         </div>
         <div class="branding-input">
             <p>Tagline/Slogan:</p>
-            <input type="text" name="taglineSlogan" id="" required>
+            <input type="text" name="taglineSlogan" id="" required bind:value={formData2.taglineSlogan} readonly>
         </div>
 
         <h3 class="headers-h3">Contact Details:</h3>
         <div class="contact-input">
             <p>Business Address:</p>
-            <input type="text" name="businessAddress" id="" required>
+            <input type="text" name="businessAddress" id="" required bind:value={formData2.businessAddress} readonly>
         </div>
         <div class="contact-input">
             <p>Phone Number:</p>
-            <input type="number" name="phoneNumber" id="" required>
+            <input type="number" name="phoneNumber" id="" required bind:value={formData2.phoneNumber} readonly>
         </div>
         <div class="contact-input">
             <p>Email Address:</p>
-            <input type="email" name="emailAddress" id="" required>
+            <input type="email" name="emailAddress" id="" required bind:value={formData2.emailAddress} readonly>
         </div>
         <!--
         <div class="branding-input-image">
@@ -61,11 +190,11 @@
         <div class="input-text-areas">
             <div class="custom-input">
                 <p>Default Header Text:</p>
-                <textarea name="defaultHeaderText" id=""></textarea>
+                <textarea name="defaultHeaderText" id="" bind:value={formData2.defaultHeaderText} readonly></textarea>
             </div>
             <div class="custom-input">
                 <p>Default Footer Text:</p>
-                <textarea name="defaultFooterText" id=""></textarea>
+                <textarea name="defaultFooterText" id="" bind:value={formData2.defaultFooterText} readonly></textarea>
             </div>
         </div>
 
@@ -73,11 +202,11 @@
         <div class="sender-wrapper">
             <div class="sender-input">
                 <p>Sender Name:</p>
-                <input type="text" name="senderName" id="" required>
+                <input type="text" name="senderName" id="" required bind:value={formData2.senderName} readonly>
             </div>
             <div class="sender-input">
                 <p>Position:</p>
-                <input type="text" name="senderPosition" id="" required>
+                <input type="text" name="senderPosition" id="" required bind:value={formData2.senderPosition} readonly>
             </div>
             <!--
             <div class="sender-input-image-wrap">
@@ -109,8 +238,109 @@
             <button type="submit">Save</button>
         </div>
     </div>
-</div>
+    {:else if formState === 'form2'}
+    <div class="branding-contact">
+        <h3 class="headers-h3">Branding Details:</h3>
+        <div class="branding-input">
+            <p>Business Name:</p>
+            <input type="text" name="businessName" id="" required bind:value={formData.businessName} placeholder="business name">
+        </div>
+        <div class="branding-input">
+            <p>Tagline/Slogan:</p>
+            <input type="text" name="taglineSlogan" id="" required bind:value={formData.taglineSlogan}>
+        </div>
 
+        <h3 class="headers-h3">Contact Details:</h3>
+        <div class="contact-input">
+            <p>Business Address:</p>
+            <input type="text" name="businessAddress" id="" required bind:value={formData.businessAddress}>
+        </div>
+        <div class="contact-input">
+            <p>Phone Number:</p>
+            <input type="number" name="phoneNumber" id="" required bind:value={formData.phoneNumber}>
+        </div>
+        <div class="contact-input">
+            <p>Email Address:</p>
+            <input type="email" name="emailAddress" id="" required bind:value={formData.emailAddress}>
+        </div>
+        <!--
+        <div class="branding-input-image">
+            <p>Upload Logos</p>
+            <div class="buttons-remove-upload">
+                <button type="reset" class="remove">Remove</button>
+                <button type="button" class="upload">Upload</button>
+            </div>
+        </div>
+        <div class="branding-input-image-preview-wrapper">
+            <div class="branding-input-image-preview">
+                <div class="image-container">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                    <img src="/assets/LogoSample.png" alt="logo">
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="custom-sender">
+        <h3 class="headers-h3">Custom Branding Details:</h3>
+        <div class="input-text-areas">
+            <div class="custom-input">
+                <p>Default Header Text:</p>
+                <textarea name="defaultHeaderText" id="" bind:value={formData.defaultHeaderText}></textarea>
+            </div>
+            <div class="custom-input">
+                <p>Default Footer Text:</p>
+                <textarea name="defaultFooterText" id="" bind:value={formData.defaultFooterText}></textarea>
+            </div>
+        </div>
+
+        <h3 class="headers-h3">Sender Details:</h3>
+        <div class="sender-wrapper">
+            <div class="sender-input">
+                <p>Sender Name:</p>
+                <input type="text" name="senderName" id="" required bind:value={formData.senderName}>
+            </div>
+            <div class="sender-input">
+                <p>Position:</p>
+                <input type="text" name="senderPosition" id="" required bind:value={formData.senderPosition}>
+            </div>
+            <!--
+            <div class="sender-input-image-wrap">
+                <div class="sender-input-image">
+                    <p>Signature Upload</p>
+                    <button type="button" class="upload">Upload</button>
+                    <button type="reset" class="remove">Remove</button>
+                </div>
+                
+                <div class="sender-input-image-preview">
+                    <div class="image-container">
+                        <img src="/assets/LogoSample.png" alt="logo">
+                    </div>
+                </div>
+                <div class="sender-input-image">
+                    <p>Head Shot Picture Upload</p>
+                    <button type="button" class="upload">Upload</button>
+                    <button type="reset" class="remove">Remove</button>
+                </div>
+                <div class="sender-input-image-preview">
+                    <div class="image-container">
+                        <img src="/assets/LogoSample.png" alt="logo">
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+        <div class="header-save">
+            <button type="submit">Save</button>
+        </div>
+    </div>
+    {/if}
+</div>
+</form>
 
 <style>
     h1 {
