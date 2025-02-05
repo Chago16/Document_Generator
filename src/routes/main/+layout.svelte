@@ -163,7 +163,7 @@
 					</svg>
 				</button>
 				<div id="account-det" class="account-det">
-					<h3 id="account-name">{user ? user.email : 'Loading...'}
+					<h3 id="account-name">{user ? user.username : 'Loading...'}
 					</h3>
 					<p id="account-email">{user ? user.email : 'Loading...'}
 					</p>
