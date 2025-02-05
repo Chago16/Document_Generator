@@ -1,10 +1,88 @@
-<script>
+<script lang=ts>
     import '../../app.css';
+    import { onMount } from 'svelte';
+    import { userStore } from '$lib/store';
     import { goto } from '$app/navigation';
 
-    function navigateToEditing(fromPage) {
+    function navigateToEditing(fromPage: string) {
     goto(`/editing?from=${fromPage}`);
     }
+
+    let user: { _id: string; username: string; email: string } | null = null;
+    let documents: string | any[] = [];
+
+    userStore.subscribe(value => {
+		user = value;
+	});
+
+    let userId: any;
+
+    onMount(() => {
+		const token = localStorage.getItem('token');
+
+		// Clear token to prevent subsequent reloads
+		localStorage.removeItem('token');
+
+		if (token) {
+			location.reload();
+		}
+	});
+
+    onMount(async () => {
+		try {
+			const response = await fetch('/api/login', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			const data = await response.json();
+			console.log(data)
+
+			if (response.ok) {
+				// Store the user data in the `user` variable
+				console.log(data.user);
+
+                userStore.set(data.user);
+                userId = data.user?._id || null;
+                console.log(userId);
+
+			} else {
+				console.error('Failed to fetch user data:', data.message);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+
+	});
+
+    async function getDocumentsByOwner() {
+  try {
+    const response = await fetch(`/api/g_data/${userId}`);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error fetching documents:', errorData.message);
+      return;
+    }
+
+    const data = await response.json();
+    console.log('Documents for owner:', data);
+    // You can now process or display the data
+
+    documents = data;
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+$: if (userId) {
+    getDocumentsByOwner();
+}
+
 </script>
 
 <div class="home-contents">
@@ -17,65 +95,17 @@
         <h1 class="rec-works">Recent Works</h1>
     
         <div class="item-div">
+            {#each documents as doc (doc.documentId)}
             <!-- Item Container -->
             <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
+                    <h2 class="doc-name">{doc.documentTitle}</h2>
+                    <h3 class="doc-type">{doc.documentType}</h3>
                 </div>
             </div>
             <!-- /Item Container -->
-    
-            <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
-                <div class="item-frame"></div>
-                <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
-                </div>
-            </div>
-            <!-- /Item Container -->
-            
-            <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
-                <div class="item-frame"></div>
-                <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
-                </div>
-            </div>
-            <!-- /Item Container -->
-    
-            <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
-                <div class="item-frame"></div>
-                <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
-                </div>
-            </div>
-            <!-- /Item Container -->
-    
-            <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
-                <div class="item-frame"></div>
-                <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
-                </div>
-            </div>
-            <!-- /Item Container -->
-    
-            <!-- Item Container -->
-            <div class="item-container" on:click={navigateToEditing('main')}>
-                <div class="item-frame"></div>
-                <div class="item-details">
-                    <h2 class="doc-name">Document Name</h2>
-                    <h3 class="doc-type">Document Type</h3>
-                </div>
-            </div>
-            <!-- /Item Container -->
+            {/each}
             
         </div>
 
@@ -124,7 +154,7 @@
     /*width: 97%;*/
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 20px;
 }
 
 .image-div-container {
@@ -170,7 +200,7 @@
 .item-frame {
     background-color: #D9D9D9;
     border-radius: 5px;
-    height: 260px;
+    height: 200px;
     width: 230px;
     margin: 20px 0 5px 0;
 }

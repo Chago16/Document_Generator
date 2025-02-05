@@ -85,6 +85,12 @@ $: if (userId) {
     getDocumentsByOwner();
 }
 
+function saveToLocalStorage(content: string) {
+    localStorage.setItem('generatedContent', content);
+    console.log(content)
+    goto('/editing');
+  }
+
 </script>
 
 
@@ -97,13 +103,13 @@ $: if (userId) {
     </div>
     <div class="item-container">
 
-        {#if documents.length > 0}
+        
         <!-- item container -->
         {#each documents as doc (doc.documentId)}
         {console.log(doc)}
         <div class="items">
             <hr class="line">
-            <a href="#">
+            <a href="#" on:click|preventDefault={() => saveToLocalStorage(doc.content)}>
             <div class="within-item">
                 <div class="item1">
                     <h2 class="docu-title">{doc.documentTitle}</h2>
@@ -124,9 +130,7 @@ $: if (userId) {
         </div>
         {/each}
         <!-- /item container -->
-{:else}
-  <p>No documents found for this owner.</p>
-{/if}
+
          
          
     </div>
