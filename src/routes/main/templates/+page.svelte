@@ -1,7 +1,7 @@
 <script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
-    import { userStore, templateDataStore } from '../../../lib/store.js';
+    import { userStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
 
     let user: { _id: string; username: string; email: string } | null = null;
@@ -98,46 +98,24 @@ async function fetchData() {
 }
 
 async function sendRequest() {
-    try {
-        const response = await fetch('/api/chatgpt', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ templateData, formData })
-        });
+    const response = await fetch('/api/chatgpt', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ templateData, formData })
+    });
 
-<<<<<<< HEAD
-        if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Generated Content:", data.content);
-
-        if (!data.content) {
-            throw new Error("Empty content received");
-        }
-
-        // Store content and navigate
-        localStorage.setItem('generatedContent', data.content);
-        goto('/editing');
-    } catch (error) {
-        console.error("Error in sendRequest:", error);
-        alert("Failed to generate document. Please check the console for details.");
-    }
-=======
     const data = await response.json();
-    const htmlContent = deltaToHtml(data.content);
-    console.log(htmlContent); // Logs rich text in HTML format
-    sendTemplatetoStore()
->>>>>>> 7266899fbd94c7c75e08977b948d80458f26dc93
+
+    // Pass to the editing page (assuming you have a way to store/send data)
+    localStorage.setItem('generatedContent', data.content);
+    console.log(data.content);
+
+    // Redirect to editing page
+    goto('/editing');
 }
 
-
-function sendTemplatetoStore() {
-    console.log("saving template data to store");
-    console.log(templateData);
-  templateDataStore.set(templateData);
-}
 
 </script>
 

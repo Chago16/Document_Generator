@@ -6,42 +6,15 @@
   import { goto } from '$app/navigation';
   import { saveAs } from 'file-saver';
   import { generateWord } from 'quill-to-word';
-  import { userStore, templateDataStore } from '../../lib/store.js';
+  import { userStore } from '../../lib/store.js';
   import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
   /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
 
-
-  let templateData: {
-  documentTitle: string;
-  documentType: string;
-  documentSize: string;
-  tone: string;
-  detailsPrompt: string;
-  additionalDetails: string;
-} = {
-  documentTitle: '',
-  documentType: '',
-  documentSize: '',
-  tone: '',
-  detailsPrompt: '',
-  additionalDetails: ''
-};
-
-onMount(() => {
-  templateDataStore.subscribe(value => {
-    if (value) {
-      templateData = value;
-    }
-  });
-});
-
-
-
   // @ts-ignore
   let fromPage;
-  let generatedContent = '';
+  let editor;
 
   $: {
       fromPage = $page.url.searchParams.get('from') || 'default';
@@ -67,18 +40,6 @@ onMount(() => {
     ['clean']
   ];
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-
-    // Load content from localStorage
-    const savedContent = localStorage.getItem('generatedContent');
-    if (savedContent) {
-        quill.root.innerHTML = savedContent;
-    }
-});
-
 
   /*Quill.register('modules/imageResize', ImageResize);*/
 
@@ -92,15 +53,23 @@ onMount(() => {
         },*/
       }
     });
-    const storedContent = localStorage.getItem('generatedContent');
 
-    if (storedContent) {
-        generatedContent = storedContent;
-        console.log("Editing page received content:", generatedContent);
+    let generatedContent = localStorage.getItem('generatedContent');
+    if (generatedContent) {
+        generatedContent = generatedContent.replace(/^```html\s*/g, '').replace(/\s*```$/g, '');
+        generatedContent = convertInlineStylesToClasses(generatedContent);
+        // Insert the HTML into the Quill editor
+        quil.clipboard.dangerouslyPasteHTML(generatedContent);
     } else {
-        console.warn("No generated content received!");
+        console.warn("No content found in localStorage");
     }
   });
+
+  function convertInlineStylesToClasses(html) {
+    return html.replace(/style="text-align:\s*center;"/g, 'class="ql-align-center"')
+               .replace(/style="text-align:\s*right;"/g, 'class="ql-align-right"')
+               .replace(/style="text-align:\s*left;"/g, 'class="ql-align-left"');
+}
 
   async function convertImagesToBase64() {
     const images = document.querySelectorAll('#editor img');
@@ -423,7 +392,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 				},
 				credentials: 'include'
 			});
-      sendTemplatetoStore()
+
 			const data = await response.json();
 			console.log(data)
 
@@ -447,24 +416,24 @@ let user: { _id: string; username: string; email: string } | null = null;
 
   async function saveQuillContent() {
   const content = quil.root.innerHTML; // Get Quill's innerHTML
-  const owner = userId;  // Replace with the actual user ID
-  const documentTitle = templateData.documentTitle;  // Replace with the actual document name
-  const documentType = templateData.documentType;  // Replace with the actual document type
+  const owner = userId
+   // Replace with the actual user ID
 
   try {
     const response = await fetch('/api/saved_data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ owner, content, documentTitle, documentType })
+      body: JSON.stringify({ owner, content })
     });
 
     const result = await response.json();
     console.log(result.message);
-    goto(`/${fromPage}`);
   } catch (error) {
     console.error('Error saving content:', error);
   }
 }
+
+
 
 
 </script>
@@ -485,8 +454,7 @@ let user: { _id: string; username: string; email: string } | null = null;
   </div>
 
   <div class="title">
-    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentTitle} readonly>
-    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentType} readonly>
+    <input type="text" name="" id="" placeholder="Title">
   </div>
 </div>
 
@@ -499,11 +467,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 
 <div class="editing-page">
   <div id="editor">
-<<<<<<< HEAD
-    {generatedContent}
-=======
-    <p>Hello <strong>World</strong>! Good Morning</p>
->>>>>>> 7266899fbd94c7c75e08977b948d80458f26dc93
+    
   </div>
 </div>
 
@@ -565,9 +529,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 
     .title{
       margin-top: 10px;
-      margin-right: 20px;
-      display: flex;
-      flex-direction: column;
+      margin-right: 30px;
     }
 
     .title input{
