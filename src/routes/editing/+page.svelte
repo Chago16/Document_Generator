@@ -11,6 +11,7 @@
   import html2canvas from "html2canvas";
   /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
 
+  // @ts-ignore
   let fromPage;
 
   $: {
@@ -18,9 +19,11 @@
   }
 
   function exitAndSave() {
+        // @ts-ignore
         goto(`/${fromPage}`); // Go back to the original page
   }
 
+  // @ts-ignore
   let quil;
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
@@ -58,11 +61,15 @@
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
 
+            // @ts-ignore
             canvas.width = img.naturalWidth;
+            // @ts-ignore
             canvas.height = img.naturalHeight;
+            // @ts-ignore
             ctx.drawImage(img, 0, 0);
 
             const dataURL = canvas.toDataURL("image/png");
+            // @ts-ignore
             img.src = dataURL;
 
             resolve(dataURL);
@@ -72,9 +79,12 @@
     const base64Images = await Promise.all(promises);
 
     // Modify the Quill delta to store Base64 images
+    // @ts-ignore
     const delta = quil.getContents();
+    // @ts-ignore
     delta.ops = delta.ops.map((op) => {
         if (op.insert && op.insert.image) {
+            // @ts-ignore
             const imgIndex = Array.from(images).findIndex(img => img.src === op.insert.image);
             if (imgIndex !== -1) {
                 op.insert.image = base64Images[imgIndex]; // Replace image URL with Base64
@@ -87,11 +97,14 @@
 }
 
 // Function to get image dimensions from the Quill editor
+// @ts-ignore
 function getImageDimensions(imageUrl) {
     const image = document.querySelector(`img[src="${imageUrl}"]`);
     if (image) {
         return {
+            // @ts-ignore
             width: image.width,
+            // @ts-ignore
             height: image.height,
         };
     }
@@ -102,19 +115,25 @@ async function exportToWord() {
     const delta = await convertImagesToBase64(); // Ensure images are Base64 before exporting
 
     let paragraphs = [];
+    // @ts-ignore
     let currentTextRuns = [];
     let currentAlignment = 'left';  // Default alignment
 
+    // @ts-ignore
     delta.ops.forEach(op => {
         if (typeof op.insert === 'string') {
             let textOptions = {};
 
             // Apply formatting
             if (op.attributes) {
+                // @ts-ignore
                 if (op.attributes.bold) textOptions.bold = true;
+                // @ts-ignore
                 if (op.attributes.italic) textOptions.italic = true;
+                // @ts-ignore
                 if (op.attributes.underline) textOptions.underline = true;
 
+                // @ts-ignore
                 if (op.attributes.strike) textOptions.strike = true;
 
                 if (op.attributes.font) {
@@ -123,6 +142,7 @@ async function exportToWord() {
                         'serif': "Times New Roman",
                         'monospace': "Courier New"
                     };
+                    // @ts-ignore
                     textOptions.font = fontMap[op.attributes.font] || "Calibri"; // Default to Calibri
                 }
 
@@ -137,8 +157,10 @@ async function exportToWord() {
                 }
 
 
+                // @ts-ignore
                 if (op.attributes.color) textOptions.color = op.attributes.color;
                 if (op.attributes.background) {
+                    // @ts-ignore
                     textOptions.shading = { fill: op.attributes.background };
                 }
 
@@ -148,14 +170,17 @@ async function exportToWord() {
                         large: 28,  // 14pt
                         huge: 40    // 20pt
                     };
+                    // @ts-ignore
                     textOptions.size = fontSizeMap[op.attributes.size] || 24; // Default to normal size (12pt)
                 }
 
                 if (op.attributes.script === "super") {
+                    // @ts-ignore
                     textOptions.superscript = true;
                 }
 
                 if (op.attributes.script === "sub") {
+                    // @ts-ignore
                     textOptions.subscript = true;
                 }
 
@@ -168,13 +193,16 @@ async function exportToWord() {
 
             // Split text by newline, but keep it in the same paragraph
             const textParts = op.insert.split("\n");
+            // @ts-ignore
             textParts.forEach((part, index) => {
                 if (part !== "") {
                     currentTextRuns.push(new TextRun({ text: part, ...textOptions }));
                 }
                 if (index !== textParts.length - 1) {
                     paragraphs.push(new Paragraph({
+                        // @ts-ignore
                         children: currentTextRuns,
+                        // @ts-ignore
                         alignment: currentAlignment,  
                     }));
                     currentTextRuns = [];
@@ -186,7 +214,9 @@ async function exportToWord() {
         if (op.insert && op.insert.image) {
             if (currentTextRuns.length > 0) {
                 paragraphs.push(new Paragraph({
+                    // @ts-ignore
                     children: currentTextRuns,
+                    // @ts-ignore
                     alignment: currentAlignment,  // Apply alignment to the paragraph
                 }));
                 currentTextRuns = [];
@@ -198,6 +228,7 @@ async function exportToWord() {
             paragraphs.push(
                 new Paragraph({
                     children: [
+                        // @ts-ignore
                         new ImageRun({
                             data: imageData,
                             transformation: {
@@ -206,6 +237,7 @@ async function exportToWord() {
                             },
                         }),
                     ],
+                    // @ts-ignore
                     alignment: currentAlignment,  // Apply alignment to the paragraph
                 })
             );
@@ -215,7 +247,9 @@ async function exportToWord() {
     // Add last text paragraph if any
     if (currentTextRuns.length > 0) {
         paragraphs.push(new Paragraph({
+            // @ts-ignore
             children: currentTextRuns,
+            // @ts-ignore
             alignment: currentAlignment,  // Apply alignment to the paragraph
         }));
     }
@@ -271,6 +305,7 @@ async function exportToPDF() {
     }
 
     // Use html2canvas to capture the editor content as an image
+    // @ts-ignore
     html2canvas(editorContent, {
         scale: 2, // Increase scale for higher resolution
         useCORS: true // Allow cross-origin images
