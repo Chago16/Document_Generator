@@ -3,8 +3,8 @@
     import { goto } from '$app/navigation';
 
 
-    function navigateToEditing() {
-        goto('/editing');
+    function navigateToEditing(fromPage) {
+    goto(`/editing?from=${fromPage}`);
     }
 </script>
 
@@ -66,7 +66,7 @@
                     </select>
                 </div>
                 <br><br><br>
-                <p><strong>Disclaimer:</strong> The content generated below will rely heavily on the inputs provided by you. We use AI for content generation, so the quality and relevance of the content will depend on your input.</p>
+                <p><strong>Disclaimer:</strong> The content generated will rely heavily on the inputs provided by you. We use AI for content generation, so the quality and relevance of the content will depend on your input.</p>
             </div>
         </div>
         
@@ -119,7 +119,7 @@
             </div>
         </div>
     
-        <button on:click={navigateToEditing}>Generate Document</button>
+        <button on:click={navigateToEditing('main/templates')}>Generate Document</button>
     </div>
 </div>
 
