@@ -5,7 +5,7 @@
     import { goto } from '$app/navigation';
 
     let user: { _id: string; username: string; email: string } | null = null;
-    let documents: { documentId: string, title: string, type: string, date: string }[] = [];
+    let documents: string | any[] = [];
 
     userStore.subscribe(value => {
 		user = value;
@@ -74,7 +74,8 @@
     console.log('Documents for owner:', data);
     // You can now process or display the data
 
-    documents = data.documents || [];
+    documents = data;
+
   } catch (error) {
     console.error('Error:', error);
   }
@@ -84,7 +85,6 @@ $: if (userId) {
     getDocumentsByOwner();
 }
 
-$: documents, console.log(documents); 
 </script>
 
 
@@ -106,8 +106,8 @@ $: documents, console.log(documents);
             <a href="#">
             <div class="within-item">
                 <div class="item1">
-                    <h2 class="docu-title">{doc.title}</h2>
-                    <h2 class="docu-type">{doc.type}</h2>
+                    <h2 class="docu-title">{doc.documentTitle}</h2>
+                    <h2 class="docu-type">{doc.documentType}</h2>
                 </div>
                 <div class="item2">
                     <h2 class="date">01/01/25</h2>
@@ -159,7 +159,7 @@ $: documents, console.log(documents);
 
 .label {
     font-family: 'Poppins Bold';
-    font-size: 24px;
+    font-size: 18px;
     margin: 0 0 8px 10px;
     color: #1B1B1B;
 }
