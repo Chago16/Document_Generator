@@ -423,7 +423,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 				},
 				credentials: 'include'
 			});
-
+      sendTemplatetoStore()
 			const data = await response.json();
 			console.log(data)
 
