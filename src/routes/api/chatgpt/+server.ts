@@ -80,6 +80,5 @@ export async function POST({ request }) {
     });
 
     const data = await response.json();
-
     return json({ content: data.choices[0].message.content });
 }

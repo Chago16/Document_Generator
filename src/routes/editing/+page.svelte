@@ -14,6 +14,7 @@
 
   // @ts-ignore
   let fromPage;
+  let generatedContent = '';
 
   $: {
       fromPage = $page.url.searchParams.get('from') || 'default';
@@ -39,6 +40,18 @@
     ['clean']
   ];
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+
+    // Load content from localStorage
+    const savedContent = localStorage.getItem('generatedContent');
+    if (savedContent) {
+        quill.root.innerHTML = savedContent;
+    }
+});
+
 
   /*Quill.register('modules/imageResize', ImageResize);*/
 
@@ -52,6 +65,14 @@
         },*/
       }
     });
+    const storedContent = localStorage.getItem('generatedContent');
+
+    if (storedContent) {
+        generatedContent = storedContent;
+        console.log("Editing page received content:", generatedContent);
+    } else {
+        console.warn("No generated content received!");
+    }
   });
 
   async function convertImagesToBase64() {
@@ -411,6 +432,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 
     const result = await response.json();
     console.log(result.message);
+    goto(`/${fromPage}`);
   } catch (error) {
     console.error('Error saving content:', error);
   }
@@ -450,6 +472,7 @@ let user: { _id: string; username: string; email: string } | null = null;
 
 <div class="editing-page">
   <div id="editor">
+    {generatedContent}
   </div>
 </div>
 

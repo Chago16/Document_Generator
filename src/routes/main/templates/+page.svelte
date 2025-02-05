@@ -3,7 +3,6 @@
     import { goto } from '$app/navigation';
     import { userStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
-    import Quill from 'quill';
 
     let user: { _id: string; username: string; email: string } | null = null;
 
@@ -98,24 +97,32 @@ async function fetchData() {
     }
 }
 
-function deltaToHtml(delta) {
-    const quill = new Quill(document.createElement('div')); // Temporary Quill instance
-    quill.setContents(delta);
-    return quill.root.innerHTML; // Get formatted HTML
-}
-
 async function sendRequest() {
-    const response = await fetch('/api/chatgpt', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ templateData, formData })
-    });
+    try {
+        const response = await fetch('/api/chatgpt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ templateData, formData })
+        });
 
-    const data = await response.json();
-    const htmlContent = deltaToHtml(data.content);
-    console.log(htmlContent); // Logs rich text in HTML format
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Generated Content:", data.content);
+
+        if (!data.content) {
+            throw new Error("Empty content received");
+        }
+
+        // Store content and navigate
+        localStorage.setItem('generatedContent', data.content);
+        goto('/editing');
+    } catch (error) {
+        console.error("Error in sendRequest:", error);
+        alert("Failed to generate document. Please check the console for details.");
+    }
 }
 
 
