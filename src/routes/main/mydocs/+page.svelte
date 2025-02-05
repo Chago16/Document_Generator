@@ -120,8 +120,8 @@ function saveToLocalStorage(content: string) {
     <h1 class="title-header">My Documents</h1>
 
     <div class="labels">
-        <h2 class="label">Name</h2>
-        <h2 class="label2">Date</h2>
+        <h2 class="label">Document Name</h2>
+        <h2 class="label2">Document Type</h2>
     </div>
     <div class="item-container">
 
@@ -135,10 +135,10 @@ function saveToLocalStorage(content: string) {
             <div class="within-item">
                 <div class="item1">
                     <h2 class="docu-title">{doc.documentTitle}</h2>
-                    <h2 class="docu-type">{doc.documentType}</h2>
                 </div>
                 <div class="item2">
-                    <h2 class="date">01/01/25</h2>
+                    
+                    <h2 class="docu-type">{doc.documentType}</h2>
                 </div>
                 <div class="delete-item">
                     <button on:click|stopPropagation={() => deleteDocument(doc.documentId)}>
@@ -193,7 +193,7 @@ function saveToLocalStorage(content: string) {
 .label2 {
     font-family: 'Poppins Bold';
     font-size: 18px;
-    margin: 0 290px 8px auto;
+    margin: 0 290px 8px 600px;
     color: #1B1B1B;
 }
 
@@ -232,13 +232,21 @@ a {
     background: linear-gradient(to right, #A0EA00, #a0ea0000);
 }
 
+.item1 {
+    display: flex;
+    align-items: center;
+    margin: 10px 0px 0px 0px;
+    width: 750px;
+}
+
+
 .item2 {
     display: flex;
     align-items: center;
-    margin: 10px 215px 0px auto;
+    margin: 10px 430px 0px 10px;
 }
 .delete-item{
-    margin-top: 19px;
+    margin-top: 18px;
 }
 
 .delete-item button{
@@ -263,12 +271,6 @@ a {
     font-size: 16px;
     font-weight: 300;
     margin: 2px 0 0 0;
-}
-
-.date {
-    font-family: 'Telegraf Regular';
-    font-size: 18px;
-    font-weight: 300;
 }
 
 .item-container::-webkit-scrollbar {

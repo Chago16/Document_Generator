@@ -297,8 +297,20 @@ async function exportToWord() {
 
     // Convert inches to twips (1 inch = 1440 twips)
     const inchesToTwips = 1440;
-    const pageWidthInches = 8.5;
-    const pageHeightInches = 14;
+    let pageWidthInches = 8.5;  // Default for letter size
+    let pageHeightInches = 11;  // Default for letter size
+
+    // Set the page size based on documentSize
+    if (templateData.documentSize === 'letter') {
+        pageWidthInches = 8.5;
+        pageHeightInches = 11;
+    } else if (templateData.documentSize === 'legal') {
+        pageWidthInches = 8.5;
+        pageHeightInches = 14;
+    } else if (templateData.documentSize === 'a4') {
+        pageWidthInches = 8.27;
+        pageHeightInches = 11.69;
+    }
     const marginInches = 1; // 1 inch margin for all sides
 
     const doc = new Document({
