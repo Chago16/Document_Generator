@@ -40,7 +40,7 @@ onMount(() => {
   let editor;
 
   $: {
-      fromPage = $page.url.searchParams.get('from') || 'default';
+      fromPage = $page.url.searchParams.get('from') || 'main';
       
   }
 

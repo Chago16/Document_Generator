@@ -203,6 +203,7 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-frame {
+    background-image: url('assets/aboutblank.png');
     background-color: #D9D9D9;
     border-radius: 5px;
     height: 200px;

@@ -2,6 +2,7 @@
 	import '../../app.css';
 	import { onMount } from 'svelte';
 	import { activePage, userStore } from '../../lib/store.js';
+	
 	import { goto } from '$app/navigation';
 	
 	let user: { _id: string; username: string; email: string } | null = null;

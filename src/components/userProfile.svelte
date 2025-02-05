@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	
 	import { onMount } from 'svelte';
 	import { activePage, userStore } from '../lib/store.js';
 	import { goto } from '$app/navigation';
@@ -144,9 +144,87 @@
 </div>
 
 <style>
+	:global(body) {
+		margin: 0px;
+	}
 
+	main {
+		height: 95vh;
+		margin: 0px;
+	}
 
-	
+	.wrapper-container {
+		margin-top: -15px;
+		height: min-content;
+		display: flex;
+		flex-direction: column;
+		z-index: 1;
+	}
+
+	.header {
+		display: flex;
+		flex-direction: row;
+		position: fixed;
+		height: 22%;
+		width: 100%;
+		background: linear-gradient(to bottom, #ffffff, #ffffff, #ffffff, #ffffff00);
+		z-index: 2;
+		margin-left: -9px;
+		margin-top: 5px;
+		padding-right: 50px;
+	}
+
+	.header .logo {
+		width: 55px;
+		margin-top: -30px;
+		margin-left: 40px;
+	}
+
+	.header .create-account {
+		width: 91%;
+		display: flex;
+		justify-content: space-between; /* Ensures items are on opposite sides */
+		padding-right: 58px;
+	}
+
+	.header .create {
+		display: flex;
+		height: 139px;
+		min-width: 379px;
+		padding: 0;
+		transform: translateX(5px) translateY(-15px);
+		background: url('/assets/createNewBar.svg') no-repeat;
+		background-size: 379px;
+		justify-content: center;
+		align-items: center;
+		transition: transform 0.3s ease;
+	}
+
+	.header .create:hover {
+		transform: translateX(5px) translateY(5px);
+		cursor: pointer;
+	}
+
+	.header .create .create-contents {
+		display: flex;
+		margin-top: 30px;
+		margin-left: -8px;
+	}
+
+	.create-contents p {
+		margin-left: 30px;
+		margin-top: 11px;
+		font-size: 22px;
+	}
+
+	.header .account {
+		width: min-content;
+		display: flex; /* Flexbox for the account section */
+		justify-content: flex-end; /* Ensures it aligns to the right */
+		align-items: center; /* Vertically centers items */
+		margin-top: -45px;
+	}
+
 	.account button {
 		display: flex;
 		align-items: center;
@@ -173,7 +251,13 @@
 		cursor: pointer;
 	}
 
-	
+	.header .account .account-det {
+		display: flex;
+		flex-direction: column;
+		margin-top: 15px;
+		white-space: nowrap;
+		width: max-content;
+	}
 
 	.account-det h3 {
 		font-family: 'Telegraf UltraBold';
@@ -187,5 +271,117 @@
 		font-family: 'Telegraf Regular';
 	}
 
+	.navigation-container {
+		position: fixed;
+		padding: 0;
+		height: min-content;
+		width: 133px;
+		transform: translateX(-12px) translateY(110px);
+		z-index: 3;
+		margin-left: 9px;
+	}
 
+	#navigation-bar {
+		transition: opacity 0.5s ease; /* Smooth transition for opacity */
+		transform: translateX(-26px);
+	}
+
+	.inactive {
+		opacity: 0; /* Example: dim the navbar when inactive */
+	}
+
+	.inactive-item p {
+		color: #1b1b1b;
+		transition: color 0.5s ease;
+	}
+
+	.inactive-item .icon {
+		fill: #1b1b1b;
+		transition: fill 0.5s ease;
+	}
+
+	.activePage p {
+		color: #023dfe;
+	}
+
+	.activePage .icon {
+		fill: #023dfe;
+	}
+
+	.content-container {
+		margin: 25px 0 0 0;
+	}
+
+	.navigation-contents {
+		top: 0;
+		z-index: 2;
+		position: absolute; /* Positions content on top of navbar */
+		margin-left: 35px;
+		margin-top: 65px;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 0;
+	}
+
+	.navigation-contents ul {
+		list-style: none; /* Removes the black dot */
+		padding: 0; /* Optional: Removes any default padding */
+		margin: 0; /* Optional: Removes any default margin */
+	}
+
+	.navigation-contents a {
+		text-decoration: none;
+	}
+
+	.navigation-item {
+		margin-bottom: 25px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		transition: color 0.5s ease;
+	}
+
+	.navigation-item svg {
+		height: 18px;
+	}
+
+	.icon {
+		fill: #eef2f8;
+		margin: auto;
+	}
+
+	.nav-label {
+		font-family: 'Telegraf UltraBold';
+		color: #eef2f8;
+	}
+
+	.navigation-contents p {
+		font-size: 14px;
+	}
+
+	.navigation-item:hover p {
+		color: #1b1b1b;
+	}
+
+	.navigation-item:hover .icon {
+		fill: #1b1b1b;
+	}
+
+	.wrapper-container .content-container {
+		transform: translateY(120px);
+		margin-left: 133px;
+		width: 91%;
+	}
+
+	.currentNav {
+		position: absolute;
+		top: var(--top-value, 15px);
+		left: 22px;
+		transition: top 0.3s ease;
+	}
+
+	.currentNav svg {
+		width: 112px;
+	}
 </style>

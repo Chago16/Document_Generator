@@ -86,9 +86,10 @@
 
     <div class="text">
         <h1>About the Team</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec metus nibh. Vivamus sapien felis, fermentum id leo nec, viverra laoreet ipsum. Donec luctus quis arcu non dignissim. Vivamus posuere arcu id est tempor fringilla. Duis ac magna vel ex molestie finibus ac nec mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dictum purus, nec imperdiet felis. Sed quis ipsum sed est posuere mattis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+        <p>We are Team Dikta—Gab, Lui, Ches, and James—driven by a shared mission to contribute something meaningful to the world. With a strong passion for innovation and technology, we’ve created Dikta, an AI Document Generator, designed to make content creation simpler, smarter, and more efficient. Our vision is to empower individuals, businesses, and organizations by streamlining the document creation process. By saving valuable time and effort, we help you focus on what matters most while ensuring high-quality, tailored results every time.
             <br><br>
-            Aenean in lorem eu dui fringilla tempor. Nulla aliquet libero mauris, sed pellentesque elit bibendum sollicitudin. Maecenas in congue urna. Maecenas commodo felis turpis, a ornare nisl faucibus a. Ut ac lobortis mauris. Donec tristique sit amet orci vel suscipit. Proin risus enim, commodo sed ex ut, pharetra sodales est. Vestibulum gravida lobortis libero, vitae interdum leo fringilla nec.
+            Our team is built on diverse backgrounds in technology, design, and problem-solving. This blend of skills allows us to approach challenges creatively and create tools that truly make a positive impact. As Team Dikta, we are committed to continuous improvement, innovation, and excellence. We are excited to see how Dikta will transform the way you generate, manage, and refine your documents, and we look forward to playing a part in your success.
+
     </div>
 
     <div class="blur circle-1 "></div>
