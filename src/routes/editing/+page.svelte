@@ -450,7 +450,6 @@ let user: { _id: string; username: string; email: string } | null = null;
 
 <div class="editing-page">
   <div id="editor">
-    <p>Hello <strong>World</strong>! Good Morning</p>
   </div>
 </div>
 
