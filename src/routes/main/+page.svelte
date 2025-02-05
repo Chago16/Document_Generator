@@ -5,7 +5,7 @@
     import { goto } from '$app/navigation';
 
     function navigateToEditing(fromPage: string) {
-    goto(`/editing?from=${fromPage}`);
+    goto(`/editing?from=main`);
     }
 
     let user: { _id: string; username: string; email: string } | null = null;

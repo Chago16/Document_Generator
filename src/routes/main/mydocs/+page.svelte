@@ -88,7 +88,9 @@ $: if (userId) {
 function saveToLocalStorage(content: string) {
     localStorage.setItem('generatedContent', content);
     console.log(content)
-    goto('/editing');
+    goto(`/editing?from=mydocs`);
+
+    navigateToEditing('main/mydocs')
   }
 
 </script>

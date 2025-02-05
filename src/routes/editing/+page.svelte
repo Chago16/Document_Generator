@@ -11,7 +11,7 @@
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
   /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
-
+  let isSaved = false;
   let templateData: {
   documentTitle: string;
   documentType: string;
@@ -41,11 +41,17 @@ onMount(() => {
 
   $: {
       fromPage = $page.url.searchParams.get('from') || 'default';
+      
   }
 
-  function exitAndSave() {
-        // @ts-ignore
-        goto(`/${fromPage}`); // Go back to the original page
+  function exit() {
+    if (!isSaved) {
+      const confirmExit = confirm("You have unsaved changes. Are you sure you want to exit?");
+      if (!confirmExit) return;
+    }
+    alert("Exiting...");
+    goto(`/${fromPage}`);
+
   }
 
   // @ts-ignore
@@ -466,6 +472,8 @@ let user: { _id: string; username: string; email: string } | null = null;
 
     const result = await response.json();
     console.log(result.message);
+    isSaved = true;
+    alert("Document saved successfully!");
   } catch (error) {
     console.error('Error saving content:', error);
   }
@@ -482,7 +490,10 @@ let user: { _id: string; username: string; email: string } | null = null;
   <div class="header-left">
     <img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
     <div class="save-export">
-      <button on:click={saveQuillContent}>Exit and Save</button>
+      <div class="exit-save">
+        <button on:click={exit}>Exit</button>
+        <button on:click={saveQuillContent}>Save</button>
+      </div>
       <div class="export">
         <h3>Export as:</h3>
         <button on:click={exportToWord}>Word Document</button>
@@ -492,8 +503,8 @@ let user: { _id: string; username: string; email: string } | null = null;
   </div>
 
   <div class="title">
-    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentTitle} readonly>
-    <input type="text" name="" id="" placeholder="Title" bind:value={templateData.documentType} readonly>
+    <input type="text" name="" id="title" placeholder="Title" bind:value={templateData.documentTitle} readonly>
+    <input type="text" name="" id="type" placeholder="Title" bind:value={templateData.documentType} readonly>
   </div>
 </div>
 
@@ -530,6 +541,16 @@ let user: { _id: string; username: string; email: string } | null = null;
       display: flex;
     }
 
+    .exit-save{
+      display: flex;
+      flex-direction: row;
+      margin-right: 50px;
+    }
+
+    .exit-save button{
+      margin-right: 20px;
+    }
+
     .save-export{
       display: flex;
       align-items: center;
@@ -540,6 +561,7 @@ let user: { _id: string; username: string; email: string } | null = null;
     }
 
     .save-export button{
+      width: 150px;
       height: 50px;
       font-family: 'Telegraf Regular';
       font-size: 16px;
@@ -552,6 +574,7 @@ let user: { _id: string; username: string; email: string } | null = null;
     }
 
     .export{
+      width: 570px;
       display: flex;
       align-items: center;
       margin-left: 30px;
@@ -573,12 +596,16 @@ let user: { _id: string; username: string; email: string } | null = null;
 
     .title input{
       width: 400px;
-      height: 40px;
+      height: 20px;
       font-family: 'Telegraf Regular';
       font-size: 20px;
       text-align: right;
       border: 0px;
     }
+
+    .title #type {
+      font-size: 18px;
+      color: rgb(142, 142, 142)    }
 
     .toolbar{
       width: 100%;

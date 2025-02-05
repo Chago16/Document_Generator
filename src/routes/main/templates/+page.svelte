@@ -74,8 +74,8 @@
 	});
 
 
-    function navigateToEditing() {
-        goto('/editing');
+    function navigateToEditing(fromPage: string) {
+    goto(`/editing?from=${fromPage}`);
     }
 
     $: if (userId) {
@@ -114,7 +114,8 @@ async function sendRequest() {
     sendTemplatetoStore();
 
     // Redirect to editing page
-    goto('/editing');
+    
+    navigateToEditing('main/templates')
 }
 
 function sendTemplatetoStore() {

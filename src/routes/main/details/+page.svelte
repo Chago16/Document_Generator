@@ -128,11 +128,15 @@ const toggleForm = () => {
 
 </script>
 
-<div class="header-save">
-    <h1>Common Details Setup</h1>
+<div class="header-edit">
+    <div class="header-save">
+        <h1>Common Details Setup</h1>
+    </div>
+    <div class="edit-button">
+        <button on:click={toggleForm} class={formState === 'form1' ? 'form1-button' : 'form2-button'}>{formState === 'form1' ? 'Edit' : 'Lock'}</button>
+    </div>
 </div>
 
-<button on:click={toggleForm}>Edit</button>
 
 
 <form on:submit={handleSubmit}>
@@ -243,25 +247,25 @@ const toggleForm = () => {
         <h3 class="headers-h3">Branding Details:</h3>
         <div class="branding-input">
             <p>Business Name:</p>
-            <input type="text" name="businessName" id="" required bind:value={formData.businessName} placeholder="business name">
+            <input type="text" name="businessName" id="" required bind:value={formData.businessName} placeholder="Your Business Name Here">
         </div>
         <div class="branding-input">
             <p>Tagline/Slogan:</p>
-            <input type="text" name="taglineSlogan" id="" required bind:value={formData.taglineSlogan}>
+            <input type="text" name="taglineSlogan" id="" required bind:value={formData.taglineSlogan} placeholder="&quot;Bringing Ideas to Life&quot;">
         </div>
 
         <h3 class="headers-h3">Contact Details:</h3>
         <div class="contact-input">
             <p>Business Address:</p>
-            <input type="text" name="businessAddress" id="" required bind:value={formData.businessAddress}>
+            <input type="text" name="businessAddress" id="" required bind:value={formData.businessAddress} placeholder="123 Example Street, Sample City, PH">
         </div>
         <div class="contact-input">
             <p>Phone Number:</p>
-            <input type="number" name="phoneNumber" id="" required bind:value={formData.phoneNumber}>
+            <input type="number" name="phoneNumber" id="" required bind:value={formData.phoneNumber} placeholder="912 345 6789">
         </div>
         <div class="contact-input">
             <p>Email Address:</p>
-            <input type="email" name="emailAddress" id="" required bind:value={formData.emailAddress}>
+            <input type="email" name="emailAddress" id="" required bind:value={formData.emailAddress} placeholder="contact@yourbusiness.com">
         </div>
         <!--
         <div class="branding-input-image">
@@ -290,11 +294,11 @@ const toggleForm = () => {
         <div class="input-text-areas">
             <div class="custom-input">
                 <p>Default Header Text:</p>
-                <textarea name="defaultHeaderText" id="" bind:value={formData.defaultHeaderText}></textarea>
+                <textarea name="defaultHeaderText" id="" bind:value={formData.defaultHeaderText} placeholder="&quot;Welcome to [Your Business Name] - Excellence in Every Step!&quot;"></textarea>
             </div>
             <div class="custom-input">
                 <p>Default Footer Text:</p>
-                <textarea name="defaultFooterText" id="" bind:value={formData.defaultFooterText}></textarea>
+                <textarea name="defaultFooterText" id="" bind:value={formData.defaultFooterText} placeholder="&quot;Thank you for choosing [Your Business Name]!&quot;"></textarea>
             </div>
         </div>
 
@@ -302,11 +306,11 @@ const toggleForm = () => {
         <div class="sender-wrapper">
             <div class="sender-input">
                 <p>Sender Name:</p>
-                <input type="text" name="senderName" id="" required bind:value={formData.senderName}>
+                <input type="text" name="senderName" id="" required bind:value={formData.senderName} placeholder="Juan Dela Cruz">
             </div>
             <div class="sender-input">
                 <p>Position:</p>
-                <input type="text" name="senderPosition" id="" required bind:value={formData.senderPosition}>
+                <input type="text" name="senderPosition" id="" required bind:value={formData.senderPosition} placeholder="Chief Executive Officer">
             </div>
             <!--
             <div class="sender-input-image-wrap">
@@ -364,6 +368,33 @@ const toggleForm = () => {
         cursor: pointer;
     }
 
+    .form1-button{
+        width: 200px;
+        height: 50px;
+        font-family: 'SourceSansPro Regular';
+        font-size: 20px;
+        border: 0px;
+        border-radius: 8px;
+        background-color: #023DFE;
+        color: white;
+        margin-right: 50px;
+        cursor: pointer;
+    }
+
+
+    .form2-button{
+        width: 200px;
+        height: 50px;
+        font-family: 'SourceSansPro Regular';
+        font-size: 20px;
+        border: 0px;
+        border-radius: 8px;
+        background-color: #F8422F;
+        color: white;
+        margin-right: 50px;
+        cursor: pointer;
+    }
+
     /*.remove{
         font-family: 'SourceSansPro Bold';
         border: 2px solid #023DFE;
@@ -403,6 +434,14 @@ const toggleForm = () => {
         font-size: 16px;
         border-radius:10px;
         padding-left: 10px;
+    }
+
+    .header-edit{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width:100%;
     }
 
     .header-save{
