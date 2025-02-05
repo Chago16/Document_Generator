@@ -1,13 +1,119 @@
-<script>
+<script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
+    import { userStore } from '../../../lib/store.js';
+    import { onMount } from 'svelte';
 
+    let user: { _id: string; username: string; email: string } | null = null;
 
-    function navigateToEditing(fromPage) {
-    goto(`/editing?from=${fromPage}`);
+    userStore.subscribe(value => {
+		user = value;
+	});
+
+    let userId: any;
+    let formData = {
+        businessName: '',
+        taglineSlogan: '',
+        businessAddress: '',
+        phoneNumber: '',
+        emailAddress:'',
+        defaultHeaderText: '',
+        defaultFooterText: '',
+        senderName: '',
+        senderPosition: ''
     }
+
+    let templateData = {
+        documentTitle: '',
+        documentType: '',
+        documentSize: '',
+        tone: '',
+        detailsPrompt: '',
+        additionalDetails: ''
+    }
+
+    onMount(() => {
+		const token = localStorage.getItem('token');
+
+		// Clear token to prevent subsequent reloads
+		localStorage.removeItem('token');
+
+		if (token) {
+			location.reload();
+		}
+	});
+
+    onMount(async () => {
+		try {
+			const response = await fetch('/api/login', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			const data = await response.json();
+			console.log(data)
+
+			if (response.ok) {
+				// Store the user data in the `user` variable
+				console.log(data.user);
+
+                userStore.set(data.user);
+                userId = data.user?._id || null;
+                console.log(userId);
+
+			} else {
+				console.error('Failed to fetch user data:', data.message);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+
+	});
+
+
+    function navigateToEditing() {
+        goto('/editing');
+    }
+
+    $: if (userId) {
+    fetchData();
+}
+
+async function fetchData() {
+    try {
+        const response = await fetch(`/api/g_details/${userId}`);
+        if (!response.ok) {
+            console.error('Failed to fetch data:', response.status, await response.text());
+            return;
+        }
+
+        const data = await response.json();
+        formData = { ...formData, ...data };
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+}
+
+async function sendRequest() {
+        const response = await fetch('/api/chatgpt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ templateData, formData })
+        });
+
+        const data = await response.json();
+        console.log(data);
+    }
+
+
 </script>
 
+<form>
 <div class="templates-contents">
 
     <div class="documents">
@@ -51,15 +157,15 @@
                 <h3>Document</h3>
                 <div class="document-input">
                     <p>Document Title:</p>
-                    <input type="text" name="documentTitle" id="" required>
+                    <input type="text" name="documentTitle" id="" required bind:value={templateData.documentTitle}>
                 </div>
                 <div class="document-input">
                     <p>Document Type:</p>
-                    <input type="text" name="documentType" id="" required>
+                    <input type="text" name="documentType" id="" required bind:value={templateData.documentType}>
                 </div>
                 <div class="document-input">
                     <p>Document Size:</p>
-                    <select id="tone" name="tone">
+                    <select id="tone" name="tone" bind:value={templateData.documentSize}>
                         <option value="letter">Letter</option>
                         <option value="legal">Legal</option>
                         <option value="a4">A4</option>
@@ -79,7 +185,7 @@
                 <h3>Content</h3>
                     <div class="content-input-select">
                         <p>Tone:</p>
-                        <select id="tone" name="tone">
+                        <select id="tone" name="tone" bind:value={templateData.tone}>
                             <option value="Formal">Formal</option>
                             <option value="Professional">Professional</option>
                             <option value="Conversational">Conversational</option>
@@ -94,11 +200,11 @@
                     </div>
                     <div class="content-input-textarea">
                         <p>Details Prompt<br>to AI:</p>
-                        <textarea name="detailsPrompt" id="detailsPrompt"></textarea>
+                        <textarea name="detailsPrompt" id="detailsPrompt" bind:value={templateData.detailsPrompt}></textarea>
                     </div>
                     <div class="content-input-textarea">
                         <p>Additional Details:</p>
-                        <textarea name="additionalDetails" id="additionalDetails"></textarea>
+                        <textarea name="additionalDetails" id="additionalDetails" bind:value={templateData.additionalDetails}></textarea>
                     </div>
             <!--
             <h3>Use Past Document as Preset</h3>
@@ -119,9 +225,10 @@
             </div>
         </div>
     
-        <button on:click={navigateToEditing('main/templates')}>Generate Document</button>
+        <button on:click={sendRequest}>Generate Document</button>
     </div>
 </div>
+</form>
 
 
 

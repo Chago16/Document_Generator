@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { activePage, userStore } from '../../lib/store.js';
 	import { goto } from '$app/navigation';
+	
 	let user: { _id: string; username: string; email: string } | null = null;
 	
 	// Subscribe to the store
@@ -20,6 +21,7 @@
 			location.reload();
 		}
 	});
+
 
 	let { children } = $props();
 	// svelte-ignore non_reactive_update
@@ -48,7 +50,7 @@
 
 			if (response.ok) {
 				// Store the user data in the `user` variable
-				console.log(data);
+				console.log(data.user);
 
 				userStore.set(data.user);
 			} else {
