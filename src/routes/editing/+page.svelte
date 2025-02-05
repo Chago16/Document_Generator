@@ -342,7 +342,6 @@ async function exportToPDF() {
 
 <div class="editing-page">
   <div id="editor">
-    <p>Hello <strong>World</strong>! Good Morning</p>
   </div>
 </div>
 

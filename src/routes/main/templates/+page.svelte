@@ -3,6 +3,7 @@
     import { goto } from '$app/navigation';
     import { userStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
+    import Quill from 'quill';
 
     let user: { _id: string; username: string; email: string } | null = null;
 
@@ -97,18 +98,25 @@ async function fetchData() {
     }
 }
 
-async function sendRequest() {
-        const response = await fetch('/api/chatgpt', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ templateData, formData })
-        });
+function deltaToHtml(delta) {
+    const quill = new Quill(document.createElement('div')); // Temporary Quill instance
+    quill.setContents(delta);
+    return quill.root.innerHTML; // Get formatted HTML
+}
 
-        const data = await response.json();
-        console.log(data);
-    }
+async function sendRequest() {
+    const response = await fetch('/api/chatgpt', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ templateData, formData })
+    });
+
+    const data = await response.json();
+    const htmlContent = deltaToHtml(data.content);
+    console.log(htmlContent); // Logs rich text in HTML format
+}
 
 
 </script>
