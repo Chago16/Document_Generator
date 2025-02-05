@@ -50,9 +50,18 @@ export async function POST({ request }) {
         You will write the document in this tone: ${tone}
         this is the document size so you are aware: ${documentSize}
 
-        Please generate this certain document in HTML format while being concise and without commentary. Use rich text formatting like bold, italic, and hyperlinks where relevant.
-
-        (We are using an API for this please so dont use unneccesary words only the code.)
+        While being concise and without commentary, Make a code for this document. Use rich Text Formatting. We are using an API for this please so dont use unneccesary words only the code. This will be pasted in a quill editor, here are the toolbards we set:
+            ['bold', 'italic', 'underline', 'strike'],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                ['image'],
+                [{ 'font': [] }],
+                [{ 'size': ['small', false, 'large', 'huge'] }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['clean']
+            base your format on this quill toolbar. 
         `;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -69,7 +78,6 @@ export async function POST({ request }) {
             ]
         })
     });
-
 
     const data = await response.json();
 
