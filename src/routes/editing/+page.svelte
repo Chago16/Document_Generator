@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import '/src/app.css';
   import { onMount } from 'svelte';
   import Quill from 'quill';
@@ -6,6 +6,7 @@
   import { goto } from '$app/navigation';
   import { saveAs } from 'file-saver';
   import { generateWord } from 'quill-to-word';
+  import { userStore } from '../../lib/store.js';
   import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
@@ -24,7 +25,7 @@
   }
 
   // @ts-ignore
-  let quil;
+  let quil: Quill;
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     [{ 'script': 'sub'}, { 'script': 'super' }],
@@ -346,6 +347,78 @@ async function exportToPDF() {
 
 
 
+let user: { _id: string; username: string; email: string } | null = null;
+
+    userStore.subscribe(value => {
+		user = value;
+	});
+
+  let userId: any;
+
+  onMount(() => {
+		const token = localStorage.getItem('token');
+
+		// Clear token to prevent subsequent reloads
+		localStorage.removeItem('token');
+
+		if (token) {
+			location.reload();
+		}
+	});
+
+    onMount(async () => {
+		try {
+			const response = await fetch('/api/login', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			const data = await response.json();
+			console.log(data)
+
+			if (response.ok) {
+				// Store the user data in the `user` variable
+				console.log(data.user);
+
+                userStore.set(data.user);
+                userId = data.user?._id || null;
+                console.log(userId);
+
+			} else {
+				console.error('Failed to fetch user data:', data.message);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+
+	});
+
+
+  async function saveQuillContent() {
+  const content = quil.root.innerHTML; // Get Quill's innerHTML
+  const owner = userId
+   // Replace with the actual user ID
+
+  try {
+    const response = await fetch('/api/saved_data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ owner, content })
+    });
+
+    const result = await response.json();
+    console.log(result.message);
+  } catch (error) {
+    console.error('Error saving content:', error);
+  }
+}
+
+
+
+
 </script>
 
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -354,7 +427,7 @@ async function exportToPDF() {
   <div class="header-left">
     <img src="/logo/logoIcon.svg" class="logo" alt="Dikta Logo">
     <div class="save-export">
-      <button on:click={exitAndSave}>Exit and Save</button>
+      <button on:click={saveQuillContent}>Exit and Save</button>
       <div class="export">
         <h3>Export as:</h3>
         <button on:click={exportToWord}>Word Document</button>
