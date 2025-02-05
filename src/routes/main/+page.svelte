@@ -1,7 +1,10 @@
 <script>
     import '../../app.css';
+    import { goto } from '$app/navigation';
 
-
+    function navigateToEditing(fromPage) {
+    goto(`/editing?from=${fromPage}`);
+    }
 </script>
 
 <div class="home-contents">
@@ -15,7 +18,7 @@
     
         <div class="item-div">
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -25,7 +28,7 @@
             <!-- /Item Container -->
     
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -35,7 +38,7 @@
             <!-- /Item Container -->
             
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -45,7 +48,7 @@
             <!-- /Item Container -->
     
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -55,7 +58,7 @@
             <!-- /Item Container -->
     
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -65,7 +68,7 @@
             <!-- /Item Container -->
     
             <!-- Item Container -->
-            <div class="item-container">
+            <div class="item-container" on:click={navigateToEditing('main')}>
                 <div class="item-frame"></div>
                 <div class="item-details">
                     <h2 class="doc-name">Document Name</h2>
@@ -157,6 +160,11 @@
 .item-container {
     max-width: 230px;
     width: 100%;
+}
+
+.item-container:hover {
+    color:#023DFE;
+    cursor: pointer;
 }
 
 .item-frame {

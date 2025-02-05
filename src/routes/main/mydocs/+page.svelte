@@ -1,7 +1,10 @@
 <script>
     import '../../../app.css';
+    import { goto } from '$app/navigation';
 
-
+    function navigateToEditing(fromPage) {
+    goto(`/editing?from=${fromPage}`);
+    }
 </script>
 
 
@@ -18,7 +21,7 @@
         <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -28,7 +31,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -40,7 +45,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -50,7 +55,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -62,7 +69,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -72,7 +79,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -84,7 +93,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -94,7 +103,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -106,7 +117,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -116,7 +127,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -128,7 +141,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -138,7 +151,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -150,7 +165,7 @@
          <div class="items">
             <hr class="line">
             <a href="#">
-            <div class="within-item">
+            <div class="within-item" on:click={navigateToEditing('main/mydocs')}>
                 <div class="item1">
                     <h2 class="docu-title">Document Name</h2>
                     <h2 class="docu-type">Document Type</h2>
@@ -160,7 +175,9 @@
                 </div>
                 <div class="delete-item">
                     <button>
-                        <img src="/icons/delete.svg" alt="">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#1D1B20"/>
+                        </svg>
                     </button>
                 </div>
             </div> 
@@ -225,7 +242,7 @@
 
 .line {
     width: 100%; 
-    margin: 13px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     border-top: 1px solid #1B1B1B;
 }
 
@@ -242,9 +259,13 @@ a {
 
 .within-item {
     display: flex;
-    margin-left: 15px;
+    padding-left: 15px;
+    padding-bottom: 13px;
 }
 
+.within-item:hover {
+    background: linear-gradient(to right, #A0EA00, #a0ea0000);
+}
 
 .item2 {
     display: flex;
@@ -261,12 +282,15 @@ a {
     cursor: pointer;
 }
 
+.delete-item button:hover path{
+    fill:#023DFE;
+}
+
 
 .docu-title {
     font-family: 'Poppins Bold';
     font-size: 18px;
     margin: 10px 0 0 0;
-    color: #1B1B1B;
 }
 
 .docu-type {
@@ -274,14 +298,12 @@ a {
     font-size: 16px;
     font-weight: 300;
     margin: 2px 0 0 0;
-    color: #1B1B1B;
 }
 
 .date {
     font-family: 'Telegraf Regular';
     font-size: 18px;
     font-weight: 300;
-    color: #1B1B1B;
 }
 
 .item-container::-webkit-scrollbar {

@@ -2,6 +2,7 @@
   import '/src/app.css';
   import { onMount } from 'svelte';
   import Quill from 'quill';
+  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { saveAs } from 'file-saver';
   import { generateWord } from 'quill-to-word';
@@ -9,6 +10,16 @@
   import { jsPDF } from "jspdf";
   import html2canvas from "html2canvas";
   /*import { ImageResize } from 'node_modules/quill-image-resize-module/image-resize.min.js';*/
+
+  let fromPage;
+
+  $: {
+      fromPage = $page.url.searchParams.get('from') || 'default';
+  }
+
+  function exitAndSave() {
+        goto(`/${fromPage}`); // Go back to the original page
+  }
 
   let quil;
   const toolbarOptions = [
@@ -24,9 +35,6 @@
     ['clean']
   ];
 
-  function exitAndSave() {
-    goto('/main/templates');
-  }
 
   /*Quill.register('modules/imageResize', ImageResize);*/
 

@@ -172,7 +172,7 @@ async function sendRequest() {
                     </select>
                 </div>
                 <br><br><br>
-                <p><strong>Disclaimer:</strong> The content generated below will rely heavily on the inputs provided by you. We use AI for content generation, so the quality and relevance of the content will depend on your input.</p>
+                <p><strong>Disclaimer:</strong> The content generated will rely heavily on the inputs provided by you. We use AI for content generation, so the quality and relevance of the content will depend on your input.</p>
             </div>
         </div>
         
