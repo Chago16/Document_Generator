@@ -50,7 +50,7 @@ export async function POST({ request }) {
         You will write the document in this tone: ${tone}
         this is the document size so you are aware: ${documentSize}
 
-        While being concise and without commentary, Make a code for this document. Use rich Text Formatting. We are using an API for this please so dont use unneccesary words only the code. This will be pasted in a quill editor, here are the toolbards we set:
+        While without commentary, Make a code for this document. do not use rich Text Formatting or Delta. just html code but with only within a div. We are using an API for this please so dont use unneccesary words only the code. This will be pasted in a quill editor, here are the toolbards we set:
             ['bold', 'italic', 'underline', 'strike'],
                 [{ 'script': 'sub'}, { 'script': 'super' }],
                 ['image'],
@@ -61,7 +61,7 @@ export async function POST({ request }) {
                 [{ 'indent': '-1'}, { 'indent': '+1' }],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                 ['clean']
-            base your format on this quill toolbar. 
+            base the format of the document content on this quill toolbar. if needed, include the alignment(center, left, right), superscipt and subscript, color, background, list(ordered,bullet), attributes, and columns.
         `;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -81,5 +81,7 @@ export async function POST({ request }) {
 
     const data = await response.json();
 
+    console.log(data);
+    console.log(data.choices[0].message.content);
     return json({ content: data.choices[0].message.content });
 }

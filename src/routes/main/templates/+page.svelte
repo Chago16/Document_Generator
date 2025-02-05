@@ -1,9 +1,8 @@
 <script lang="ts">
     import '../../../app.css';
     import { goto } from '$app/navigation';
-    import { userStore, templateDataStore } from '../../../lib/store.js';
+    import { userStore } from '../../../lib/store.js';
     import { onMount } from 'svelte';
-    import Quill from 'quill';
 
     let user: { _id: string; username: string; email: string } | null = null;
 
@@ -98,12 +97,6 @@ async function fetchData() {
     }
 }
 
-function deltaToHtml(delta) {
-    const quill = new Quill(document.createElement('div')); // Temporary Quill instance
-    quill.setContents(delta);
-    return quill.root.innerHTML; // Get formatted HTML
-}
-
 async function sendRequest() {
     const response = await fetch('/api/chatgpt', {
         method: 'POST',
@@ -114,17 +107,15 @@ async function sendRequest() {
     });
 
     const data = await response.json();
-    const htmlContent = deltaToHtml(data.content);
-    console.log(htmlContent); // Logs rich text in HTML format
-    sendTemplatetoStore()
+
+    // Pass to the editing page (assuming you have a way to store/send data)
+    localStorage.setItem('generatedContent', data.content);
+    console.log(data.content);
+
+    // Redirect to editing page
+    goto('/editing');
 }
 
-
-function sendTemplatetoStore() {
-    console.log("saving template data to store");
-    console.log(templateData);
-  templateDataStore.set(templateData);
-}
 
 </script>
 
