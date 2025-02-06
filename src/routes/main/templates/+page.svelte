@@ -169,15 +169,16 @@ function sendTemplatetoStore() {
                 <h3>Document</h3>
                 <div class="document-input">
                     <p>Document Title:</p>
-                    <input type="text" name="documentTitle" id="" required bind:value={templateData.documentTitle}>
+                    <input type="text" name="documentTitle" id="" required bind:value={templateData.documentTitle}  placeholder="Enter your document title here">
                 </div>
                 <div class="document-input">
                     <p>Document Type:</p>
-                    <input type="text" name="documentType" id="" required bind:value={templateData.documentType}>
+                    <input type="text" name="documentType" id="" required bind:value={templateData.documentType}  placeholder="Enter document type (e.g., Report, Proposal)">
                 </div>
                 <div class="document-input">
                     <p>Document Size:</p>
-                    <select id="tone" name="tone" bind:value={templateData.documentSize}>
+                    <select id="tone" name="tone" bind:value={templateData.documentSize} required>
+                        <option value="" disabled selected>Select a Document Size</option>
                         <option value="letter">Letter</option>
                         <option value="legal">Legal</option>
                         <option value="a4">A4</option>
@@ -198,6 +199,7 @@ function sendTemplatetoStore() {
                     <div class="content-input-select">
                         <p>Tone:</p>
                         <select id="tone" name="tone" bind:value={templateData.tone}>
+                            <option value="" disabled selected>Select a tone</option>
                             <option value="Formal">Formal</option>
                             <option value="Professional">Professional</option>
                             <option value="Conversational">Conversational</option>
@@ -212,11 +214,11 @@ function sendTemplatetoStore() {
                     </div>
                     <div class="content-input-textarea">
                         <p>Details Prompt<br>to AI:</p>
-                        <textarea name="detailsPrompt" id="detailsPrompt" bind:value={templateData.detailsPrompt}></textarea>
+                        <textarea name="detailsPrompt" id="detailsPrompt" bind:value={templateData.detailsPrompt}  placeholder="Provide details or context for the AI to generate content"></textarea>
                     </div>
                     <div class="content-input-textarea">
                         <p>Additional Details:</p>
-                        <textarea name="additionalDetails" id="additionalDetails" bind:value={templateData.additionalDetails}></textarea>
+                        <textarea name="additionalDetails" id="additionalDetails" bind:value={templateData.additionalDetails}  placeholder="Specify formatting or styling preferences (e.g., bold headers, bullet points, font color)"></textarea>
                     </div>
             <!--
             <h3>Use Past Document as Preset</h3>
