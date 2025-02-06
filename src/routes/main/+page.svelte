@@ -203,12 +203,17 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-frame {
-    background-image: url('assets/aboutblank.png');
-    background-color: #D9D9D9;
+    background: url('assets/aboutblank3.png');
+    background-size: cover;
     border-radius: 5px;
     height: 200px;
     width: 230px;
     margin: 20px 0 5px 0;
+}
+
+.item-container:hover .item-frame{
+    background: url('assets/aboutblank1.png');
+    background-size: cover;
 }
 
 .doc-name {

@@ -356,55 +356,85 @@ async function exportToWord() {
 
 
 async function exportToPDF() {
-    // Get the content of the Quill editor
     const editorContent = document.querySelector('.ql-editor');
     if (!editorContent) {
         console.error("Editor content not found!");
         return;
     }
 
-    // Use html2canvas to capture the editor content as an image
-    // @ts-ignore
     html2canvas(editorContent, {
-        scale: 2, // Increase scale for higher resolution
-        useCORS: true // Allow cross-origin images
+        scale: 3, // High resolution
+        useCORS: true
     }).then((canvas) => {
-        // Get the canvas dimensions (in pixels)
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
+        const imgData = canvas.toDataURL('image/png');
 
-        // Calculate the aspect ratio
-        const aspectRatio = canvasWidth / canvasHeight;
+        // Get actual canvas dimensions
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
 
-        // Set custom page size in inches (8.5 x 14 inches)
-        const pdf = new jsPDF('p', 'in', [8.5, 14]); // Custom page size in inches
-
-        const pageWidth = pdf.internal.pageSize.width;
-        const pageHeight = pdf.internal.pageSize.height;
-
-        // Calculate the scaled width and height to maintain aspect ratio
-        let imgWidth = pageWidth - 0.5; // Subtracting margins (0.5 inches)
-        let imgHeight = imgWidth / aspectRatio;
-
-        // If the height exceeds the page height (taking into account margins), adjust the height
-        if (imgHeight > pageHeight - 0.5) {
-            imgHeight = pageHeight - 0.5;
-            imgWidth = imgHeight * aspectRatio;
+        // Define PDF page size based on document size
+        let pageWidthInches, pageHeightInches;
+        switch (templateData.documentSize) {
+            case 'legal':
+                pageWidthInches = 8.5;
+                pageHeightInches = 14;
+                break;
+            case 'a4':
+                pageWidthInches = 8.27;
+                pageHeightInches = 11.69;
+                break;
+            case 'letter':
+            default:
+                pageWidthInches = 8.5;
+                pageHeightInches = 11;
+                break;
         }
 
-        // Add the image to the PDF, centered with margins
-        const margin = 0.5; // Set margin (0.25 inches for all sides)
-        pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', margin, margin, imgWidth, imgHeight);
+        // Convert inches to points (1 inch = 72 points)
+        const pdfWidth = pageWidthInches * 72;
+        const pdfHeight = pageHeightInches * 72;
 
-        console.log("templateData.documentTitle:", templateData.documentTitle);
-        // Save the PDF
+        // Define margins (1 inch)
+        const margin = 72;
+        const usableWidth = pdfWidth - margin * 2;
+        const usableHeight = pdfHeight - margin * 2;
+
+        // Adjust height and width while maintaining aspect ratio
+        let scaledWidth = usableWidth;
+        let scaledHeight = (scaledWidth / imgWidth) * imgHeight; // Maintain aspect ratio
+
+        // Increase the height if necessary but still maintaining aspect ratio
+        if (scaledHeight < usableHeight) {
+            // Increase height proportionally if it's too small
+            scaledHeight = usableHeight * 1.5;
+            scaledWidth = (scaledHeight / imgHeight) * imgWidth;
+        }
+
+        // Create a new PDF document
+        const pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
+
+        // Centering the image properly with margin
+        const x = margin + (usableWidth - scaledWidth) / 2;
+        const y = margin; // Ensuring proper top alignment
+
+        // Add the image
+        pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+
+        // Save the file
         const fileName = templateData.documentTitle ? `${templateData.documentTitle}.pdf` : "document.pdf";
         pdf.save(fileName);
+
         console.log("Generated PDF Filename:", fileName);
     }).catch(error => {
         console.error("Error generating PDF:", error);
     });
 }
+
+
+
+
+
+
 
 
 
