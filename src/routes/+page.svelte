@@ -122,9 +122,45 @@
 				</div>
 			</div>
 			<div class="content">
-				<div class="logoName"></div>
-				<div class="cover1"></div>
-				<div class="cover2"></div>
+				<div class="logoName" style="
+					background: url('assets/logoName.png') no-repeat;
+					width: 450px;
+					height: 181px;
+					position: absolute;
+					left: 270px;
+					top: 230px;
+					background-size: 100% 100%;
+					background-position: middle left;
+					z-index: 1;
+				"></div>
+
+				<!-- Cover 1 -->
+				<div class="cover1" style="
+					background: url('assets/logoName.png') no-repeat;
+					width: 450px;
+					height: 181px;
+					position: absolute;
+					left: 270px;
+					top: 230px;
+					background-size: 100% 100%;
+					background-position: middle left;
+					z-index: 3;
+					clip-path: inset(0% 40% 30% 0%);
+				"></div>
+
+				<!-- Cover 2 -->
+				<div class="cover2" style="
+					background: url('assets/logoName.png') no-repeat;
+					width: 450px;
+					height: 181px;
+					position: absolute;
+					left: 270px;
+					top: 230px;
+					background-size: 100% 100%;
+					background-position: middle left;
+					z-index: 3;
+					clip-path: inset(0% 80% 0% 0%);
+				"></div>
 			</div>
 		</div>
 		<div class="tagline">
@@ -286,44 +322,6 @@
 	.banner .slider .item img {
 		width: 100%;
 		object-fit: fit;
-	}
-
-	.content .logoName {
-		background: url('assets/logoName.png') no-repeat;
-		width: 450px;
-		height: 181px;
-		position: absolute;
-		left: 270px;
-		top: 230px;
-		background-size: 100% 100%;
-		background-position: middle left;
-		z-index: 1;
-	}
-
-	.content .cover1 {
-		background: url('assets/logoName.png') no-repeat;
-		width: 450px;
-		height: 181px;
-		position: absolute;
-		left: 270px;
-		top: 230px;
-		background-size: 100% 100%;
-		background-position: middle left;
-		z-index: 3;
-		clip-path: inset(0% 40% 30% 0%);
-	}
-
-	.content .cover2 {
-		background: url('assets/logoName.png') no-repeat;
-		width: 450px;
-		height: 181px;
-		position: absolute;
-		left: 270px;
-		top: 230px;
-		background-size: 100% 100%;
-		background-position: middle left;
-		z-index: 3;
-		clip-path: inset(0% 80% 0% 0%);
 	}
 
 	.tagline {

@@ -88,12 +88,24 @@ function saveToLocalStorage(content: string) {
     console.log(content)
     goto('/editing');
   }
+
+  function hoverEffect(event) {
+    const itemFrame = event.currentTarget.querySelector('.item-frame');
+    itemFrame.style.background = "url('/assets/aboutblank6.png')";
+    itemFrame.style.backgroundSize = "cover"; 
+  }
+
+  function resetEffect(event) {
+    const itemFrame = event.currentTarget.querySelector('.item-frame');
+    itemFrame.style.background = "url('/assets/aboutblank7.png')";
+    itemFrame.style.backgroundSize = "cover"; 
+  }
 </script>
 
 <div class="home-contents">
     <div class="overflow-container">
 
-        <div class="image-div-container" style="background: url('/assets/wp-banner1.png');">
+        <div class="image-div-container" style="background: url('/assets/wp-banner1.png'); background-position: center; height: 160px; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
             <h1 class="your-proj">YOUR PROJECTS</h1>
         </div>
     
@@ -102,8 +114,8 @@ function saveToLocalStorage(content: string) {
         <div class="item-div">
             {#each documents as doc (doc.documentId)}
             <!-- Item Container -->
-            <div class="item-container" on:click|preventDefault={() => saveToLocalStorage(doc.content)}>
-                <div class="item-frame"></div>
+            <div class="item-container" style="margin: 20px 0 5px 0;" on:mouseover={hoverEffect} on:mouseout={resetEffect}>
+                <div class="item-frame" style="background: url('/assets/aboutblank7.png'); background-size: cover; border-radius: 5px; height: 200px; width: 230px;"></div>
                 <div class="item-details">
                     <h2 class="doc-name">{doc.documentTitle}</h2>
                     <h3 class="doc-type">{doc.documentType}</h3>
@@ -202,7 +214,6 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-frame {
-    background: url('assets/aboutblank7.png');
     background-size: cover;
     border-radius: 5px;
     height: 200px;
@@ -211,7 +222,6 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-container:hover .item-frame{
-    background: url('assets/aboutblank6.png');
     background-size: cover;
 }
 
