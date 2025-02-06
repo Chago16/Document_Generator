@@ -479,7 +479,7 @@
 	.register-input button {
 		width: 100%;
 		height: 50px;
-		margin-top: 20px;
+		margin-top: 10px;
 		border-radius: 10px;
 		font-family: Telegraf;
 		font-size: 20px;
@@ -492,7 +492,7 @@
 		color: #1b1b1b;
 		padding: 0px 70px 0px 70px;
 		text-align: center;
-		margin-top: -30px;
+		margin-top: -5px;
 	}
 
 	.login-link-text h3 {
