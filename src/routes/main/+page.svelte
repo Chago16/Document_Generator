@@ -166,7 +166,6 @@ function saveToLocalStorage(content: string) {
     margin-top: 15px;
     border-radius: 5px;
     background: url('assets/wp-banner1.png') ;
-    background-size: cover;
     background-position: center;
     /*width: 97%;*/
     height: 160px;
