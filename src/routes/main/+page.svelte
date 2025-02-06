@@ -94,6 +94,7 @@ function saveToLocalStorage(content: string) {
     <div class="overflow-container">
 
         <div class="image-div-container" style="background: url('/assets/wp-banner1.png');">
+            <img src="/assets/wp-banner1.png" alt="">
             <h1 class="your-proj">YOUR PROJECTS</h1>
         </div>
     
