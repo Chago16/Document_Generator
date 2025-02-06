@@ -165,7 +165,7 @@ function saveToLocalStorage(content: string) {
 .image-div-container {
     margin-top: 15px;
     border-radius: 5px;
-    background-image: url('assets/wp-banner1.png');
+    background: url('assets/wp-banner1.png') ;
     background-size: cover;
     background-position: center;
     /*width: 97%;*/

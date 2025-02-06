@@ -77,8 +77,8 @@
                 onmouseover={() => displayStatus("Gabriel Ian Santos", "[Analyst]", {
                     "UI/UX Design": { width: "50%", className: "ui-ux" },
                     "Front-end Dev": { width: "50%", className: "frontend" },
-                    "Back-end Dev": { width: "50%", className: "backend" },
-                    "Communication": { width: "50%", className: "communication" }
+                    "Back-end Dev": { width: "20%", className: "backend" },
+                    "Communication": { width: "100%", className: "communication" }
                 }, "20px", "80px", "320px", "-59px", "#131313 transparent transparent  transparent")}
                 onmouseleave={hideStatus}>
         </div>

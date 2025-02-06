@@ -243,9 +243,10 @@ a {
 
 
 .item2 {
+    width: 500px;
     display: flex;
     align-items: center;
-    margin: 10px 430px 0px 10px;
+    margin: 10px 0px 0px 10px;
 }
 .delete-item{
     margin-top: 18px;
