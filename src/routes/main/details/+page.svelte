@@ -133,7 +133,7 @@ const toggleForm = () => {
         <h1>Common Details Setup</h1>
     </div>
     <div class="edit-button">
-        <button on:click={toggleForm} class={formState === 'form1' ? 'form1-button' : 'form2-button'}>{formState === 'form1' ? 'Edit' : 'Lock'}</button>
+        <button on:click={toggleForm} class={formState === 'form1' ? 'form1-button' : 'form2-button'}>{formState === 'form1' ? 'Edit New' : 'Go Back'}</button>
     </div>
 </div>
 

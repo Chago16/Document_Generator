@@ -159,7 +159,7 @@ function saveToLocalStorage(content: string) {
     /*width: 97%;*/
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 39px;
 }
 
 .image-div-container {
@@ -203,7 +203,7 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-frame {
-    background: url('assets/aboutblank3.png');
+    background: url('assets/aboutblank7.png');
     background-size: cover;
     border-radius: 5px;
     height: 200px;
@@ -212,7 +212,7 @@ function saveToLocalStorage(content: string) {
 }
 
 .item-container:hover .item-frame{
-    background: url('assets/aboutblank1.png');
+    background: url('assets/aboutblank6.png');
     background-size: cover;
 }
 

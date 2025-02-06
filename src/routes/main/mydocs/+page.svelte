@@ -181,7 +181,7 @@ function saveToLocalStorage(content: string) {
 
 .labels {
     display: flex;
-    margin: 0 0 -10px 5px;
+    margin: 0 0 -5px 5px;
     padding-right: 50px;
 }
 
@@ -237,7 +237,7 @@ a {
 .item1 {
     display: flex;
     align-items: center;
-    margin: 10px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     width: 750px;
 }
 
