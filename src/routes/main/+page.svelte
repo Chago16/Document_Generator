@@ -114,7 +114,7 @@ function saveToLocalStorage(content: string) {
         <div class="item-div">
             {#each documents as doc (doc.documentId)}
             <!-- Item Container -->
-            <div class="item-container" style="margin: 20px 0 5px 0;" on:mouseover={hoverEffect} on:mouseout={resetEffect}>
+            <div class="item-container" style="margin: 20px 0 5px 0;" on:mouseover={hoverEffect} on:mouseout={resetEffect} on:click|preventDefault={() => saveToLocalStorage(doc.content)}>
                 <div class="item-frame" style="background: url('/assets/aboutblank7.png'); background-size: cover; border-radius: 5px; height: 200px; width: 230px;"></div>
                 <div class="item-details">
                     <h2 class="doc-name">{doc.documentTitle}</h2>
