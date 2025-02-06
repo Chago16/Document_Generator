@@ -94,7 +94,6 @@ function saveToLocalStorage(content: string) {
     <div class="overflow-container">
 
         <div class="image-div-container" style="background: url('/assets/wp-banner1.png');">
-            <img src="/assets/wp-banner1.png" alt="">
             <h1 class="your-proj">YOUR PROJECTS</h1>
         </div>
     
@@ -166,6 +165,7 @@ function saveToLocalStorage(content: string) {
 .image-div-container {
     margin-top: 15px;
     border-radius: 5px;
+    background-size: cover;
     background-position: center;
     /*width: 97%;*/
     height: 160px;
