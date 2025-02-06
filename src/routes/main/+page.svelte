@@ -219,6 +219,7 @@ function saveToLocalStorage(content: string) {
 .doc-name {
     font-family: 'Poppins Semibold';
     font-size: 20px;
+    line-height: 1.2;
     margin-bottom: 0px;
     margin-top: 0px;
 }
